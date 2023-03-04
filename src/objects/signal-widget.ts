@@ -89,11 +89,12 @@ export class SignalWidget {
         this.drawBuffer = this.p.createGraphics(this.width, this.height);
         this.drawBuffer.fill(...this.strokeColor, 10);
         this.drawBuffer.stroke(...this.strokeColor);
-        this.drawBuffer.strokeWeight(3);
+        this.drawBuffer.strokeWeight(appSettings.strokeWeight);
     }
 
     drawSignal() {
-        if (!this.userDraggingKeyframe) this.consolidateData(); // always avoid duplicates?
+        let badKeyframes = this.consolidateData(this.userDraggingKeyframe); // always avoid duplicates?
+        let badKeyframeIndicatorCoordinates: [number, number, number][] = [];
 
         this.drawBuffer.clear(0, 0, 0, 0);
         this.drawBuffer.rect(0, 0, this.width, this.height);
@@ -154,6 +155,25 @@ export class SignalWidget {
                         currentX,
                         currentHeight
                     );
+
+                    // draw bulb to show existence of keyframe
+                    if (this.userDraggingKeyframe && i in badKeyframes) {
+                        badKeyframeIndicatorCoordinates.push([
+                            currentX,
+                            currentHeight,
+                            appSettings.strokeWeight,
+                        ]);
+                    } else {
+                        this.drawBuffer.push();
+                        this.drawBuffer.rectMode(this.p.CENTER);
+                        this.drawBuffer.square(
+                            currentX,
+                            currentHeight,
+                            appSettings.strokeWeight
+                        );
+                        this.drawBuffer.pop();
+                    }
+
                     if (currentX > 0)
                         this.verticalKeyframePositions.push(currentX);
                     this.angularArgumentDataIndices.push(i + 1);
@@ -166,6 +186,17 @@ export class SignalWidget {
         this.drawBuffer.line(currentX, currentHeight, currentX, loweredHeight);
         this.verticalKeyframePositions.push(currentX);
         console.log(this.currentData);
+
+        // draw bad keyframe indicators
+        if (!this.userDraggingKeyframe) return;
+        this.drawBuffer.push();
+        this.drawBuffer.rectMode(this.p.CENTER);
+        this.drawBuffer.fill(...appSettings.badKeyframeColor);
+        this.drawBuffer.stroke(...appSettings.badKeyframeColor);
+        for (const coords of badKeyframeIndicatorCoordinates) {
+            this.drawBuffer.square(...coords);
+        }
+        this.drawBuffer.pop();
     }
 
     getSelectedKeyframe() {
@@ -321,8 +352,11 @@ export class SignalWidget {
             }
 
             this.currentData[argumentIndex] = newArgument;
-        } else if (!this.p.mouseIsPressed) this.userDraggingKeyframe = false;
-        this.drawSignal();
+            this.drawSignal();
+        } else if (!this.p.mouseIsPressed && this.userDraggingKeyframe) {
+            this.userDraggingKeyframe = false;
+            this.drawSignal();
+        }
     }
 
     keyPressed() {
@@ -336,6 +370,15 @@ export class SignalWidget {
             this.verticalKeyframeToTheRightOfMouse - 1,
             this.verticalKeyframeToTheRightOfMouse
         );
+
+        // if
+        if (
+            this.verticalKeyframeToTheRightOfMouse >
+                this.angularArgumentDataIndices.length - 1 ||
+            this.verticalKeyframeToTheRightOfMouse === undefined
+        )
+            return;
+
         const verticalKeyframeDataIndex =
             this.angularArgumentDataIndices[
                 this.verticalKeyframeToTheRightOfMouse
@@ -370,7 +413,9 @@ export class SignalWidget {
     deleteVerticalKeyframe() {
         if (
             this.selectedVerticalKeyframe >= 0 &&
-            this.verticalKeyframePositions.length >= 3
+            this.verticalKeyframePositions.length >= 3 &&
+            this.selectedVerticalKeyframe <
+                this.angularArgumentDataIndices.length
         ) {
             const argumentIndex =
                 this.angularArgumentDataIndices[this.selectedVerticalKeyframe];
@@ -384,15 +429,23 @@ export class SignalWidget {
      * consolidateData
      *
      * This function merges all consecutive time commands in currentData.
-     * ~~Also, if there are repeated talk commands separated by a single delay, we merge.~~ [currently off]
+     * Also, if there are repeated talk commands separated by a single delay, we merge.
+     *
+     * Arguments:
+     *  test: boolean -- if true, then does not actually consolidate; just returns a map with potential deletes.
      */
-    consolidateData() {
+    consolidateData(test: boolean = false) {
+        let badKeyframes: { [keyframeId: number]: boolean } = {};
+
         for (let i = 0; i < this.currentData.length - 2; i += 2) {
             // consecutiveness condition
             if (
                 this.currentData[i] == appSettings.commands.delay &&
                 this.currentData[i + 2] == appSettings.commands.delay
             ) {
+                badKeyframes[i + 3] = true;
+                if (test) continue;
+
                 this.currentData[i + 1] += this.currentData[i + 3]; // merge into one
                 this.currentData.splice(i + 2, 2); // delete the latter 2 items
             } else if (
@@ -402,6 +455,9 @@ export class SignalWidget {
                 this.currentData[i + 4] == appSettings.commands.talk &&
                 this.currentData[i + 1] == this.currentData[i + 5]
             ) {
+                badKeyframes[i + 4] = true;
+                if (test) continue;
+
                 let deleteCount = 2;
 
                 if (
@@ -414,6 +470,8 @@ export class SignalWidget {
                 this.currentData.splice(i + 4, deleteCount); // delete the extraneous items
             }
         }
+
+        return badKeyframes;
     }
 
     draw() {

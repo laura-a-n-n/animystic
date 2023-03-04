@@ -57,11 +57,13 @@ export const appSettings = {
     
     // signal widget settings
     signalWaveHeightScale: 0.4,
-    angularRange: 55,
+    angularRange: 50,
     mouseTolerance: 0.008,
 
     // signal widget colors
     defaultSignalStrokeColor: [255, 0, 255],
+    strokeWeight: 3,
+    badKeyframeColor: [0, 0, 255],
 
     // command settings for servo widget
     commands: {

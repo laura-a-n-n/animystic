@@ -1,7 +1,7 @@
 import { getFilesAsync } from "@/utilities/file-helpers";
 import { P5Singleton } from "@/utilities/p5-singleton";
 import { appSettings } from "@/constants";
-import data from "data.json";
+import data from "data/data.json";
 
 const preloadAssets = async () => {
     const p = P5Singleton.getInstance();

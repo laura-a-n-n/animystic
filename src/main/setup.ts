@@ -30,5 +30,5 @@ export const setup = () => {
     p.gui = new Gui();
     p.menu = new Menu();
     p.audioWidget = new AudioWidget();
-    p.signalWidget = new SignalWidget(appSettings.angularRange);
+    p.signalWidget = new SignalWidget(appSettings.angularRange, true);
 };
