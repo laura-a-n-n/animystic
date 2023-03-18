@@ -30,17 +30,17 @@ export class Menu {
     }
 
     computeSize() {
-        this.width = this.p.viewport.percentOfWidth(
+        this.width = this.p.viewport.scaleToWidth(
             1 - 2 * appSettings.horizontalMargin
         );
         this.height = this.p.viewport.height;
-        this.cellSize = this.p.viewport.percentOfWidth(appSettings.cellSize);
-        this.cellPadding = this.p.viewport.percentOfWidth(
+        this.cellSize = this.p.viewport.scaleToWidth(appSettings.cellSize);
+        this.cellPadding = this.p.viewport.scaleToWidth(
             appSettings.cellPadding
         );
         this.trueCellSize = this.cellSize + this.cellPadding;
         this.textSize = appSettings.menuTextSizeRatio * this.cellSize;
-        this.horizontalMargin = this.p.viewport.percentOfWidth(
+        this.horizontalMargin = this.p.viewport.scaleToWidth(
             appSettings.horizontalMargin
         );
         this.rows = this.p.ceil(this.height / this.trueCellSize);

@@ -1,6 +1,7 @@
 import { AudioWidget } from "@/objects/audio-widget";
-import { Gui } from "@/objects/gui";
+import { Banner } from "@/objects/gui";
 import { Menu } from "@/objects/menu";
+import { Mouse } from "@/objects/mouse";
 import { SignalWidget } from "@/objects/signal-widget";
 import { Viewport } from "@/objects/viewport";
 import p5 from "p5";
@@ -9,10 +10,11 @@ export type AnimationEditor = p5 & {
     viewport: Viewport;
     loaded: boolean;
     menu: Menu;
-    gui: Gui;
+    banner: Banner;
     files: { [assetType: string]: string[] };
     audioWidget: AudioWidget;
     signalWidget: SignalWidget;
+    mouse: Mouse;
 
     data: { [key: string]: { [filename: string]: number[] } };
     sounds: { [name: string]: p5.SoundFile };
@@ -28,5 +30,4 @@ export type AnimationEditor = p5 & {
     maxSounds: number;
     maxImages: number;
     essentialImagesLoaded: boolean;
-    mouseEngaged: boolean;
 };

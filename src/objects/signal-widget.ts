@@ -2,7 +2,7 @@ import { appSettings } from "@/constants";
 import { AnimationEditor } from "@/types/animation-editor";
 import { getIndexOrDefault } from "@/utilities/general";
 import { P5Singleton } from "@/utilities/p5-singleton";
-import { isInBoundingBox, isInRectangle } from "@/utilities/p5-utils";
+import { isInBoundingBox, isInRectangle, triangle } from "@/utilities/p5-utils";
 import p5 from "p5";
 
 export class SignalWidget {
@@ -29,6 +29,7 @@ export class SignalWidget {
     raisedHeight!: number;
     loweredHeight!: number;
     mouseTolerance!: number;
+    indicatorHeight!: number;
 
     selectedVerticalKeyframe: number = -1;
     selectedHorizontalKeyframe: number = -1;
@@ -41,6 +42,7 @@ export class SignalWidget {
     keyBindings: { [key: string]: () => any } = {
         a: this.insertVerticalKeyframe.bind(this),
         d: this.deleteVerticalKeyframe.bind(this),
+        c: this.copyCommand.bind(this)
     };
 
     constructor(
@@ -72,9 +74,15 @@ export class SignalWidget {
         this.buffer();
     }
 
+    copyCommand() {
+        if (!this.p.keyIsDown(this.p.CONTROL)) return;
+        navigator.clipboard.writeText(this.currentData.toString());
+        console.log(this.currentData.toString());
+    }
+
     computeSize() {
         this.width = this.p.width;
-        this.height = this.p.viewport.percentOfHeight(
+        this.height = this.p.viewport.scaleToHeight(
             2 * appSettings.maxWaveHeightProportion
         );
         this.topOffset = (this.p.audioWidget?.height - this.height) / 2;
@@ -83,6 +91,7 @@ export class SignalWidget {
         this.signalVerticalMargin = (this.height - this.signalHeight) / 2;
         this.resolution = this.p.audioWidget.resolution / 1000.0;
         this.mouseTolerance = this.width * appSettings.mouseTolerance;
+        this.indicatorHeight = this.height - appSettings.indicatorMargin * this.signalVerticalMargin;
     }
 
     createBuffer() {
@@ -92,8 +101,16 @@ export class SignalWidget {
         this.drawBuffer.strokeWeight(appSettings.strokeWeight);
     }
 
-    drawSignal() {
-        let badKeyframes = this.consolidateData(this.userDraggingKeyframe); // always avoid duplicates?
+    roundData() {
+        for (const [index, datum] of this.currentData.entries()) {
+            this.currentData[index] = Math.round(datum);
+        }
+    }
+
+    drawSignal(consolidate: boolean = true) {
+        this.roundData(); // ensure data is integer
+
+        let badKeyframes = this.consolidateData(this.userDraggingKeyframe || !consolidate); // always avoid duplicates?
         let badKeyframeIndicatorCoordinates: [number, number, number][] = [];
 
         this.drawBuffer.clear(0, 0, 0, 0);
@@ -239,11 +256,11 @@ export class SignalWidget {
                     currentHeight + toleranceRadius
                 )
             ) {
-                this.p.cursor("ns-resize");
+                this.p.mouse.cursor("ns-resize");
                 this.selectedHorizontalKeyframe = index;
                 if (!this.userDraggingKeyframe)
                     this.selectedVerticalKeyframe = -1;
-                this.p.mouseEngaged = mouseEngaged = true;
+                mouseEngaged = true;
             }
 
             // is user selecting a vertical keyframe?
@@ -257,10 +274,10 @@ export class SignalWidget {
                     currentHeight
                 )
             ) {
-                this.p.cursor("ew-resize");
+                this.p.mouse.cursor("ew-resize");
                 this.selectedVerticalKeyframe = index;
                 this.selectedHorizontalKeyframe = -1;
-                this.p.mouseEngaged = mouseEngaged = true;
+                mouseEngaged = true;
             }
         }
 
@@ -291,6 +308,22 @@ export class SignalWidget {
             this.p.lerp(0, distanceBetweenKeyframes, percentRight) /
             this.resolution
         );
+    }
+
+    getAngleFromY() {
+        const mouseY = this.p.viewport.mouseY;
+        const percentOpen = this.p.constrain(
+            (this.loweredHeight + this.mouseTolerance - mouseY) /
+                (this.signalHeight + this.mouseTolerance),
+            0,
+            1
+        );
+        const angle = this.p.lerp(
+            this.closedAngle,
+            this.openAngle,
+            percentOpen
+        );
+        return angle;
     }
 
     handleMouse() {
@@ -336,20 +369,7 @@ export class SignalWidget {
                     this.currentData[nextArgumentIndex] -=
                         newArgument - oldArgument;
                 }
-            } else {
-                const mouseY = this.p.viewport.mouseY;
-                const percentOpen = this.p.constrain(
-                    (this.loweredHeight + this.mouseTolerance - mouseY) /
-                        (this.signalHeight + this.mouseTolerance),
-                    0,
-                    1
-                );
-                newArgument = this.p.lerp(
-                    this.closedAngle,
-                    this.openAngle,
-                    percentOpen
-                );
-            }
+            } else newArgument = this.getAngleFromY();
 
             this.currentData[argumentIndex] = newArgument;
             this.drawSignal();
@@ -357,6 +377,8 @@ export class SignalWidget {
             this.userDraggingKeyframe = false;
             this.drawSignal();
         }
+        
+        this.drawIndicators();
     }
 
     keyPressed() {
@@ -364,17 +386,18 @@ export class SignalWidget {
     }
 
     insertVerticalKeyframe() {
+        console.log("???")
         const mouseX = this.p.viewport.mouseX;
         const newTimeArgument = this.getMillisecondsFromX(
             mouseX,
             this.verticalKeyframeToTheRightOfMouse - 1,
             this.verticalKeyframeToTheRightOfMouse
         );
+        console.log(newTimeArgument, this.verticalKeyframeToTheRightOfMouse)
 
-        // if
         if (
-            this.verticalKeyframeToTheRightOfMouse >
-                this.angularArgumentDataIndices.length - 1 ||
+            // this.verticalKeyframeToTheRightOfMouse >
+                // this.angularArgumentDataIndices.length - 1 ||
             this.verticalKeyframeToTheRightOfMouse === undefined
         )
             return;
@@ -396,7 +419,7 @@ export class SignalWidget {
             associatedHorizontalKeyframeDataIndex + 1,
             0,
             appSettings.commands.talk,
-            this.angularRange / 2,
+            this.getAngleFromY(),
             appSettings.commands.delay,
             oldTimeArgument - newTimeArgument
         );
@@ -407,7 +430,7 @@ export class SignalWidget {
             verticalKeyframeDataIndex,
             associatedHorizontalKeyframeDataIndex
         );
-        this.drawSignal();
+        this.drawSignal(false);
     }
 
     deleteVerticalKeyframe() {
@@ -449,7 +472,7 @@ export class SignalWidget {
                 this.currentData[i + 1] += this.currentData[i + 3]; // merge into one
                 this.currentData.splice(i + 2, 2); // delete the latter 2 items
             } else if (
-                i < this.currentData.length - 4 &&
+                i < this.currentData.length - 5 &&
                 this.currentData[i] == appSettings.commands.talk &&
                 this.currentData[i + 2] == appSettings.commands.delay &&
                 this.currentData[i + 4] == appSettings.commands.talk &&
@@ -461,7 +484,7 @@ export class SignalWidget {
                 let deleteCount = 2;
 
                 if (
-                    i < this.currentData.length - 6 &&
+                    i < this.currentData.length - 7 &&
                     this.currentData[i + 6] == appSettings.commands.delay
                 ) {
                     this.currentData[i + 3] += this.currentData[i + 7];
@@ -472,6 +495,13 @@ export class SignalWidget {
         }
 
         return badKeyframes;
+    }
+
+    drawIndicators() {
+        // "free" indicator
+        triangle(this.p, this.p.mouseX, this.indicatorHeight, this.p.color(...appSettings.freeIndicatorColor));
+        // selection indicator
+        triangle(this.p, this.verticalKeyframePositions[this.selectedVerticalKeyframe], this.indicatorHeight, this.p.color(...appSettings.selectionIndicatorColor));
     }
 
     draw() {

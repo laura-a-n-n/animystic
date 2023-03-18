@@ -5,7 +5,7 @@ export function triangle(
     centerX: number,
     centerY: number,
     color: p5.Color,
-    size = 16
+    size = 12
 ) {
     p.push();
     p.fill(color);

@@ -18,6 +18,10 @@ export class AudioWidget {
     height!: number;
     resolution!: number;
     topOffset!: number;
+    controlsHeight!: number;
+    controlsTopOffset!: number;
+    audioButtonHeight!: number;
+    playButtonBox!: [number, number, number, number];
 
     keyBindings: { [key: string]: () => any } = {
         " ": this.toggle.bind(this),
@@ -36,9 +40,13 @@ export class AudioWidget {
 
     computeSize() {
         this.width = this.p.width;
-        this.height = this.p.height - this.p.gui.height;
+        this.height = this.p.height - this.p.banner.height;
         this.resolution = this.width / this.currentSound.duration();
         this.topOffset = this.height / 2;
+        this.controlsHeight = this.p.viewport.scaleToHeight(appSettings.controlsHeightProportion);
+        this.controlsTopOffset = this.height - this.controlsHeight;
+        this.audioButtonHeight = appSettings.audioButtonHeightProportion * this.controlsHeight;
+        this.playButtonBox = [this.width / 2, this.controlsTopOffset + this.controlsHeight / 2, this.audioButtonHeight, this.audioButtonHeight];
     }
 
     bindSound(sound: p5.SoundFile) {
@@ -54,9 +62,22 @@ export class AudioWidget {
         this.drawBuffer.stroke(...appSettings.defaultFill);
     }
 
+    drawScrubber() {
+        this.p.push();
+        this.p.stroke(...appSettings.scrubberColor);
+        this.p.fill(...appSettings.scrubberColor);
+        this.p.line(
+            this.currentPosition,
+            0,
+            this.currentPosition,
+            this.p.height
+        );
+        this.p.pop();
+    }
+
     drawAudioWave(reset = false) {
         // compute data
-        const numSamples = this.p.viewport.percentOfWidth(appSettings.samplingResolution);
+        const numSamples = this.p.viewport.scaleToWidth(appSettings.samplingResolution);
         const peaks = this.currentSound.getPeaks(numSamples);
         if (reset) this.resetTime();
         this.loading = false;
@@ -73,6 +94,15 @@ export class AudioWidget {
                 this.height * (0.5 - appSettings.maxWaveHeightProportion * element) // deviation from center
             );
         }
+    }
+
+    drawControls() {
+        this.p.push();
+        this.p.imageMode(this.p.CENTER);
+        this.p.fill(...appSettings.headerColor);
+        this.p.rect(0, this.controlsTopOffset, this.width, this.controlsHeight);
+        this.p.image(this.p.images.playButton, ...this.playButtonBox);
+        this.p.pop();
     }
 
     keyPressed() {
@@ -143,19 +173,8 @@ export class AudioWidget {
 
         this.p.push();
         this.p.image(this.drawBuffer, 0, 0);
-
-        // draw scrubber
-        this.p.push();
-        this.p.stroke(255, 0, 0);
-        this.p.fill(255, 0, 0);
-        this.p.line(
-            this.currentPosition,
-            0,
-            this.currentPosition,
-            this.p.height
-        );
-        this.p.pop();
-
+        this.drawScrubber();
+        this.drawControls();
         this.p.pop();
     }
 }

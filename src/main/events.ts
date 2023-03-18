@@ -5,7 +5,7 @@ export const windowResized = () => {
     const [width, height] = p.viewport.computeSize();
     p.resizeCanvas(width, height);
     p.textSize(p.viewport.computeTextSize());
-    p.gui.computeSize();
+    p.banner.computeSize();
     p.menu.computeSize();
     p.audioWidget?.buffer();
     p.signalWidget?.buffer();
@@ -22,7 +22,7 @@ export const keyPressed = () => {
 export const mouseClicked = () => {
     const p = P5Singleton.getInstance();
     if (p.uiProcessed) {
-        if (p.gui.mouseHoverHome) {
+        if (p.banner.mouseHoverHome) {
             // user wants to go home
             p.audioWidget.currentSound?.stop();
             p.menu.enabled = true;

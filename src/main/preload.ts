@@ -1,17 +1,28 @@
+import data from "data/data.json";
 import { getFilesAsync } from "@/utilities/file-helpers";
 import { P5Singleton } from "@/utilities/p5-singleton";
 import { appSettings } from "@/constants";
-import data from "data/data.json";
+import { AnimationEditor } from "@/types/animation-editor";
 
-const preloadAssets = async () => {
-    const p = P5Singleton.getInstance();
+let p: AnimationEditor;
 
+const preloadSetup = () => {
     p.images = {};
     p.sounds = {};
     p.images.logo = p.loadImage(`${appSettings.imagesPath}/${appSettings.logo}`);
     p.images.missingImage = p.loadImage(`${appSettings.imagesPath}/${appSettings.missingImage}`);
+    p.images.playButton = p.loadImage(`${appSettings.imagesPath}/${appSettings.playButton}`);
+    p.images.pauseButton = p.loadImage(`${appSettings.imagesPath}/${appSettings.pauseButton}`);
     p.essentialImagesLoaded = true;
-    
+    p.loaded = false;
+    p.showMessage = true;
+    p.message = "Loading...";
+    p.imagesLoaded = 0;
+    p.soundsLoaded = 0;
+    p.percentLoaded = 0;
+}
+
+const preloadAssets = async () => {
     const files = await getFilesAsync();
     p.files = files;
     files.image = files.contentImage.concat(files.specialImage);
@@ -40,5 +51,7 @@ const preloadAssets = async () => {
 };
 
 export const preload = async () => {
+    p = P5Singleton.getInstance();
+    preloadSetup();
     preloadAssets();
 };

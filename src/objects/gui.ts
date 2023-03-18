@@ -2,7 +2,7 @@ import { appSettings } from "@/constants";
 import { AnimationEditor } from "@/types/animation-editor";
 import { P5Singleton } from "@/utilities/p5-singleton";
 
-export class Gui {
+export class Banner {
     p: AnimationEditor;
     width!: number;
     height!: number;
@@ -19,7 +19,7 @@ export class Gui {
         if (this.p.images === undefined) return;
         this.width = this.p.viewport.width;
         this.height = this.p.max(
-            this.p.viewport.percentOfHeight(appSettings.bannerHeight),
+            this.p.viewport.scaleToHeight(appSettings.bannerHeight),
             this.p.images.logo.height
         );
         this.logoHeight =
@@ -28,21 +28,16 @@ export class Gui {
     }
 
     update() {
-        this.p.uiProcessed = this.p.mouseY <= this.height; // is mouse hovering toolbar?
+        this.p.uiProcessed = this.p.uiProcessed || this.p.mouseY <= this.height; // is mouse hovering toolbar?
         this.mouseHoverHome =
             this.p.uiProcessed &&
             this.p.abs(this.p.mouseX - this.width / 2) <=
                 this.p.images.logo.width / 2; // is mouse hovering logo image?
 
-        if (this.mouseHoverHome) {
-            this.p.mouseEngaged = true;
-            this.p.cursor("pointer");
-        }
+        if (this.mouseHoverHome) this.p.mouse.cursor("pointer");
     }
 
     draw() {
-        this.update();
-
         // banner
         this.p.push();
         this.p.fill(...appSettings.headerColor);

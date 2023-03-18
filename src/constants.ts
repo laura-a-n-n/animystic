@@ -3,12 +3,15 @@ export const appSettings = {
     defaultFont: "Georgia",
 
     // file settings
+    dataEndpoint: "data/dist.h",
     imagesPath: "assets/image",
     mainImagesPath: "assets/image/zarbalatrax/content",
     specialImagesPath: "assets/image/zarbalatrax/special",
     soundsPath: "assets/sound",
     logo: "sound-transparent.png",
     missingImage: "thonk.png",
+    playButton: "play-circle.png",
+    pauseButton: "pause-circle.png",
     filetypeIdLookup: [1, 14, 31, 44, 60, 71, 84, 97, 100, 101],
     filetypes: [
         "★ Fortune",
@@ -54,16 +57,24 @@ export const appSettings = {
     samplingResolution: 64,
     maxWaveHeightProportion: 1 / 3,
     innerPadding: 0.05,
+    controlsHeightProportion: 1 / 16,
+    audioButtonHeightProportion: 2 / 3,
+
+    // audio widget appearance
+    scrubberColor: [255, 0, 0],
     
     // signal widget settings
     signalWaveHeightScale: 0.4,
     angularRange: 50,
     mouseTolerance: 0.008,
 
-    // signal widget colors
-    defaultSignalStrokeColor: [255, 0, 255],
+    // signal widget appearance
     strokeWeight: 3,
+    indicatorMargin: 0.9,
+    defaultSignalStrokeColor: [255, 0, 255],
     badKeyframeColor: [0, 0, 255],
+    freeIndicatorColor: [255, 0, 0],
+    selectionIndicatorColor: [0, 0, 255],
 
     // command settings for servo widget
     commands: {

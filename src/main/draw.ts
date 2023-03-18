@@ -8,17 +8,22 @@ export const draw = () => {
 
     p.background(...appSettings.backgroundColor);
     handleMessage();
-
     if (p.showMessage || !p.essentialImagesLoaded) return;
-    p.viewport.translate(0, p.gui.height);
+
+    // pre-draw updates
+    p.mouse.update();
+    p.banner.update();
+
+    // main draw functions
+    p.viewport.translate(0, p.banner.height); // move viewport below banner
     if (p.files !== undefined && p.menu !== undefined && p.menu.enabled) p.menu.draw();
     if (p.menu !== undefined && !p.menu.enabled) {
         p.audioWidget.draw();
         p.signalWidget.draw();
     }
     p.viewport.reset();
-    p.gui.draw();
 
-    if (!p.mouseEngaged) p.cursor("default");
-    p.mouseEngaged = false;
+    // call banner draw functions
+    p.banner.draw();
+    p.mouse.draw();
 };

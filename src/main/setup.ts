@@ -1,7 +1,8 @@
 import { appSettings } from "@/constants";
 import { AudioWidget } from "@/objects/audio-widget";
-import { Gui } from "@/objects/gui";
+import { Banner } from "@/objects/gui";
 import { Menu } from "@/objects/menu";
+import { Mouse } from "@/objects/mouse";
 import { SignalWidget } from "@/objects/signal-widget";
 import { Viewport } from "@/objects/viewport";
 import { P5Singleton } from "@/utilities/p5-singleton";
@@ -12,23 +13,15 @@ export const setup = () => {
 
     p.viewport = new Viewport();
 
-    p.loaded = false;
-    p.showMessage = true;
-    p.message = "Loading...";
-    p.imagesLoaded = 0;
-    p.soundsLoaded = 0;
-    p.percentLoaded = 0;
-    p.maxSounds = 97; // ??
-    p.maxImages = 97;
-
     p.createCanvas(p.viewport.width, p.viewport.height);
     p.fill(...appSettings.defaultFill);
     p.noStroke();
     p.textFont(appSettings.defaultFont)
     p.textSize(p.viewport.textSize);
 
-    p.gui = new Gui();
+    p.banner = new Banner();
     p.menu = new Menu();
     p.audioWidget = new AudioWidget();
     p.signalWidget = new SignalWidget(appSettings.angularRange, true);
+    p.mouse = new Mouse();
 };

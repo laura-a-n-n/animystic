@@ -23,7 +23,7 @@ export const handleMessage = () => {
                 }\nImages loaded: ${p.imagesLoaded}/${p.maxImages}`;
             } else {
                 p.showMessage = false;
-                p.gui.computeSize();
+                p.banner.computeSize();
             }
         }
         p.pop();

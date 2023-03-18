@@ -58,11 +58,11 @@ export class Viewport {
         ));
     }
 
-    percentOfHeight(decimal: number) {
+    scaleToHeight(decimal: number) {
         return this.height * decimal;
     }
 
-    percentOfWidth(decimal: number) {
+    scaleToWidth(decimal: number) {
         return this.width * decimal;
     }
 }
