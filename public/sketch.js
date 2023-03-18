@@ -12385,1277 +12385,931 @@
 			2,
 			50,
 			1,
-			1228,
+			8612,
 			2,
-			30,
+			0,
 			1,
-			463
+			8612
 		],
 		"002.wav": [
 			2,
 			50,
 			1,
-			1228,
+			10823,
 			2,
-			30,
+			0,
 			1,
-			463
+			10823
 		],
 		"003.wav": [
 			2,
 			50,
 			1,
-			1228,
+			13200,
 			2,
-			30,
+			0,
 			1,
-			463
+			13200
 		],
 		"004.wav": [
 			2,
 			50,
 			1,
-			1228,
+			10593,
 			2,
-			30,
+			0,
 			1,
-			463
+			10593
 		],
 		"005.wav": [
 			2,
 			50,
 			1,
-			1228,
+			9029,
 			2,
-			30,
+			0,
 			1,
-			463
+			9029
 		],
 		"006.wav": [
 			2,
 			50,
 			1,
-			1228,
+			10260,
 			2,
-			30,
+			0,
 			1,
-			463
+			10260
 		],
 		"007.wav": [
 			2,
 			50,
 			1,
-			1228,
+			19769,
 			2,
-			30,
+			0,
 			1,
-			463
+			19769
 		],
 		"008.wav": [
 			2,
 			50,
 			1,
-			1228,
+			11553,
 			2,
-			30,
+			0,
 			1,
-			463
+			11553
 		],
 		"009.wav": [
 			2,
 			50,
 			1,
-			1228,
+			13033,
 			2,
-			30,
+			0,
 			1,
-			463
+			13033
 		],
 		"010.wav": [
 			2,
 			50,
 			1,
-			1217,
+			13158,
 			2,
 			0,
 			1,
-			908,
-			2,
-			26,
-			1,
-			411,
-			2,
-			4,
-			1,
-			257,
-			2,
-			19,
-			1,
-			325,
-			2,
-			11,
-			1,
-			412,
-			2,
-			50,
-			1,
-			993,
-			2,
-			0,
-			1,
-			412,
-			2,
-			7,
-			1,
-			428,
-			2,
-			4,
-			1,
-			291,
-			2,
-			28,
-			1,
-			206,
-			2,
-			0,
-			1,
-			582,
-			2,
-			38,
-			1,
-			343,
-			2,
-			0,
-			1,
-			566,
-			2,
-			50,
-			1,
-			548,
-			2,
-			0,
-			1,
-			462,
-			2,
-			14,
-			1,
-			309,
-			2,
-			1,
-			1,
-			325,
-			2,
-			27,
-			1,
-			155,
-			2,
-			6,
-			1,
-			342,
-			2,
-			29,
-			1,
-			206,
-			2,
-			1,
-			1,
-			360,
-			2,
-			16,
-			1,
-			222,
-			2,
-			0,
-			1,
-			206,
-			2,
-			22,
-			1,
-			257,
-			2,
-			3,
-			1,
-			908,
-			2,
-			50,
-			1,
-			240,
-			2,
-			0,
-			1,
-			651,
-			2,
-			37,
-			1,
-			257,
-			2,
-			2,
-			1,
-			206,
-			2,
-			18,
-			1,
-			497,
-			2,
-			50,
-			1,
-			445,
-			2,
-			0,
-			1,
-			240,
-			2,
-			14,
-			1,
-			188,
-			2,
-			31,
-			1,
-			155,
-			2,
-			0,
-			1,
-			377,
-			2,
-			14,
-			1,
-			240,
-			2,
-			22,
-			1,
-			188,
-			2,
-			0,
-			1,
-			154,
-			2,
-			22,
-			1,
-			137,
-			2,
-			9,
-			1,
-			172,
-			2,
-			21,
-			1,
-			171,
-			2,
-			0,
-			1,
-			428,
-			2,
-			49,
-			1,
-			926,
-			2,
-			0,
-			1,
-			479,
-			2,
-			24,
-			1,
-			155,
-			2,
-			0,
-			1,
-			325,
-			2,
-			16,
-			1,
-			137,
-			2,
-			0,
-			1,
-			223,
-			2,
-			22,
-			1,
-			120,
-			2,
-			3,
-			1,
-			343,
-			2,
-			9,
-			1,
-			496,
-			2,
-			50,
-			1,
-			377,
-			2,
-			0,
-			1,
-			137,
-			2,
-			12,
-			1,
-			155,
-			2,
-			0,
-			1,
-			411,
-			2,
-			24,
-			1,
-			188,
-			2,
-			12,
-			1,
-			309,
-			2,
-			5,
-			1,
-			257,
-			2,
-			17,
-			1,
-			274,
-			2,
-			20,
-			1,
-			171,
-			2,
-			10,
-			1,
-			206,
-			2,
-			0,
-			1,
-			120,
-			2,
-			15,
-			1,
-			377,
-			2,
-			0,
-			1,
-			428,
-			2,
-			50,
-			1,
-			360,
-			2,
-			0,
-			1,
-			274,
-			2,
-			11,
-			1,
-			463,
-			2,
-			23,
-			1,
-			120,
-			2,
-			3,
-			1,
-			719,
-			2,
-			50,
-			1,
-			1028
+			13158
 		],
 		"011.wav": [
 			2,
 			50,
 			1,
-			1228,
+			13492,
 			2,
-			30,
+			0,
 			1,
-			463
+			13492
 		],
 		"012.wav": [
 			2,
 			50,
 			1,
-			1228,
+			17642,
 			2,
-			30,
+			0,
 			1,
-			463
+			17642
 		],
 		"013.wav": [
 			2,
 			50,
 			1,
-			1228,
+			10489,
 			2,
-			30,
+			0,
 			1,
-			463
+			10489
 		],
 		"014.wav": [
 			2,
 			50,
 			1,
-			1228,
+			12157,
 			2,
-			30,
+			0,
 			1,
-			463
+			12157
 		],
 		"015.wav": [
 			2,
 			50,
 			1,
-			1228,
+			12762,
 			2,
-			30,
+			0,
 			1,
-			463
+			12762
 		],
 		"016.wav": [
 			2,
 			50,
 			1,
-			1228,
+			13430,
 			2,
-			30,
+			0,
 			1,
-			463
+			13430
 		],
 		"017.wav": [
 			2,
 			50,
 			1,
-			1228,
+			8258,
 			2,
-			30,
+			0,
 			1,
-			463
+			8258
 		],
 		"018.wav": [
 			2,
 			50,
 			1,
-			1228,
+			7486,
 			2,
-			30,
+			0,
 			1,
-			463
+			7486
 		],
 		"019.wav": [
 			2,
 			50,
 			1,
-			1228,
+			9363,
 			2,
-			30,
+			0,
 			1,
-			463
+			9363
 		],
 		"020.wav": [
 			2,
 			50,
 			1,
-			1228,
+			9321,
 			2,
-			30,
+			0,
 			1,
-			463
+			9321
 		],
 		"021.wav": [
 			2,
 			50,
 			1,
-			1228,
+			14472,
 			2,
-			30,
+			0,
 			1,
-			463
+			14472
 		],
 		"022.wav": [
 			2,
 			50,
 			1,
-			1228,
+			10093,
 			2,
-			30,
+			0,
 			1,
-			463
+			10093
 		],
 		"023.wav": [
 			2,
 			50,
 			1,
-			1228,
+			6735,
 			2,
-			30,
+			0,
 			1,
-			463
+			6735
 		],
 		"024.wav": [
 			2,
 			50,
 			1,
-			1228,
+			17434,
 			2,
-			30,
+			0,
 			1,
-			463
+			17434
 		],
 		"025.wav": [
 			2,
 			50,
 			1,
-			1228,
+			13471,
 			2,
-			30,
+			0,
 			1,
-			463
+			13471
 		],
 		"026.wav": [
 			2,
 			50,
 			1,
-			1228,
+			20687,
 			2,
-			30,
+			0,
 			1,
-			463
+			20687
 		],
 		"027.wav": [
 			2,
 			50,
 			1,
-			1228,
+			0,
 			2,
-			30,
+			0,
 			1,
-			463
+			0
 		],
 		"028.wav": [
 			2,
 			50,
 			1,
-			1228,
+			17121,
 			2,
-			30,
+			0,
 			1,
-			463
+			17121
 		],
 		"029.wav": [
 			2,
 			50,
 			1,
-			1228,
+			21333,
 			2,
-			30,
+			0,
 			1,
-			463
+			21333
 		],
 		"030.wav": [
 			2,
 			50,
 			1,
-			1228,
+			18518,
 			2,
-			30,
+			0,
 			1,
-			463
+			18518
 		],
 		"031.wav": [
 			2,
 			50,
 			1,
-			1228,
+			19019,
 			2,
-			30,
+			0,
 			1,
-			463
+			19019
 		],
 		"032.wav": [
 			2,
 			50,
 			1,
-			1228,
+			8466,
 			2,
-			30,
+			0,
 			1,
-			463
+			8466
 		],
 		"033.wav": [
 			2,
 			50,
 			1,
-			1228,
+			13471,
 			2,
-			30,
+			0,
 			1,
-			463
+			13471
 		],
 		"034.wav": [
 			2,
 			50,
 			1,
-			1228,
+			17705,
 			2,
-			30,
+			0,
 			1,
-			463
+			17705
 		],
 		"035.wav": [
 			2,
 			50,
 			1,
-			1228,
+			23148,
 			2,
-			30,
+			0,
 			1,
-			463
+			23148
 		],
 		"036.wav": [
 			2,
 			50,
 			1,
-			1228,
+			6861,
 			2,
-			30,
+			0,
 			1,
-			463
+			6861
 		],
 		"037.wav": [
 			2,
 			50,
 			1,
-			1228,
+			18497,
 			2,
-			30,
+			0,
 			1,
-			463
+			18497
 		],
 		"038.wav": [
 			2,
 			50,
 			1,
-			1228,
+			19331,
 			2,
-			30,
+			0,
 			1,
-			463
+			19331
 		],
 		"039.wav": [
 			2,
 			50,
 			1,
-			1228,
+			9780,
 			2,
-			30,
+			0,
 			1,
-			463
+			9780
 		],
 		"040.wav": [
 			2,
 			50,
 			1,
-			1228,
+			10197,
 			2,
-			30,
+			0,
 			1,
-			463
+			10197
 		],
 		"041.wav": [
 			2,
 			50,
 			1,
-			1228,
+			9092,
 			2,
-			30,
+			0,
 			1,
-			463
+			9092
 		],
 		"042.wav": [
 			2,
 			50,
 			1,
-			1228,
+			3440,
 			2,
-			30,
+			0,
 			1,
-			463
+			3440
 		],
 		"043.wav": [
 			2,
 			50,
 			1,
-			1228,
+			9488,
 			2,
-			30,
+			0,
 			1,
-			463
+			9488
 		],
 		"044.wav": [
 			2,
 			50,
 			1,
-			1228,
+			9676,
 			2,
-			30,
+			0,
 			1,
-			463
+			9676
 		],
 		"045.wav": [
 			2,
 			50,
 			1,
-			1228,
+			7590,
 			2,
-			30,
+			0,
 			1,
-			463
+			7590
 		],
 		"046.wav": [
 			2,
 			50,
 			1,
-			1228,
+			3816,
 			2,
-			30,
+			0,
 			1,
-			463
+			3816
 		],
 		"047.wav": [
 			2,
 			50,
 			1,
-			1228,
+			5463,
 			2,
-			30,
+			0,
 			1,
-			463
+			5463
 		],
 		"048.wav": [
 			2,
 			50,
 			1,
-			1228,
+			17788,
 			2,
-			30,
+			0,
 			1,
-			463
+			17788
 		],
 		"049.wav": [
 			2,
 			50,
 			1,
-			1228,
+			5130,
 			2,
-			30,
+			0,
 			1,
-			463
+			5130
 		],
 		"050.wav": [
 			2,
 			50,
 			1,
-			1228,
+			4170,
 			2,
-			30,
+			0,
 			1,
-			463
+			4170
 		],
 		"051.wav": [
 			2,
 			50,
 			1,
-			1228,
+			7590,
 			2,
-			30,
+			0,
 			1,
-			463
+			7590
 		],
 		"052.wav": [
 			2,
 			50,
 			1,
-			1228,
+			4754,
 			2,
-			30,
+			0,
 			1,
-			463
+			4754
 		],
 		"053.wav": [
 			2,
 			50,
 			1,
-			1228,
+			7924,
 			2,
-			30,
+			0,
 			1,
-			463
+			7924
 		],
 		"054.wav": [
 			2,
 			50,
 			1,
-			1228,
+			5150,
 			2,
-			30,
+			0,
 			1,
-			463
+			5150
 		],
 		"055.wav": [
 			2,
 			50,
 			1,
-			1228,
+			9405,
 			2,
-			30,
+			0,
 			1,
-			463
+			9405
 		],
 		"056.wav": [
 			2,
 			50,
 			1,
-			1228,
+			15306,
 			2,
-			30,
+			0,
 			1,
-			463
+			15306
 		],
 		"057.wav": [
 			2,
 			50,
 			1,
-			1228,
+			15223,
 			2,
-			30,
+			0,
 			1,
-			463
+			15223
 		],
 		"058.wav": [
 			2,
 			50,
 			1,
-			1228,
+			6673,
 			2,
-			30,
+			0,
 			1,
-			463
+			6673
 		],
 		"059.wav": [
 			2,
 			50,
 			1,
-			1228,
+			5109,
 			2,
-			30,
+			0,
 			1,
-			463
+			5109
 		],
 		"060.wav": [
 			2,
 			50,
 			1,
-			1228,
+			6256,
 			2,
-			30,
+			0,
 			1,
-			463
+			6256
 		],
 		"061.wav": [
 			2,
 			50,
 			1,
-			1228,
+			6235,
 			2,
-			30,
+			0,
 			1,
-			463
+			6235
 		],
 		"062.wav": [
 			2,
 			50,
 			1,
-			1228,
+			9989,
 			2,
-			30,
+			0,
 			1,
-			463
+			9989
 		],
 		"063.wav": [
 			2,
 			50,
 			1,
-			1228,
+			7027,
 			2,
-			30,
+			0,
 			1,
-			463
+			7027
 		],
 		"064.wav": [
 			2,
 			50,
 			1,
-			1228,
+			5818,
 			2,
-			30,
+			0,
 			1,
-			463
-		],
-		"065.wav": [
-			2,
-			50,
-			1,
-			1228,
-			2,
-			30,
-			1,
-			463
-		],
-		"066.wav": [
-			2,
-			50,
-			1,
-			1228,
-			2,
-			30,
-			1,
-			463
-		],
-		"067.wav": [
-			2,
-			50,
-			1,
-			1228,
-			2,
-			30,
-			1,
-			463
-		],
-		"068.wav": [
-			2,
-			50,
-			1,
-			1228,
-			2,
-			30,
-			1,
-			463
-		],
-		"069.wav": [
-			2,
-			50,
-			1,
-			1228,
-			2,
-			30,
-			1,
-			463
-		],
-		"070.wav": [
-			2,
-			50,
-			1,
-			1228,
-			2,
-			30,
-			1,
-			463
+			5818
 		],
 		"071.wav": [
 			2,
 			50,
 			1,
-			1228,
+			1584,
 			2,
-			30,
+			0,
 			1,
-			463
+			1584
 		],
 		"072.wav": [
 			2,
 			50,
 			1,
-			1228,
+			2565,
 			2,
-			30,
+			0,
 			1,
-			463
+			2565
 		],
 		"073.wav": [
 			2,
 			50,
 			1,
-			1228,
+			1730,
 			2,
-			30,
+			0,
 			1,
-			463
+			1730
 		],
 		"074.wav": [
 			2,
 			50,
 			1,
-			1228,
+			2022,
 			2,
-			30,
+			0,
 			1,
-			463
+			2022
 		],
 		"075.wav": [
 			2,
 			50,
 			1,
-			1228,
+			2752,
 			2,
-			30,
+			0,
 			1,
-			463
+			2752
 		],
 		"076.wav": [
 			2,
 			50,
 			1,
-			1228,
+			3315,
 			2,
-			30,
+			0,
 			1,
-			463
+			3315
 		],
 		"077.wav": [
 			2,
 			50,
 			1,
-			1228,
+			3128,
 			2,
-			30,
+			0,
 			1,
-			463
+			3128
 		],
 		"078.wav": [
 			2,
 			50,
 			1,
-			1228,
+			8362,
 			2,
-			30,
+			0,
 			1,
-			463
+			8362
 		],
 		"079.wav": [
 			2,
 			50,
 			1,
-			1228,
+			7152,
 			2,
-			30,
+			0,
 			1,
-			463
+			7152
 		],
 		"080.wav": [
 			2,
 			50,
 			1,
-			1228,
+			6402,
 			2,
-			30,
+			0,
 			1,
-			463
+			6402
 		],
 		"081.wav": [
 			2,
 			50,
 			1,
-			1228,
+			4650,
 			2,
-			30,
+			0,
 			1,
-			463
+			4650
 		],
 		"082.wav": [
 			2,
 			50,
 			1,
-			1228,
+			5568,
 			2,
-			30,
+			0,
 			1,
-			463
+			5568
 		],
 		"083.wav": [
 			2,
 			50,
 			1,
-			1228,
+			6986,
 			2,
-			30,
+			0,
 			1,
-			463
+			6986
 		],
 		"084.wav": [
 			2,
 			50,
 			1,
-			1228,
+			4754,
 			2,
-			30,
+			0,
 			1,
-			463
+			4754
 		],
 		"085.wav": [
 			2,
 			50,
 			1,
-			1228,
+			5005,
 			2,
-			30,
+			0,
 			1,
-			463
+			5005
 		],
 		"086.wav": [
 			2,
 			50,
 			1,
-			1228,
+			6777,
 			2,
-			30,
+			0,
 			1,
-			463
+			6777
 		],
 		"087.wav": [
 			2,
 			50,
 			1,
-			1228,
+			3503,
 			2,
-			30,
+			0,
 			1,
-			463
+			3503
 		],
 		"088.wav": [
 			2,
 			50,
 			1,
-			1228,
+			6464,
 			2,
-			30,
+			0,
 			1,
-			463
+			6464
 		],
 		"089.wav": [
 			2,
 			50,
 			1,
-			1228,
+			8237,
 			2,
-			30,
+			0,
 			1,
-			463
+			8237
 		],
 		"090.wav": [
 			2,
 			50,
 			1,
-			1228,
+			6610,
 			2,
-			30,
+			0,
 			1,
-			463
+			6610
 		],
 		"091.wav": [
 			2,
 			50,
 			1,
-			1228,
+			9947,
 			2,
-			30,
+			0,
 			1,
-			463
+			9947
 		],
 		"092.wav": [
 			2,
 			50,
 			1,
-			1228,
+			5338,
 			2,
-			30,
+			0,
 			1,
-			463
+			5338
 		],
 		"093.wav": [
 			2,
 			50,
 			1,
-			1228,
+			7799,
 			2,
-			30,
+			0,
 			1,
-			463
+			7799
 		],
 		"094.wav": [
 			2,
 			50,
 			1,
-			1228,
+			4066,
 			2,
-			30,
+			0,
 			1,
-			463
-		],
-		"095.wav": [
-			2,
-			50,
-			1,
-			1228,
-			2,
-			30,
-			1,
-			463
-		],
-		"096.wav": [
-			2,
-			50,
-			1,
-			1228,
-			2,
-			30,
-			1,
-			463
+			4066
 		],
 		"097.wav": [
 			2,
 			50,
 			1,
-			1228,
+			1334,
 			2,
-			30,
+			0,
 			1,
-			463
-		],
-		"098.wav": [
-			2,
-			50,
-			1,
-			1228,
-			2,
-			30,
-			1,
-			463
-		],
-		"099.wav": [
-			2,
-			50,
-			1,
-			1228,
-			2,
-			30,
-			1,
-			463
+			1334
 		],
 		"100.wav": [
 			2,
 			50,
 			1,
-			1228,
+			0,
 			2,
-			30,
+			0,
 			1,
-			463
+			0
+		],
+		"101.wav": [
+			2,
+			50,
+			1,
+			0,
+			2,
+			0,
+			1,
+			0
+		],
+		"102.wav": [
+			2,
+			50,
+			1,
+			0,
+			2,
+			0,
+			1,
+			0
+		],
+		"103.wav": [
+			2,
+			50,
+			1,
+			0,
+			2,
+			0,
+			1,
+			0
 		]
 	};
 	var data = {
@@ -13663,6 +13317,9 @@
 	};
 
 	var appSettings = {
+	    versionString: "animystic version: 0.0.1 alpha",
+	    versionStringColor: [255, 128],
+	    versionStringTextSize: 8,
 	    defaultFill: [255],
 	    defaultFont: "Georgia",
 	    // file settings
@@ -13675,6 +13332,7 @@
 	    missingImage: "thonk.png",
 	    playButton: "play-circle.png",
 	    pauseButton: "pause-circle.png",
+	    helpButton: "question-circle.png",
 	    filetypeIdLookup: [1, 14, 31, 44, 60, 71, 84, 97, 100, 101],
 	    filetypes: [
 	        "★ Fortune",
@@ -13686,7 +13344,7 @@
 	        "Introduction",
 	        '"In a past life..."',
 	        "★★★GOD MODE★★★",
-	        "Music"
+	        "Music",
 	    ],
 	    // menu and gui settings
 	    bannerHeight: 0.15,
@@ -13734,8 +13392,11 @@
 	    // command settings for servo widget
 	    commands: {
 	        delay: 1,
-	        talk: 2
-	    }
+	        talk: 2,
+	    },
+	    // help box settings
+	    helpBoxSize: 1 / 2,
+	    helpBoxMargin: 0.05,
 	};
 
 	function getFilesAsync() {
@@ -13771,6 +13432,7 @@
 	    p.images.missingImage = p.loadImage("".concat(appSettings.imagesPath, "/").concat(appSettings.missingImage));
 	    p.images.playButton = p.loadImage("".concat(appSettings.imagesPath, "/").concat(appSettings.playButton));
 	    p.images.pauseButton = p.loadImage("".concat(appSettings.imagesPath, "/").concat(appSettings.pauseButton));
+	    p.images.helpButton = p.loadImage("".concat(appSettings.imagesPath, "/").concat(appSettings.helpButton));
 	    p.essentialImagesLoaded = true;
 	    p.loaded = false;
 	    p.showMessage = true;
@@ -13805,7 +13467,9 @@
 	                    finally { if (e_1) throw e_1.error; }
 	                }
 	                _loop_1 = function (index, f) {
-	                    p.images[f] = p.loadImage("".concat((index < files.contentImage.length) ? appSettings.mainImagesPath : appSettings.specialImagesPath, "/").concat(f), function () { return p.imagesLoaded++; }, function () {
+	                    p.images[f] = p.loadImage("".concat(index < files.contentImage.length
+	                        ? appSettings.mainImagesPath
+	                        : appSettings.specialImagesPath, "/").concat(f), function () { return p.imagesLoaded++; }, function () {
 	                        p.maxImages--;
 	                        p.images[f] = p.images.missingImage;
 	                    });
@@ -13859,8 +13523,8 @@
 	}
 	function isInBoundingBox(p0, p1, x0, y0, x1, y1) {
 	    var _a, _b;
-	    _a = __read((x0 <= x1) ? [x0, x1] : [x1, x0], 2), x0 = _a[0], x1 = _a[1];
-	    _b = __read((y0 <= y1) ? [y0, y1] : [y1, y0], 2), y0 = _b[0], y1 = _b[1];
+	    _a = __read(x0 <= x1 ? [x0, x1] : [x1, x0], 2), x0 = _a[0], x1 = _a[1];
+	    _b = __read(y0 <= y1 ? [y0, y1] : [y1, y0], 2), y0 = _b[0], y1 = _b[1];
 	    return p0 >= x0 && p0 <= x1 && p1 >= y0 && p1 <= y1;
 	}
 
@@ -13870,11 +13534,14 @@
 	        this.currentPosition = 0;
 	        this.loading = true;
 	        this.paused = false;
+	        this.uiProcessed = false;
 	        this.keyBindings = {
 	            " ": this.toggle.bind(this),
 	            r: this.resetTime.bind(this),
 	        };
 	        this.p = P5Singleton.getInstance();
+	        this.currentPlaybackImage = this.p.images.pauseButton;
+	        this.playbackImages = [this.p.images.pauseButton, this.p.images.playButton];
 	    }
 	    AudioWidget.prototype.buffer = function () {
 	        this.computeSize();
@@ -13888,8 +13555,20 @@
 	        this.topOffset = this.height / 2;
 	        this.controlsHeight = this.p.viewport.scaleToHeight(appSettings.controlsHeightProportion);
 	        this.controlsTopOffset = this.height - this.controlsHeight;
-	        this.audioButtonHeight = appSettings.audioButtonHeightProportion * this.controlsHeight;
-	        this.playButtonBox = [this.width / 2, this.controlsTopOffset + this.controlsHeight / 2, this.audioButtonHeight, this.audioButtonHeight];
+	        this.audioButtonSize =
+	            appSettings.audioButtonHeightProportion * this.controlsHeight;
+	        this.playbackButtonBox = [
+	            this.width / 2,
+	            this.controlsTopOffset + this.controlsHeight / 2,
+	            this.audioButtonSize,
+	            this.audioButtonSize,
+	        ];
+	        this.helpButtonBox = [
+	            this.width - this.audioButtonSize,
+	            this.controlsTopOffset + this.controlsHeight / 2,
+	            this.audioButtonSize,
+	            this.audioButtonSize,
+	        ];
 	    };
 	    AudioWidget.prototype.bindSound = function (sound) {
 	        this.currentSound = sound;
@@ -13941,17 +13620,24 @@
 	        }
 	    };
 	    AudioWidget.prototype.drawControls = function () {
-	        var _a, _b;
+	        var _a, _b, _c;
 	        this.p.push();
 	        this.p.imageMode(this.p.CENTER);
 	        (_a = this.p).fill.apply(_a, __spreadArray([], __read(appSettings.headerColor), false));
 	        this.p.rect(0, this.controlsTopOffset, this.width, this.controlsHeight);
-	        (_b = this.p).image.apply(_b, __spreadArray([this.p.images.playButton], __read(this.playButtonBox), false));
+	        (_b = this.p).image.apply(_b, __spreadArray([this.currentPlaybackImage], __read(this.playbackButtonBox), false));
+	        (_c = this.p).image.apply(_c, __spreadArray([this.p.images.helpButton], __read(this.helpButtonBox), false));
 	        this.p.pop();
 	    };
 	    AudioWidget.prototype.keyPressed = function () {
 	        var _a, _b;
 	        (_b = (_a = this.keyBindings)[this.p.key]) === null || _b === void 0 ? void 0 : _b.call(_a);
+	    };
+	    AudioWidget.prototype.mouseClicked = function () {
+	        if (this.playbackButtonHover)
+	            this.toggle();
+	        else if (this.helpButtonHover)
+	            this.p.helpBox.toggle();
 	    };
 	    AudioWidget.prototype.toggle = function () {
 	        if (this.currentSound.isPlaying() && !this.paused) {
@@ -13981,12 +13667,17 @@
 	    AudioWidget.prototype.update = function () {
 	        if (this.loading)
 	            return;
+	        this.currentPlaybackImage = this.playbackImages[Number(this.paused)];
 	        if (!this.paused) {
-	            if (!this.p.mouseIsPressed && !this.currentSound.isPlaying() && this.currentTime < this.currentSound.duration()) {
+	            if (!this.p.mouseIsPressed &&
+	                !this.currentSound.isPlaying() &&
+	                this.currentTime < this.currentSound.duration()) {
 	                this.currentSound.play(undefined, undefined, undefined, this.currentTime);
 	            }
 	            else
-	                this.currentTime = this.currentSound.isPlaying() ? this.currentSound.currentTime() : 0;
+	                this.currentTime = this.currentSound.isPlaying()
+	                    ? this.currentSound.currentTime()
+	                    : 0;
 	        }
 	        if (this.currentSound.duration() - this.currentTime < 0.1) {
 	            this.pause();
@@ -13998,11 +13689,28 @@
 	    };
 	    AudioWidget.prototype.handleMouse = function () {
 	        var _a, _b;
-	        if (this.p.uiProcessed || ((_a = this.p.signalWidget) === null || _a === void 0 ? void 0 : _a.mouseEngaged) || ((_b = this.p.signalWidget) === null || _b === void 0 ? void 0 : _b.userDraggingKeyframe))
+	        this.uiProcessed = this.playbackButtonHover = this.helpButtonHover = false;
+	        if (this.p.uiProcessed)
 	            return;
-	        if (this.p.mouseIsPressed && this.p.mouseButton == this.p.LEFT) {
+	        if (((_a = this.p.signalWidget) === null || _a === void 0 ? void 0 : _a.mouseEngaged) ||
+	            ((_b = this.p.signalWidget) === null || _b === void 0 ? void 0 : _b.userDraggingKeyframe))
+	            return;
+	        var mouseCoords = [
+	            this.p.mouseX + this.audioButtonSize / 2,
+	            this.p.viewport.mouseY + this.audioButtonSize / 2,
+	        ];
+	        // playback button
+	        this.playbackButtonHover = isInRectangle.apply(void 0, __spreadArray(__spreadArray([], __read(mouseCoords), false), __read(this.playbackButtonBox), false));
+	        // help button
+	        if (!this.playbackButtonHover)
+	            this.helpButtonHover = isInRectangle.apply(void 0, __spreadArray(__spreadArray([], __read(mouseCoords), false), __read(this.helpButtonBox), false));
+	        this.p.uiProcessed =
+	            this.p.uiProcessed || this.playbackButtonHover || this.helpButtonHover;
+	        this.uiProcessed = this.p.uiProcessed;
+	        if (this.p.uiProcessed)
+	            this.p.mouse.cursor("pointer");
+	        else if (this.p.mouseIsPressed && this.p.mouseButton == this.p.LEFT)
 	            this.scrubToPosition(this.p.mouseX);
-	        }
 	    };
 	    AudioWidget.prototype.draw = function () {
 	        this.update();
@@ -14026,16 +13734,17 @@
 	            return;
 	        this.width = this.p.viewport.width;
 	        this.height = this.p.max(this.p.viewport.scaleToHeight(appSettings.bannerHeight), this.p.images.logo.height);
-	        this.logoHeight =
-	            appSettings.logoHeightToBannerHeightRatio * this.height;
+	        this.logoHeight = appSettings.logoHeightToBannerHeightRatio * this.height;
 	        this.logoWidth = appSettings.logoAspect * this.logoHeight;
 	    };
 	    Banner.prototype.update = function () {
-	        this.p.uiProcessed = this.p.uiProcessed || this.p.mouseY <= this.height; // is mouse hovering toolbar?
+	        var mouseYGood = this.p.mouseY <= this.height;
 	        this.mouseHoverHome =
-	            this.p.uiProcessed &&
+	            !this.p.uiProcessed &&
+	                mouseYGood &&
 	                this.p.abs(this.p.mouseX - this.width / 2) <=
 	                    this.p.images.logo.width / 2; // is mouse hovering logo image?
+	        this.p.uiProcessed = this.p.uiProcessed || this.mouseHoverHome; // is mouse hovering toolbar?
 	        if (this.mouseHoverHome)
 	            this.p.mouse.cursor("pointer");
 	    };
@@ -14052,6 +13761,55 @@
 	        this.p.pop();
 	    };
 	    return Banner;
+	}());
+
+	var HelpBox = /** @class */ (function () {
+	    function HelpBox() {
+	        var _this = this;
+	        var _a;
+	        this.mouseOver = false;
+	        this.p = P5Singleton.getInstance();
+	        this.computeSize();
+	        this.div = this.p.select("#help");
+	        this.div.mouseOver(function () {
+	            _this.mouseOver = true;
+	        });
+	        this.div.mouseOut(function () {
+	            _this.mouseOver = false;
+	        });
+	        this.div.hide();
+	        (_a = this.p.select(".help input")) === null || _a === void 0 ? void 0 : _a.mouseClicked(function () { _this.div.hide(); });
+	    }
+	    Object.defineProperty(HelpBox.prototype, "hidden", {
+	        get: function () {
+	            return this.div.style("display") == "none";
+	        },
+	        enumerable: false,
+	        configurable: true
+	    });
+	    Object.defineProperty(HelpBox.prototype, "isMouseOver", {
+	        get: function () {
+	            return this.mouseOver;
+	        },
+	        enumerable: false,
+	        configurable: true
+	    });
+	    HelpBox.prototype.computeSize = function () {
+	        // none
+	    };
+	    HelpBox.prototype.hide = function () {
+	        this.div.hide();
+	    };
+	    HelpBox.prototype.toggle = function () {
+	        if (this.hidden)
+	            this.div.show();
+	        else
+	            this.div.hide();
+	    };
+	    HelpBox.prototype.update = function () {
+	        this.p.uiProcessed = this.p.uiProcessed || !this.hidden;
+	    };
+	    return HelpBox;
 	}());
 
 	var Menu = /** @class */ (function () {
@@ -14095,9 +13853,7 @@
 	        this.p.pop();
 	    };
 	    Menu.prototype.getGridIndex = function (i, j) {
-	        return ((i + this.p.floor(this.scrollOffset / this.trueCellSize)) *
-	            this.cols +
-	            j);
+	        return ((i + this.p.floor(this.scrollOffset / this.trueCellSize)) * this.cols + j);
 	    };
 	    Menu.prototype.image = function (index, i, j) {
 	        // calculate the x position of the item
@@ -14198,7 +13954,7 @@
 	        this.keyBindings = {
 	            a: this.insertVerticalKeyframe.bind(this),
 	            d: this.deleteVerticalKeyframe.bind(this),
-	            c: this.copyCommand.bind(this)
+	            c: this.copyCommand.bind(this),
 	        };
 	        this.p = P5Singleton.getInstance();
 	        this.angularRange = angularRange;
@@ -14232,7 +13988,8 @@
 	        this.signalVerticalMargin = (this.height - this.signalHeight) / 2;
 	        this.resolution = this.p.audioWidget.resolution / 1000.0;
 	        this.mouseTolerance = this.width * appSettings.mouseTolerance;
-	        this.indicatorHeight = this.height - appSettings.indicatorMargin * this.signalVerticalMargin;
+	        this.indicatorHeight =
+	            this.height - appSettings.indicatorMargin * this.signalVerticalMargin;
 	    };
 	    SignalWidget.prototype.createBuffer = function () {
 	        var _a, _b;
@@ -14300,8 +14057,7 @@
 	                        percentOpen = 1 - percentOpen;
 	                    // calculate wave height
 	                    lastHeight = currentHeight;
-	                    currentHeight =
-	                        loweredHeight - percentOpen * this.signalHeight;
+	                    currentHeight = loweredHeight - percentOpen * this.signalHeight;
 	                    // draw vertical line
 	                    this.drawBuffer.line(currentX, lastHeight, currentX, currentHeight);
 	                    // draw bulb to show existence of keyframe
@@ -14352,10 +14108,7 @@
 	    };
 	    SignalWidget.prototype.getSelectedKeyframe = function () {
 	        var e_3, _a;
-	        var _b = __read([
-	            this.p.viewport.mouseX,
-	            this.p.viewport.mouseY,
-	        ], 2), mouseX = _b[0], mouseY = _b[1];
+	        var _b = __read([this.p.viewport.mouseX, this.p.viewport.mouseY], 2), mouseX = _b[0], mouseY = _b[1];
 	        var toleranceRadius = this.mouseTolerance / 2;
 	        var mouseEngaged = false;
 	        var verticalKeyframeToTheRightOfMouse = 0;
@@ -14395,16 +14148,14 @@
 	            finally { if (e_3) throw e_3.error; }
 	        }
 	        this.mouseEngaged = mouseEngaged;
-	        this.verticalKeyframeToTheRightOfMouse =
-	            verticalKeyframeToTheRightOfMouse;
+	        this.verticalKeyframeToTheRightOfMouse = verticalKeyframeToTheRightOfMouse;
 	    };
 	    SignalWidget.prototype.getMillisecondsFromX = function (x, leftIndex, rightIndex) {
 	        var previousVerticalKeyframe = getIndexOrDefault(this.verticalKeyframePositions, leftIndex, 0);
 	        var nextVerticalKeyframe = getIndexOrDefault(this.verticalKeyframePositions, rightIndex, this.p.audioWidget.width);
 	        var distanceBetweenKeyframes = nextVerticalKeyframe - previousVerticalKeyframe;
 	        var percentRight = this.p.constrain((x - previousVerticalKeyframe) / distanceBetweenKeyframes, 0, 1);
-	        return (this.p.lerp(0, distanceBetweenKeyframes, percentRight) /
-	            this.resolution);
+	        return (this.p.lerp(0, distanceBetweenKeyframes, percentRight) / this.resolution);
 	    };
 	    SignalWidget.prototype.getAngleFromY = function () {
 	        var mouseY = this.p.viewport.mouseY;
@@ -14415,7 +14166,8 @@
 	    };
 	    SignalWidget.prototype.handleMouse = function () {
 	        this.getSelectedKeyframe();
-	        if (this.p.mouseIsPressed &&
+	        if (!this.p.uiProcessed &&
+	            this.p.mouseIsPressed &&
 	            this.p.mouseButton == this.p.LEFT &&
 	            this.mouseEngaged) {
 	            this.userDraggingKeyframe = true;
@@ -14435,8 +14187,7 @@
 	                console.log(argumentIndices, selectedIndex + 1, nextArgumentIndex);
 	                if (nextArgumentIndex >= 1) {
 	                    var oldArgument = this.currentData[argumentIndex];
-	                    this.currentData[nextArgumentIndex] -=
-	                        newArgument - oldArgument;
+	                    this.currentData[nextArgumentIndex] -= newArgument - oldArgument;
 	                }
 	            }
 	            else
@@ -14468,8 +14219,7 @@
 	        var associatedHorizontalKeyframeDataIndex = this.timeArgumentDataIndices[this.verticalKeyframeToTheRightOfMouse];
 	        console.log(this.currentData);
 	        var oldTimeArgument = this.currentData[associatedHorizontalKeyframeDataIndex];
-	        this.currentData[associatedHorizontalKeyframeDataIndex] =
-	            newTimeArgument;
+	        this.currentData[associatedHorizontalKeyframeDataIndex] = newTimeArgument;
 	        this.currentData.splice(associatedHorizontalKeyframeDataIndex + 1, 0, appSettings.commands.talk, this.getAngleFromY(), appSettings.commands.delay, oldTimeArgument - newTimeArgument);
 	        console.log(this.currentData, mouseX, newTimeArgument, verticalKeyframeDataIndex, associatedHorizontalKeyframeDataIndex);
 	        this.drawSignal(false);
@@ -14477,8 +14227,7 @@
 	    SignalWidget.prototype.deleteVerticalKeyframe = function () {
 	        if (this.selectedVerticalKeyframe >= 0 &&
 	            this.verticalKeyframePositions.length >= 3 &&
-	            this.selectedVerticalKeyframe <
-	                this.angularArgumentDataIndices.length) {
+	            this.selectedVerticalKeyframe < this.angularArgumentDataIndices.length) {
 	            var argumentIndex = this.angularArgumentDataIndices[this.selectedVerticalKeyframe];
 	            var commandIndex = argumentIndex - 1;
 	            this.currentData.splice(commandIndex, 2);
@@ -14592,11 +14341,16 @@
 	    p.noStroke();
 	    p.textFont(appSettings.defaultFont);
 	    p.textSize(p.viewport.textSize);
+	};
+	var postloadSetup = function () {
+	    var p = P5Singleton.getInstance();
 	    p.banner = new Banner();
 	    p.menu = new Menu();
 	    p.audioWidget = new AudioWidget();
 	    p.signalWidget = new SignalWidget(appSettings.angularRange, true);
 	    p.mouse = new Mouse();
+	    p.helpBox = new HelpBox();
+	    p.postloadSetupFinished = true;
 	};
 
 	var handleMessage = function () {
@@ -14614,13 +14368,20 @@
 	                            appSettings.imageLoadingWeight * p.maxImages);
 	                p.message = "Loading (".concat((p.percentLoaded * 100.0).toFixed(2), "%)...\nSounds loaded: ").concat(p.soundsLoaded, "/").concat(p.maxSounds, "\nImages loaded: ").concat(p.imagesLoaded, "/").concat(p.maxImages);
 	            }
-	            else {
+	            else
 	                p.showMessage = false;
-	                p.banner.computeSize();
-	            }
 	        }
 	        p.pop();
 	    }
+	};
+
+	var drawVersionText = function () {
+	    var p = P5Singleton.getInstance();
+	    p.push();
+	    p.textSize(appSettings.versionStringTextSize);
+	    p.fill.apply(p, __spreadArray([], __read(appSettings.versionStringColor), false));
+	    p.text(appSettings.versionString, p.width - p.textWidth(appSettings.versionString), 1.5 * p.textAscent());
+	    p.pop();
 	};
 
 	var draw = function () {
@@ -14631,8 +14392,11 @@
 	    handleMessage();
 	    if (p.showMessage || !p.essentialImagesLoaded)
 	        return;
+	    if (!p.postloadSetupFinished)
+	        postloadSetup();
 	    // pre-draw updates
-	    p.mouse.update();
+	    p.mouse.update(); // sets uiProcessed state to false
+	    p.helpBox.update(); // ensures uiProcessed state is true if dialog is open
 	    p.banner.update();
 	    // main draw functions
 	    p.viewport.translate(0, p.banner.height); // move viewport below banner
@@ -14646,18 +14410,21 @@
 	    // call banner draw functions
 	    p.banner.draw();
 	    p.mouse.draw();
+	    // draw version string
+	    drawVersionText();
 	};
 
 	var windowResized = function () {
-	    var _a, _b;
+	    var _a, _b, _c;
 	    var p = P5Singleton.getInstance();
-	    var _c = __read(p.viewport.computeSize(), 2), width = _c[0], height = _c[1];
+	    var _d = __read(p.viewport.computeSize(), 2), width = _d[0], height = _d[1];
 	    p.resizeCanvas(width, height);
 	    p.textSize(p.viewport.computeTextSize());
 	    p.banner.computeSize();
 	    p.menu.computeSize();
 	    (_a = p.audioWidget) === null || _a === void 0 ? void 0 : _a.buffer();
 	    (_b = p.signalWidget) === null || _b === void 0 ? void 0 : _b.buffer();
+	    (_c = p.helpBox) === null || _c === void 0 ? void 0 : _c.computeSize();
 	};
 	var keyPressed = function () {
 	    var p = P5Singleton.getInstance();
@@ -14674,8 +14441,14 @@
 	            // user wants to go home
 	            (_a = p.audioWidget.currentSound) === null || _a === void 0 ? void 0 : _a.stop();
 	            p.menu.enabled = true;
+	            return;
 	        }
-	        return;
+	        else if (p.audioWidget.uiProcessed) {
+	            p.audioWidget.mouseClicked();
+	            return;
+	        }
+	        if (!p.helpBox.isMouseOver)
+	            p.helpBox.hide();
 	    }
 	    if (p.menu.enabled && p.menu.lastSelectedFile !== "") {
 	        p.menu.enabled = false;
