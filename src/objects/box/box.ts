@@ -1,28 +1,26 @@
-import { appSettings } from "@/constants";
 import { AnimationEditor } from "@/types/animation-editor";
-import { displayPercent } from "@/utilities/general";
 import { P5Singleton } from "@/utilities/p5-singleton";
 import { Element } from "p5";
 
-export class HelpBox {
+export class Box {
   p: AnimationEditor;
   div!: Element;
   size!: number;
 
-  private mouseOver: boolean = false;
+  protected mouseOver: boolean = false;
 
-  constructor() {
+  constructor(selector: string) {
     this.p = P5Singleton.getInstance();
-    this.computeSize();
-    this.div = this.p.select("#help") as Element;
+    this.div = this.p.select(selector) as Element;
     this.div.mouseOver(() => {
       this.mouseOver = true;
     });
     this.div.mouseOut(() => {
       this.mouseOver = false;
     });
-    this.div.hide();
-    this.p.select(".help input")?.mouseClicked(() => { this.div.hide(); })
+    this.p
+      .select(`${selector} input, ${selector} .close-button`)
+      ?.mouseClicked(this.div.hide.bind(this.div));
   }
 
   get hidden() {
@@ -31,10 +29,6 @@ export class HelpBox {
 
   get isMouseOver() {
     return this.mouseOver;
-  }
-
-  computeSize() {
-    // none
   }
 
   hide() {

@@ -9,7 +9,12 @@ export const appSettings = {
         specialImage: "./assets/image/zarbalatrax/special",
     },
 
-    // ssh settings (temporary, probably)
-    hostname: "raspberrypi.local",
-    username: "zarbalatrax"
+    // data input file
+    dataInputPath: "./data/dist/zarbalatrax-3/zarbalatrax/data.h",
+
+    // batch files
+    uploadBatchFiles: [
+        "./data/dist/admin-panel/upload-to-arduino.bat",
+        "./data/dist/admin-panel/reboot.bat"
+    ]
 } as const;

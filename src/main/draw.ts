@@ -15,7 +15,7 @@ export const draw = () => {
 
   // pre-draw updates
   p.mouse.update(); // sets uiProcessed state to false
-  p.helpBox.update(); // ensures uiProcessed state is true if dialog is open
+  for (const box of p.boxes) box.update(); // ensures uiProcessed state is true if dialog is open
   p.banner.update();
 
   // main draw functions

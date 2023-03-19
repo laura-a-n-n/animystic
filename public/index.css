@@ -6,15 +6,13 @@ body {
   overflow: hidden;
 }
 
-div.help {
+div#help, div#upload {
   text-align: left;
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   width: 35%;
-  height: 50%;
-  background-color: rgba(24, 25, 28, 0);
   color: white;
   font: 18px Georgia;
   padding: 1em;
@@ -23,12 +21,46 @@ div.help {
   border-radius: 1em;
 }
 
+div#help {
+  background-color: rgba(24, 25, 28, 0);
+  height: 50%;
+}
+
+div#upload {
+  background-color: rgba(24, 25, 28);
+  height: fit-content;
+}
+
+.button-container {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.button {
+  width: calc(20%);
+  font: 12px Georgia;
+  color: #fff;
+}
+
+#upload-yes {
+  background-color: #222;
+}
+
+#upload-no {
+  background-color: #F00;
+}
+
+.button:hover {
+  background-color: rgb(24, 25, 28) !important;
+  color: #fff;
+}
+
 table.help {
   margin: auto;
   width: 100%;
   max-height: 100%;
   border-collapse: collapse;
-  border-spacing: 0
 }
 
 td input {
@@ -54,6 +86,14 @@ td input {
 .help td {
   color: white;;
   padding: 0.5em;
+}
+
+.help tr:nth-child(even) td {
+  border: 3px solid rgb(55, 57, 62);
+}
+
+.help tr:nth-child(odd) td {
+  border: 3px solid rgb(59, 61, 67);
 }
 
 .help td:nth-child(odd) {

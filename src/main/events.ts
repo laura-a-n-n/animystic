@@ -9,10 +9,10 @@ export const windowResized = () => {
   p.menu.computeSize();
   p.audioWidget?.buffer();
   p.signalWidget?.buffer();
-  p.helpBox?.computeSize();
 };
 
-export const keyPressed = () => {
+export const keyPressed = (event: KeyboardEvent) => {
+  event.preventDefault();
   const p = P5Singleton.getInstance();
   if (!p.menu.enabled) {
     p.audioWidget.keyPressed();
@@ -32,7 +32,7 @@ export const mouseClicked = () => {
       p.audioWidget.mouseClicked();
       return;
     }
-    if (!p.helpBox.isMouseOver) p.helpBox.hide();
+    for (const box of p.boxes) if (!box.isMouseOver) box.hide();
   }
 
   if (p.menu.enabled && p.menu.lastSelectedFile !== "") {

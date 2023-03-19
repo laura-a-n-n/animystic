@@ -1,7 +1,8 @@
 import { appSettings } from "@/constants";
 import { AudioWidget } from "@/objects/audio-widget";
 import { Banner } from "@/objects/banner";
-import { HelpBox } from "@/objects/help-box";
+import { Box } from "@/objects/box/box";
+import { UploadBox } from "@/objects/box/upload-box";
 import { Menu } from "@/objects/menu";
 import { Mouse } from "@/objects/mouse";
 import { SignalWidget } from "@/objects/signal-widget";
@@ -28,7 +29,9 @@ export const postloadSetup = () => {
   p.audioWidget = new AudioWidget();
   p.signalWidget = new SignalWidget(appSettings.angularRange, true);
   p.mouse = new Mouse();
-  p.helpBox = new HelpBox();
+  p.helpBox = new Box(appSettings.helpBoxSelector);
+  p.uploadBox = new UploadBox(appSettings.uploadBoxSelector);
+  p.boxes = [p.helpBox, p.uploadBox];
 
   p.postloadSetupFinished = true;
 };

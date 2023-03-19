@@ -7,6 +7,7 @@ import p5 from "p5";
 
 export class SignalWidget {
   p: AnimationEditor;
+  name: string;
   currentData!: number[];
   drawBuffer!: p5.Graphics;
 
@@ -43,6 +44,8 @@ export class SignalWidget {
     a: this.insertVerticalKeyframe.bind(this),
     d: this.deleteVerticalKeyframe.bind(this),
     c: this.copyCommand.bind(this),
+    s: this.saveCommand.bind(this),
+    u: this.uploadCommand.bind(this),
   };
 
   constructor(
@@ -52,7 +55,8 @@ export class SignalWidget {
       number,
       number,
       number
-    ] = appSettings.defaultSignalStrokeColor
+    ] = appSettings.defaultSignalStrokeColor,
+    name = "zarbalatrax"
   ) {
     this.p = P5Singleton.getInstance();
     this.angularRange = angularRange;
@@ -61,6 +65,7 @@ export class SignalWidget {
       ? [this.angularRange, 0]
       : [0, this.angularRange];
     this.strokeColor = [...strokeColor];
+    this.name = name;
   }
 
   buffer() {
@@ -74,10 +79,44 @@ export class SignalWidget {
     this.buffer();
   }
 
+  uploadCommand() {
+    if (!this.p.keyIsDown(this.p.CONTROL)) return;
+    this.p.uploadBox.toggle();
+  }
+
   copyCommand() {
     if (!this.p.keyIsDown(this.p.CONTROL)) return;
     navigator.clipboard.writeText(this.currentData.toString());
     console.log(this.currentData.toString());
+  }
+
+  saveCommand() {
+    if (!this.p.keyIsDown(this.p.CONTROL)) return;
+
+    // Convert the currentData array to JSON format
+    const jsonData = JSON.stringify({
+      name: this.name,
+      filename: this.p.menu.lastSelectedFile,
+      data: this.currentData,
+    });
+
+    // Send a POST request to the server with the array data in the request body
+    fetch("/data", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: jsonData,
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Network response was not OK");
+        }
+        console.log("Data saved successfully");
+      })
+      .catch((error) => {
+        console.error("There was a problem saving the data:", error);
+      });
   }
 
   computeSize() {

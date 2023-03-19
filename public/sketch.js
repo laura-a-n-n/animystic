@@ -12302,6 +12302,22 @@
 	OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR
 	PERFORMANCE OF THIS SOFTWARE.
 	***************************************************************************** */
+	/* global Reflect, Promise */
+
+	var extendStatics = function(d, b) {
+	    extendStatics = Object.setPrototypeOf ||
+	        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+	        function (d, b) { for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };
+	    return extendStatics(d, b);
+	};
+
+	function __extends(d, b) {
+	    if (typeof b !== "function" && b !== null)
+	        throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
+	    extendStatics(d, b);
+	    function __() { this.constructor = d; }
+	    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+	}
 
 	function __awaiter(thisArg, _arguments, P, generator) {
 	    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
@@ -13395,8 +13411,9 @@
 	        talk: 2,
 	    },
 	    // help box settings
-	    helpBoxSize: 1 / 2,
-	    helpBoxMargin: 0.05,
+	    helpBoxSelector: "#help",
+	    // upload box settings
+	    uploadBoxSelector: "#upload",
 	};
 
 	function getFilesAsync() {
@@ -13763,54 +13780,65 @@
 	    return Banner;
 	}());
 
-	var HelpBox = /** @class */ (function () {
-	    function HelpBox() {
+	var Box = /** @class */ (function () {
+	    function Box(selector) {
 	        var _this = this;
 	        var _a;
 	        this.mouseOver = false;
 	        this.p = P5Singleton.getInstance();
-	        this.computeSize();
-	        this.div = this.p.select("#help");
+	        this.div = this.p.select(selector);
 	        this.div.mouseOver(function () {
 	            _this.mouseOver = true;
 	        });
 	        this.div.mouseOut(function () {
 	            _this.mouseOver = false;
 	        });
-	        this.div.hide();
-	        (_a = this.p.select(".help input")) === null || _a === void 0 ? void 0 : _a.mouseClicked(function () { _this.div.hide(); });
+	        (_a = this.p.select("".concat(selector, " input, ").concat(selector, " .close-button"))) === null || _a === void 0 ? void 0 : _a.mouseClicked(this.div.hide.bind(this.div));
 	    }
-	    Object.defineProperty(HelpBox.prototype, "hidden", {
+	    Object.defineProperty(Box.prototype, "hidden", {
 	        get: function () {
 	            return this.div.style("display") == "none";
 	        },
 	        enumerable: false,
 	        configurable: true
 	    });
-	    Object.defineProperty(HelpBox.prototype, "isMouseOver", {
+	    Object.defineProperty(Box.prototype, "isMouseOver", {
 	        get: function () {
 	            return this.mouseOver;
 	        },
 	        enumerable: false,
 	        configurable: true
 	    });
-	    HelpBox.prototype.computeSize = function () {
-	        // none
-	    };
-	    HelpBox.prototype.hide = function () {
+	    Box.prototype.hide = function () {
 	        this.div.hide();
 	    };
-	    HelpBox.prototype.toggle = function () {
+	    Box.prototype.toggle = function () {
 	        if (this.hidden)
 	            this.div.show();
 	        else
 	            this.div.hide();
 	    };
-	    HelpBox.prototype.update = function () {
+	    Box.prototype.update = function () {
 	        this.p.uiProcessed = this.p.uiProcessed || !this.hidden;
 	    };
-	    return HelpBox;
+	    return Box;
 	}());
+
+	var UploadBox = /** @class */ (function (_super) {
+	    __extends(UploadBox, _super);
+	    function UploadBox(selector) {
+	        var _this = _super.call(this, selector) || this;
+	        _this.yesButton = _this.p.select("#upload-yes");
+	        _this.noButton = _this.p.select("#upload-no");
+	        _this.uploadText = _this.p.select("#upload-text");
+	        _this.yesButton.mouseClicked(_this.upload.bind(_this));
+	        return _this;
+	    }
+	    UploadBox.prototype.upload = function () {
+	        this.uploadText.html("Hacking Zarb's brain...");
+	    };
+	    return UploadBox;
+	}(Box));
 
 	var Menu = /** @class */ (function () {
 	    function Menu() {
@@ -13938,10 +13966,11 @@
 	};
 
 	var SignalWidget = /** @class */ (function () {
-	    function SignalWidget(angularRange, rangeInverted, strokeColor) {
+	    function SignalWidget(angularRange, rangeInverted, strokeColor, name) {
 	        var _a;
 	        if (rangeInverted === void 0) { rangeInverted = false; }
 	        if (strokeColor === void 0) { strokeColor = appSettings.defaultSignalStrokeColor; }
+	        if (name === void 0) { name = "zarbalatrax"; }
 	        this.verticalKeyframePositions = [];
 	        this.horizontalKeyframePositions = [];
 	        this.angularArgumentDataIndices = [];
@@ -13955,6 +13984,8 @@
 	            a: this.insertVerticalKeyframe.bind(this),
 	            d: this.deleteVerticalKeyframe.bind(this),
 	            c: this.copyCommand.bind(this),
+	            s: this.saveCommand.bind(this),
+	            u: this.uploadCommand.bind(this)
 	        };
 	        this.p = P5Singleton.getInstance();
 	        this.angularRange = angularRange;
@@ -13963,6 +13994,7 @@
 	            ? [this.angularRange, 0]
 	            : [0, this.angularRange], 2), this.closedAngle = _a[0], this.openAngle = _a[1];
 	        this.strokeColor = __spreadArray([], __read(strokeColor), false);
+	        this.name = name;
 	    }
 	    SignalWidget.prototype.buffer = function () {
 	        this.computeSize();
@@ -13973,11 +14005,43 @@
 	        this.currentData = data;
 	        this.buffer();
 	    };
+	    SignalWidget.prototype.uploadCommand = function () {
+	        if (!this.p.keyIsDown(this.p.CONTROL))
+	            return;
+	        this.p.uploadBox.toggle();
+	    };
 	    SignalWidget.prototype.copyCommand = function () {
 	        if (!this.p.keyIsDown(this.p.CONTROL))
 	            return;
 	        navigator.clipboard.writeText(this.currentData.toString());
 	        console.log(this.currentData.toString());
+	    };
+	    SignalWidget.prototype.saveCommand = function () {
+	        if (!this.p.keyIsDown(this.p.CONTROL))
+	            return;
+	        // Convert the currentData array to JSON format
+	        var jsonData = JSON.stringify({
+	            name: this.name,
+	            filename: this.p.menu.lastSelectedFile,
+	            data: this.currentData,
+	        });
+	        // Send a POST request to the server with the array data in the request body
+	        fetch("/data", {
+	            method: "POST",
+	            headers: {
+	                "Content-Type": "application/json",
+	            },
+	            body: jsonData,
+	        })
+	            .then(function (response) {
+	            if (!response.ok) {
+	                throw new Error("Network response was not OK");
+	            }
+	            console.log("Data saved successfully");
+	        })
+	            .catch(function (error) {
+	            console.error("There was a problem saving the data:", error);
+	        });
 	    };
 	    SignalWidget.prototype.computeSize = function () {
 	        var _a;
@@ -13989,7 +14053,8 @@
 	        this.resolution = this.p.audioWidget.resolution / 1000.0;
 	        this.mouseTolerance = this.width * appSettings.mouseTolerance;
 	        this.indicatorHeight =
-	            this.height - appSettings.indicatorMargin * this.signalVerticalMargin;
+	            this.height -
+	                appSettings.indicatorMargin * this.signalVerticalMargin;
 	    };
 	    SignalWidget.prototype.createBuffer = function () {
 	        var _a, _b;
@@ -14057,7 +14122,8 @@
 	                        percentOpen = 1 - percentOpen;
 	                    // calculate wave height
 	                    lastHeight = currentHeight;
-	                    currentHeight = loweredHeight - percentOpen * this.signalHeight;
+	                    currentHeight =
+	                        loweredHeight - percentOpen * this.signalHeight;
 	                    // draw vertical line
 	                    this.drawBuffer.line(currentX, lastHeight, currentX, currentHeight);
 	                    // draw bulb to show existence of keyframe
@@ -14108,7 +14174,10 @@
 	    };
 	    SignalWidget.prototype.getSelectedKeyframe = function () {
 	        var e_3, _a;
-	        var _b = __read([this.p.viewport.mouseX, this.p.viewport.mouseY], 2), mouseX = _b[0], mouseY = _b[1];
+	        var _b = __read([
+	            this.p.viewport.mouseX,
+	            this.p.viewport.mouseY,
+	        ], 2), mouseX = _b[0], mouseY = _b[1];
 	        var toleranceRadius = this.mouseTolerance / 2;
 	        var mouseEngaged = false;
 	        var verticalKeyframeToTheRightOfMouse = 0;
@@ -14148,14 +14217,16 @@
 	            finally { if (e_3) throw e_3.error; }
 	        }
 	        this.mouseEngaged = mouseEngaged;
-	        this.verticalKeyframeToTheRightOfMouse = verticalKeyframeToTheRightOfMouse;
+	        this.verticalKeyframeToTheRightOfMouse =
+	            verticalKeyframeToTheRightOfMouse;
 	    };
 	    SignalWidget.prototype.getMillisecondsFromX = function (x, leftIndex, rightIndex) {
 	        var previousVerticalKeyframe = getIndexOrDefault(this.verticalKeyframePositions, leftIndex, 0);
 	        var nextVerticalKeyframe = getIndexOrDefault(this.verticalKeyframePositions, rightIndex, this.p.audioWidget.width);
 	        var distanceBetweenKeyframes = nextVerticalKeyframe - previousVerticalKeyframe;
 	        var percentRight = this.p.constrain((x - previousVerticalKeyframe) / distanceBetweenKeyframes, 0, 1);
-	        return (this.p.lerp(0, distanceBetweenKeyframes, percentRight) / this.resolution);
+	        return (this.p.lerp(0, distanceBetweenKeyframes, percentRight) /
+	            this.resolution);
 	    };
 	    SignalWidget.prototype.getAngleFromY = function () {
 	        var mouseY = this.p.viewport.mouseY;
@@ -14187,7 +14258,8 @@
 	                console.log(argumentIndices, selectedIndex + 1, nextArgumentIndex);
 	                if (nextArgumentIndex >= 1) {
 	                    var oldArgument = this.currentData[argumentIndex];
-	                    this.currentData[nextArgumentIndex] -= newArgument - oldArgument;
+	                    this.currentData[nextArgumentIndex] -=
+	                        newArgument - oldArgument;
 	                }
 	            }
 	            else
@@ -14219,7 +14291,8 @@
 	        var associatedHorizontalKeyframeDataIndex = this.timeArgumentDataIndices[this.verticalKeyframeToTheRightOfMouse];
 	        console.log(this.currentData);
 	        var oldTimeArgument = this.currentData[associatedHorizontalKeyframeDataIndex];
-	        this.currentData[associatedHorizontalKeyframeDataIndex] = newTimeArgument;
+	        this.currentData[associatedHorizontalKeyframeDataIndex] =
+	            newTimeArgument;
 	        this.currentData.splice(associatedHorizontalKeyframeDataIndex + 1, 0, appSettings.commands.talk, this.getAngleFromY(), appSettings.commands.delay, oldTimeArgument - newTimeArgument);
 	        console.log(this.currentData, mouseX, newTimeArgument, verticalKeyframeDataIndex, associatedHorizontalKeyframeDataIndex);
 	        this.drawSignal(false);
@@ -14227,7 +14300,8 @@
 	    SignalWidget.prototype.deleteVerticalKeyframe = function () {
 	        if (this.selectedVerticalKeyframe >= 0 &&
 	            this.verticalKeyframePositions.length >= 3 &&
-	            this.selectedVerticalKeyframe < this.angularArgumentDataIndices.length) {
+	            this.selectedVerticalKeyframe <
+	                this.angularArgumentDataIndices.length) {
 	            var argumentIndex = this.angularArgumentDataIndices[this.selectedVerticalKeyframe];
 	            var commandIndex = argumentIndex - 1;
 	            this.currentData.splice(commandIndex, 2);
@@ -14349,7 +14423,9 @@
 	    p.audioWidget = new AudioWidget();
 	    p.signalWidget = new SignalWidget(appSettings.angularRange, true);
 	    p.mouse = new Mouse();
-	    p.helpBox = new HelpBox();
+	    p.helpBox = new Box(appSettings.helpBoxSelector);
+	    p.uploadBox = new UploadBox(appSettings.uploadBoxSelector);
+	    p.boxes = [p.helpBox, p.uploadBox];
 	    p.postloadSetupFinished = true;
 	};
 
@@ -14385,6 +14461,7 @@
 	};
 
 	var draw = function () {
+	    var e_1, _a;
 	    var p = P5Singleton.getInstance();
 	    if (p === undefined)
 	        return;
@@ -14396,7 +14473,19 @@
 	        postloadSetup();
 	    // pre-draw updates
 	    p.mouse.update(); // sets uiProcessed state to false
-	    p.helpBox.update(); // ensures uiProcessed state is true if dialog is open
+	    try {
+	        for (var _b = __values(p.boxes), _c = _b.next(); !_c.done; _c = _b.next()) {
+	            var box = _c.value;
+	            box.update();
+	        } // ensures uiProcessed state is true if dialog is open
+	    }
+	    catch (e_1_1) { e_1 = { error: e_1_1 }; }
+	    finally {
+	        try {
+	            if (_c && !_c.done && (_a = _b.return)) _a.call(_b);
+	        }
+	        finally { if (e_1) throw e_1.error; }
+	    }
 	    p.banner.update();
 	    // main draw functions
 	    p.viewport.translate(0, p.banner.height); // move viewport below banner
@@ -14415,18 +14504,18 @@
 	};
 
 	var windowResized = function () {
-	    var _a, _b, _c;
+	    var _a, _b;
 	    var p = P5Singleton.getInstance();
-	    var _d = __read(p.viewport.computeSize(), 2), width = _d[0], height = _d[1];
+	    var _c = __read(p.viewport.computeSize(), 2), width = _c[0], height = _c[1];
 	    p.resizeCanvas(width, height);
 	    p.textSize(p.viewport.computeTextSize());
 	    p.banner.computeSize();
 	    p.menu.computeSize();
 	    (_a = p.audioWidget) === null || _a === void 0 ? void 0 : _a.buffer();
 	    (_b = p.signalWidget) === null || _b === void 0 ? void 0 : _b.buffer();
-	    (_c = p.helpBox) === null || _c === void 0 ? void 0 : _c.computeSize();
 	};
-	var keyPressed = function () {
+	var keyPressed = function (event) {
+	    event.preventDefault();
 	    var p = P5Singleton.getInstance();
 	    if (!p.menu.enabled) {
 	        p.audioWidget.keyPressed();
@@ -14434,12 +14523,13 @@
 	    }
 	};
 	var mouseClicked = function () {
-	    var _a;
+	    var e_1, _a;
+	    var _b;
 	    var p = P5Singleton.getInstance();
 	    if (p.uiProcessed) {
 	        if (p.banner.mouseHoverHome) {
 	            // user wants to go home
-	            (_a = p.audioWidget.currentSound) === null || _a === void 0 ? void 0 : _a.stop();
+	            (_b = p.audioWidget.currentSound) === null || _b === void 0 ? void 0 : _b.stop();
 	            p.menu.enabled = true;
 	            return;
 	        }
@@ -14447,8 +14537,20 @@
 	            p.audioWidget.mouseClicked();
 	            return;
 	        }
-	        if (!p.helpBox.isMouseOver)
-	            p.helpBox.hide();
+	        try {
+	            for (var _c = __values(p.boxes), _d = _c.next(); !_d.done; _d = _c.next()) {
+	                var box = _d.value;
+	                if (!box.isMouseOver)
+	                    box.hide();
+	            }
+	        }
+	        catch (e_1_1) { e_1 = { error: e_1_1 }; }
+	        finally {
+	            try {
+	                if (_d && !_d.done && (_a = _c.return)) _a.call(_c);
+	            }
+	            finally { if (e_1) throw e_1.error; }
+	        }
 	    }
 	    if (p.menu.enabled && p.menu.lastSelectedFile !== "") {
 	        p.menu.enabled = false;

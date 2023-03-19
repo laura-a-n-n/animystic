@@ -1,6 +1,7 @@
 import { AudioWidget } from "@/objects/audio-widget";
 import { Banner } from "@/objects/banner";
-import { HelpBox } from "@/objects/help-box";
+import { Box } from "@/objects/box/box";
+import { UploadBox } from "@/objects/box/upload-box";
 import { Menu } from "@/objects/menu";
 import { Mouse } from "@/objects/mouse";
 import { SignalWidget } from "@/objects/signal-widget";
@@ -15,7 +16,9 @@ export type AnimationEditor = p5 & {
   files: { [assetType: string]: string[] };
   audioWidget: AudioWidget;
   signalWidget: SignalWidget;
-  helpBox: HelpBox;
+  boxes: Box[];
+  helpBox: Box;
+  uploadBox: UploadBox;
 
   data: { [key: string]: { [filename: string]: number[] } };
   sounds: { [name: string]: p5.SoundFile };

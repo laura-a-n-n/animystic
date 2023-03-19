@@ -1,6 +1,5 @@
 export const appSettings = {
-  versionString:
-    "animystic version: 0.0.1 alpha",
+  versionString: "animystic version: 0.0.1 alpha",
   versionStringColor: [255, 128],
   versionStringTextSize: 8,
 
@@ -89,6 +88,8 @@ export const appSettings = {
   },
 
   // help box settings
-  helpBoxSize: 1 / 2,
-  helpBoxMargin: 0.05,
+  helpBoxSelector: "#help",
+
+  // upload box settings
+  uploadBoxSelector: "#upload",
 } as const;
