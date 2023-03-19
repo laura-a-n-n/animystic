@@ -92,7 +92,19 @@ export class SignalWidget {
 
   saveCommand() {
     if (!this.p.keyIsDown(this.p.CONTROL)) return;
+    this.initiateSave();
+  }
 
+  initiateSave() {
+    this.p.saveBox.toggle();
+    this.saveToFile();
+    setTimeout(
+      this.p.saveBox.toggle.bind(this.p.saveBox),
+      appSettings.boxCloseTimeout
+    );
+  }
+
+  saveToFile() {
     // Convert the currentData array to JSON format
     const jsonData = JSON.stringify({
       name: this.name,

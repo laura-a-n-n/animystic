@@ -21,10 +21,16 @@ export class AudioWidget {
   controlsHeight!: number;
   controlsTopOffset!: number;
   audioButtonSize!: number;
+
+  // TODO: make this better...
   playbackButtonBox!: [number, number, number, number];
   playbackButtonHover!: boolean;
   helpButtonBox!: [number, number, number, number];
   helpButtonHover!: boolean;
+  uploadButtonBox!: [number, number, number, number];
+  uploadButtonHover!: boolean;
+  downloadButtonBox!: [number, number, number, number];
+  downloadButtonHover!: boolean;
   uiProcessed: boolean = false;
 
   keyBindings: { [key: string]: () => any } = {
@@ -65,6 +71,18 @@ export class AudioWidget {
     ];
     this.helpButtonBox = [
       this.width - this.audioButtonSize,
+      this.controlsTopOffset + this.controlsHeight / 2,
+      this.audioButtonSize,
+      this.audioButtonSize,
+    ];
+    this.uploadButtonBox = [
+      this.audioButtonSize,
+      this.controlsTopOffset + this.controlsHeight / 2,
+      this.audioButtonSize,
+      this.audioButtonSize,
+    ];
+    this.downloadButtonBox = [
+      (2 + appSettings.downloadButtonPadding) * this.audioButtonSize,
       this.controlsTopOffset + this.controlsHeight / 2,
       this.audioButtonSize,
       this.audioButtonSize,
@@ -122,6 +140,8 @@ export class AudioWidget {
     this.p.rect(0, this.controlsTopOffset, this.width, this.controlsHeight);
     this.p.image(this.currentPlaybackImage, ...this.playbackButtonBox);
     this.p.image(this.p.images.helpButton, ...this.helpButtonBox);
+    this.p.image(this.p.images.uploadButton, ...this.uploadButtonBox);
+    this.p.image(this.p.images.downloadButton, ...this.downloadButtonBox);
     this.p.pop();
   }
 
@@ -132,6 +152,8 @@ export class AudioWidget {
   mouseClicked() {
     if (this.playbackButtonHover) this.toggle();
     else if (this.helpButtonHover) this.p.helpBox.toggle();
+    else if (this.uploadButtonHover) this.p.uploadBox.toggle();
+    else if (this.downloadButtonHover) this.p.signalWidget.initiateSave();
   }
 
   toggle() {
@@ -216,8 +238,30 @@ export class AudioWidget {
         ...this.helpButtonBox
       );
 
+    // upload button
+    if (!this.helpButtonHover && !this.playbackButtonHover)
+      this.uploadButtonHover = isInRectangle(
+        ...mouseCoords,
+        ...this.uploadButtonBox
+      );
+
+    // upload button
+    if (
+      !this.helpButtonHover &&
+      !this.playbackButtonHover &&
+      !this.uploadButtonHover
+    )
+      this.downloadButtonHover = isInRectangle(
+        ...mouseCoords,
+        ...this.downloadButtonBox
+      );
+
     this.p.uiProcessed =
-      this.p.uiProcessed || this.playbackButtonHover || this.helpButtonHover;
+      this.p.uiProcessed ||
+      this.playbackButtonHover ||
+      this.helpButtonHover ||
+      this.uploadButtonHover ||
+      this.downloadButtonHover;
     this.uiProcessed = this.p.uiProcessed;
     if (this.p.uiProcessed) this.p.mouse.cursor("pointer");
     else if (this.p.mouseIsPressed && this.p.mouseButton == this.p.LEFT)

@@ -30,6 +30,8 @@ export const postloadSetup = () => {
   p.signalWidget = new SignalWidget(appSettings.angularRange, true);
   p.mouse = new Mouse();
   p.helpBox = new Box(appSettings.helpBoxSelector);
+  p.saveBox = new Box(appSettings.saveBoxSelector);
+  p.helpBox = new Box(appSettings.helpBoxSelector);
   p.uploadBox = new UploadBox(appSettings.uploadBoxSelector);
   p.boxes = [p.helpBox, p.uploadBox];
 

@@ -13349,6 +13349,8 @@
 	    playButton: "play-circle.png",
 	    pauseButton: "pause-circle.png",
 	    helpButton: "question-circle.png",
+	    uploadButton: "cloud-upload.png",
+	    downloadButton: "download.png",
 	    filetypeIdLookup: [1, 14, 31, 44, 60, 71, 84, 97, 100, 101],
 	    filetypes: [
 	        "★ Fortune",
@@ -13414,7 +13416,10 @@
 	    helpBoxSelector: "#help",
 	    // upload box settings
 	    uploadBoxSelector: "#upload",
-	    uploadCloseTimeout: 1000,
+	    boxCloseTimeout: 1000,
+	    // save box settings
+	    saveBoxSelector: "#save",
+	    downloadButtonPadding: 0.5
 	};
 
 	function getFilesAsync() {
@@ -13451,6 +13456,8 @@
 	    p.images.playButton = p.loadImage("".concat(appSettings.imagesPath, "/").concat(appSettings.playButton));
 	    p.images.pauseButton = p.loadImage("".concat(appSettings.imagesPath, "/").concat(appSettings.pauseButton));
 	    p.images.helpButton = p.loadImage("".concat(appSettings.imagesPath, "/").concat(appSettings.helpButton));
+	    p.images.uploadButton = p.loadImage("".concat(appSettings.imagesPath, "/").concat(appSettings.uploadButton));
+	    p.images.downloadButton = p.loadImage("".concat(appSettings.imagesPath, "/").concat(appSettings.downloadButton));
 	    p.essentialImagesLoaded = true;
 	    p.loaded = false;
 	    p.showMessage = true;
@@ -13559,7 +13566,10 @@
 	        };
 	        this.p = P5Singleton.getInstance();
 	        this.currentPlaybackImage = this.p.images.pauseButton;
-	        this.playbackImages = [this.p.images.pauseButton, this.p.images.playButton];
+	        this.playbackImages = [
+	            this.p.images.pauseButton,
+	            this.p.images.playButton,
+	        ];
 	    }
 	    AudioWidget.prototype.buffer = function () {
 	        this.computeSize();
@@ -13583,6 +13593,18 @@
 	        ];
 	        this.helpButtonBox = [
 	            this.width - this.audioButtonSize,
+	            this.controlsTopOffset + this.controlsHeight / 2,
+	            this.audioButtonSize,
+	            this.audioButtonSize,
+	        ];
+	        this.uploadButtonBox = [
+	            this.audioButtonSize,
+	            this.controlsTopOffset + this.controlsHeight / 2,
+	            this.audioButtonSize,
+	            this.audioButtonSize,
+	        ];
+	        this.downloadButtonBox = [
+	            (2 + appSettings.downloadButtonPadding) * this.audioButtonSize,
 	            this.controlsTopOffset + this.controlsHeight / 2,
 	            this.audioButtonSize,
 	            this.audioButtonSize,
@@ -13625,7 +13647,8 @@
 	                var _d = __read(_c.value, 2), index = _d[0], element = _d[1];
 	                currentX = index / appSettings.samplingResolution;
 	                this.drawBuffer.line(currentX, this.height * 0.5, // center
-	                currentX, this.height * (0.5 - appSettings.maxWaveHeightProportion * element) // deviation from center
+	                currentX, this.height *
+	                    (0.5 - appSettings.maxWaveHeightProportion * element) // deviation from center
 	                );
 	            }
 	        }
@@ -13638,13 +13661,15 @@
 	        }
 	    };
 	    AudioWidget.prototype.drawControls = function () {
-	        var _a, _b, _c;
+	        var _a, _b, _c, _d, _e;
 	        this.p.push();
 	        this.p.imageMode(this.p.CENTER);
 	        (_a = this.p).fill.apply(_a, __spreadArray([], __read(appSettings.headerColor), false));
 	        this.p.rect(0, this.controlsTopOffset, this.width, this.controlsHeight);
 	        (_b = this.p).image.apply(_b, __spreadArray([this.currentPlaybackImage], __read(this.playbackButtonBox), false));
 	        (_c = this.p).image.apply(_c, __spreadArray([this.p.images.helpButton], __read(this.helpButtonBox), false));
+	        (_d = this.p).image.apply(_d, __spreadArray([this.p.images.uploadButton], __read(this.uploadButtonBox), false));
+	        (_e = this.p).image.apply(_e, __spreadArray([this.p.images.downloadButton], __read(this.downloadButtonBox), false));
 	        this.p.pop();
 	    };
 	    AudioWidget.prototype.keyPressed = function () {
@@ -13656,6 +13681,10 @@
 	            this.toggle();
 	        else if (this.helpButtonHover)
 	            this.p.helpBox.toggle();
+	        else if (this.uploadButtonHover)
+	            this.p.uploadBox.toggle();
+	        else if (this.downloadButtonHover)
+	            this.p.signalWidget.initiateSave();
 	    };
 	    AudioWidget.prototype.toggle = function () {
 	        if (this.currentSound.isPlaying() && !this.paused) {
@@ -13707,7 +13736,10 @@
 	    };
 	    AudioWidget.prototype.handleMouse = function () {
 	        var _a, _b;
-	        this.uiProcessed = this.playbackButtonHover = this.helpButtonHover = false;
+	        this.uiProcessed =
+	            this.playbackButtonHover =
+	                this.helpButtonHover =
+	                    false;
 	        if (this.p.uiProcessed)
 	            return;
 	        if (((_a = this.p.signalWidget) === null || _a === void 0 ? void 0 : _a.mouseEngaged) ||
@@ -13722,8 +13754,18 @@
 	        // help button
 	        if (!this.playbackButtonHover)
 	            this.helpButtonHover = isInRectangle.apply(void 0, __spreadArray(__spreadArray([], __read(mouseCoords), false), __read(this.helpButtonBox), false));
+	        // upload button
+	        if (!this.helpButtonHover && !this.playbackButtonHover)
+	            this.uploadButtonHover = isInRectangle.apply(void 0, __spreadArray(__spreadArray([], __read(mouseCoords), false), __read(this.uploadButtonBox), false));
+	        // upload button
+	        if (!this.helpButtonHover && !this.playbackButtonHover && !this.uploadButtonHover)
+	            this.downloadButtonHover = isInRectangle.apply(void 0, __spreadArray(__spreadArray([], __read(mouseCoords), false), __read(this.downloadButtonBox), false));
 	        this.p.uiProcessed =
-	            this.p.uiProcessed || this.playbackButtonHover || this.helpButtonHover;
+	            this.p.uiProcessed ||
+	                this.playbackButtonHover ||
+	                this.helpButtonHover ||
+	                this.uploadButtonHover ||
+	                this.downloadButtonHover;
 	        this.uiProcessed = this.p.uiProcessed;
 	        if (this.p.uiProcessed)
 	            this.p.mouse.cursor("pointer");
@@ -13868,10 +13910,10 @@
 	                throw new Error("Network response was not OK");
 	            }
 	            _this.loadingSpinner.hide();
-	            _this.uploadText.html("Done! Reboot script called. Go test it!");
+	            _this.uploadText.html("Done! Reboot script called. Check server logs if needed.");
 	            setTimeout(function () {
 	                _this.hide();
-	            }, appSettings.uploadCloseTimeout);
+	            }, appSettings.boxCloseTimeout);
 	        })
 	            .catch(function (error) {
 	            _this.uploadText.html("There was a problem sending the data:\n ".concat(error));
@@ -14059,6 +14101,14 @@
 	    SignalWidget.prototype.saveCommand = function () {
 	        if (!this.p.keyIsDown(this.p.CONTROL))
 	            return;
+	        this.initiateSave();
+	    };
+	    SignalWidget.prototype.initiateSave = function () {
+	        this.p.saveBox.toggle();
+	        this.saveToFile();
+	        setTimeout(this.p.saveBox.toggle.bind(this.p.saveBox), appSettings.boxCloseTimeout);
+	    };
+	    SignalWidget.prototype.saveToFile = function () {
 	        // Convert the currentData array to JSON format
 	        var jsonData = JSON.stringify({
 	            name: this.name,
@@ -14453,6 +14503,8 @@
 	    p.audioWidget = new AudioWidget();
 	    p.signalWidget = new SignalWidget(appSettings.angularRange, true);
 	    p.mouse = new Mouse();
+	    p.helpBox = new Box(appSettings.helpBoxSelector);
+	    p.saveBox = new Box(appSettings.saveBoxSelector);
 	    p.helpBox = new Box(appSettings.helpBoxSelector);
 	    p.uploadBox = new UploadBox(appSettings.uploadBoxSelector);
 	    p.boxes = [p.helpBox, p.uploadBox];

@@ -18,6 +18,7 @@ export type AnimationEditor = p5 & {
   signalWidget: SignalWidget;
   boxes: Box[];
   helpBox: Box;
+  saveBox: Box;
   uploadBox: UploadBox;
 
   data: { [key: string]: { [filename: string]: number[] } };

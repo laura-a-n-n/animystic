@@ -51,10 +51,12 @@ export class UploadBox extends Box {
           throw new Error("Network response was not OK");
         }
         this.loadingSpinner.hide();
-        this.uploadText.html("Done! Reboot script called. Go test it!");
+        this.uploadText.html(
+          "Done! Reboot script called. Check server logs if needed."
+        );
         setTimeout(() => {
           this.hide();
-        }, appSettings.uploadCloseTimeout);
+        }, appSettings.boxCloseTimeout);
       })
       .catch((error) => {
         this.uploadText.html(

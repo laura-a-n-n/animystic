@@ -17,6 +17,8 @@ export const appSettings = {
   playButton: "play-circle.png",
   pauseButton: "pause-circle.png",
   helpButton: "question-circle.png",
+  uploadButton: "cloud-upload.png",
+  downloadButton: "download.png",
   filetypeIdLookup: [1, 14, 31, 44, 60, 71, 84, 97, 100, 101],
   filetypes: [
     "★ Fortune",
@@ -92,5 +94,9 @@ export const appSettings = {
 
   // upload box settings
   uploadBoxSelector: "#upload",
-  uploadCloseTimeout: 1000,
+  boxCloseTimeout: 1000,
+
+  // save box settings
+  saveBoxSelector: "#save",
+  downloadButtonPadding: 0.5,
 } as const;

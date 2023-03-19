@@ -22,6 +22,12 @@ const preloadSetup = () => {
   p.images.helpButton = p.loadImage(
     `${appSettings.imagesPath}/${appSettings.helpButton}`
   );
+  p.images.uploadButton = p.loadImage(
+    `${appSettings.imagesPath}/${appSettings.uploadButton}`
+  );
+  p.images.downloadButton = p.loadImage(
+    `${appSettings.imagesPath}/${appSettings.downloadButton}`
+  );
   p.essentialImagesLoaded = true;
   p.loaded = false;
   p.showMessage = true;

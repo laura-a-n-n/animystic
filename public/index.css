@@ -8,7 +8,7 @@ body {
   overflow: hidden;
 }
 
-div#help, div#upload {
+div#help, div#upload, div#save {
   text-align: left;
   position: absolute;
   top: 50%;
@@ -28,9 +28,13 @@ div#help {
   height: 50%;
 }
 
-div#upload {
-  background-color: rgba(24, 25, 28);
+div#upload, div#save {
+  background-color: rgb(24, 25, 28);
   height: fit-content;
+}
+
+div#save {
+  background-color: rgba(24, 25, 28, 0.9) !important;
 }
 
 .button-container {
