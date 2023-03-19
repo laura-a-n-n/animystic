@@ -1,3 +1,5 @@
+/* todo: use sass! */
+
 html,
 body {
   margin: 0;
@@ -39,16 +41,12 @@ div#upload {
 
 .button {
   width: calc(20%);
-  font: 12px Georgia;
+  font: 1vw Georgia;
   color: #fff;
 }
 
-#upload-yes {
-  background-color: #222;
-}
-
-#upload-no {
-  background-color: #F00;
+.button:focus, .button:active {
+  outline: none;
 }
 
 .button:hover {
@@ -98,4 +96,22 @@ td input {
 
 .help td:nth-child(odd) {
   font-variant: small-caps;
+}
+
+#upload-yes {
+  background-color: #222;
+}
+
+#upload-no {
+  background-color: #F00;
+}
+
+#upload-text {
+  display: inline-block
+}
+
+#loading-spinner {
+  display: none;
+  width: 1em;
+  height: 1em;
 }

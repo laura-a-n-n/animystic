@@ -32,7 +32,9 @@ export const mouseClicked = () => {
       p.audioWidget.mouseClicked();
       return;
     }
-    for (const box of p.boxes) if (!box.isMouseOver) box.hide();
+    for (const box of p.boxes) {
+      if (!box.isMouseOver) box.hide();
+    }
   }
 
   if (p.menu.enabled && p.menu.lastSelectedFile !== "") {

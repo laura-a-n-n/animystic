@@ -92,4 +92,5 @@ export const appSettings = {
 
   // upload box settings
   uploadBoxSelector: "#upload",
+  uploadCloseTimeout: 1000,
 } as const;

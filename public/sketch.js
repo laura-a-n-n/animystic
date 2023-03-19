@@ -13414,6 +13414,7 @@
 	    helpBoxSelector: "#help",
 	    // upload box settings
 	    uploadBoxSelector: "#upload",
+	    uploadCloseTimeout: 1000,
 	};
 
 	function getFilesAsync() {
@@ -13793,7 +13794,8 @@
 	        this.div.mouseOut(function () {
 	            _this.mouseOver = false;
 	        });
-	        (_a = this.p.select("".concat(selector, " input, ").concat(selector, " .close-button"))) === null || _a === void 0 ? void 0 : _a.mouseClicked(this.div.hide.bind(this.div));
+	        (_a = this.p
+	            .select("".concat(selector, " input, ").concat(selector, " .close-button"))) === null || _a === void 0 ? void 0 : _a.mouseClicked(this.div.hide.bind(this.div));
 	    }
 	    Object.defineProperty(Box.prototype, "hidden", {
 	        get: function () {
@@ -13831,11 +13833,49 @@
 	        _this.yesButton = _this.p.select("#upload-yes");
 	        _this.noButton = _this.p.select("#upload-no");
 	        _this.uploadText = _this.p.select("#upload-text");
+	        _this.loadingSpinner = _this.p.select("#loading-spinner");
 	        _this.yesButton.mouseClicked(_this.upload.bind(_this));
 	        return _this;
 	    }
+	    UploadBox.prototype.hide = function () {
+	        _super.prototype.hide.call(this);
+	        this.uploadText.html("Are you sure you want to upload? Be sure to save (CTRL+S) before proceeding.");
+	        this.loadingSpinner.hide();
+	        this.yesButton.show();
+	        this.noButton.show();
+	    };
 	    UploadBox.prototype.upload = function () {
+	        var _this = this;
 	        this.uploadText.html("Hacking Zarb's brain...");
+	        this.loadingSpinner.style("display", "inline");
+	        this.yesButton.hide();
+	        this.noButton.hide();
+	        // Convert the currentData array to JSON format
+	        var jsonData = JSON.stringify({
+	            name: this.p.signalWidget.name,
+	            filename: this.p.menu.lastSelectedFile,
+	        });
+	        // Send a POST request to the server with the array data in the request body
+	        fetch("/upload", {
+	            method: "POST",
+	            headers: {
+	                "Content-Type": "application/json",
+	            },
+	            body: jsonData,
+	        })
+	            .then(function (response) {
+	            if (!response.ok) {
+	                throw new Error("Network response was not OK");
+	            }
+	            _this.loadingSpinner.hide();
+	            _this.uploadText.html("Done! Reboot script called. Go test it!");
+	            setTimeout(function () {
+	                _this.hide();
+	            }, appSettings.uploadCloseTimeout);
+	        })
+	            .catch(function (error) {
+	            _this.uploadText.html("There was a problem sending the data:\n ".concat(error));
+	        });
 	    };
 	    return UploadBox;
 	}(Box));
@@ -13985,7 +14025,7 @@
 	            d: this.deleteVerticalKeyframe.bind(this),
 	            c: this.copyCommand.bind(this),
 	            s: this.saveCommand.bind(this),
-	            u: this.uploadCommand.bind(this)
+	            u: this.uploadCommand.bind(this),
 	        };
 	        this.p = P5Singleton.getInstance();
 	        this.angularRange = angularRange;
@@ -14053,8 +14093,7 @@
 	        this.resolution = this.p.audioWidget.resolution / 1000.0;
 	        this.mouseTolerance = this.width * appSettings.mouseTolerance;
 	        this.indicatorHeight =
-	            this.height -
-	                appSettings.indicatorMargin * this.signalVerticalMargin;
+	            this.height - appSettings.indicatorMargin * this.signalVerticalMargin;
 	    };
 	    SignalWidget.prototype.createBuffer = function () {
 	        var _a, _b;
@@ -14122,8 +14161,7 @@
 	                        percentOpen = 1 - percentOpen;
 	                    // calculate wave height
 	                    lastHeight = currentHeight;
-	                    currentHeight =
-	                        loweredHeight - percentOpen * this.signalHeight;
+	                    currentHeight = loweredHeight - percentOpen * this.signalHeight;
 	                    // draw vertical line
 	                    this.drawBuffer.line(currentX, lastHeight, currentX, currentHeight);
 	                    // draw bulb to show existence of keyframe
@@ -14174,10 +14212,7 @@
 	    };
 	    SignalWidget.prototype.getSelectedKeyframe = function () {
 	        var e_3, _a;
-	        var _b = __read([
-	            this.p.viewport.mouseX,
-	            this.p.viewport.mouseY,
-	        ], 2), mouseX = _b[0], mouseY = _b[1];
+	        var _b = __read([this.p.viewport.mouseX, this.p.viewport.mouseY], 2), mouseX = _b[0], mouseY = _b[1];
 	        var toleranceRadius = this.mouseTolerance / 2;
 	        var mouseEngaged = false;
 	        var verticalKeyframeToTheRightOfMouse = 0;
@@ -14217,16 +14252,14 @@
 	            finally { if (e_3) throw e_3.error; }
 	        }
 	        this.mouseEngaged = mouseEngaged;
-	        this.verticalKeyframeToTheRightOfMouse =
-	            verticalKeyframeToTheRightOfMouse;
+	        this.verticalKeyframeToTheRightOfMouse = verticalKeyframeToTheRightOfMouse;
 	    };
 	    SignalWidget.prototype.getMillisecondsFromX = function (x, leftIndex, rightIndex) {
 	        var previousVerticalKeyframe = getIndexOrDefault(this.verticalKeyframePositions, leftIndex, 0);
 	        var nextVerticalKeyframe = getIndexOrDefault(this.verticalKeyframePositions, rightIndex, this.p.audioWidget.width);
 	        var distanceBetweenKeyframes = nextVerticalKeyframe - previousVerticalKeyframe;
 	        var percentRight = this.p.constrain((x - previousVerticalKeyframe) / distanceBetweenKeyframes, 0, 1);
-	        return (this.p.lerp(0, distanceBetweenKeyframes, percentRight) /
-	            this.resolution);
+	        return (this.p.lerp(0, distanceBetweenKeyframes, percentRight) / this.resolution);
 	    };
 	    SignalWidget.prototype.getAngleFromY = function () {
 	        var mouseY = this.p.viewport.mouseY;
@@ -14258,8 +14291,7 @@
 	                console.log(argumentIndices, selectedIndex + 1, nextArgumentIndex);
 	                if (nextArgumentIndex >= 1) {
 	                    var oldArgument = this.currentData[argumentIndex];
-	                    this.currentData[nextArgumentIndex] -=
-	                        newArgument - oldArgument;
+	                    this.currentData[nextArgumentIndex] -= newArgument - oldArgument;
 	                }
 	            }
 	            else
@@ -14291,8 +14323,7 @@
 	        var associatedHorizontalKeyframeDataIndex = this.timeArgumentDataIndices[this.verticalKeyframeToTheRightOfMouse];
 	        console.log(this.currentData);
 	        var oldTimeArgument = this.currentData[associatedHorizontalKeyframeDataIndex];
-	        this.currentData[associatedHorizontalKeyframeDataIndex] =
-	            newTimeArgument;
+	        this.currentData[associatedHorizontalKeyframeDataIndex] = newTimeArgument;
 	        this.currentData.splice(associatedHorizontalKeyframeDataIndex + 1, 0, appSettings.commands.talk, this.getAngleFromY(), appSettings.commands.delay, oldTimeArgument - newTimeArgument);
 	        console.log(this.currentData, mouseX, newTimeArgument, verticalKeyframeDataIndex, associatedHorizontalKeyframeDataIndex);
 	        this.drawSignal(false);
@@ -14300,8 +14331,7 @@
 	    SignalWidget.prototype.deleteVerticalKeyframe = function () {
 	        if (this.selectedVerticalKeyframe >= 0 &&
 	            this.verticalKeyframePositions.length >= 3 &&
-	            this.selectedVerticalKeyframe <
-	                this.angularArgumentDataIndices.length) {
+	            this.selectedVerticalKeyframe < this.angularArgumentDataIndices.length) {
 	            var argumentIndex = this.angularArgumentDataIndices[this.selectedVerticalKeyframe];
 	            var commandIndex = argumentIndex - 1;
 	            this.currentData.splice(commandIndex, 2);
