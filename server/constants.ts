@@ -16,9 +16,23 @@ export const appSettings = {
   dataInputStopString: "};",
   dataRegex: /{\s*((\d+,?\s*)+)\s*}/g,
 
-  // batch files
-  uploadBatchFiles: [
+  // script files
+  windowsScriptExecutor: "cmd.exe",
+  shellExecutor: "/bin/bash",
+  uploadScriptFiles: [
+    ".\\data\\dist\\admin-panel\\sync.bat",
     ".\\data\\dist\\admin-panel\\upload-to-arduino.bat",
     ".\\data\\dist\\admin-panel\\reboot.bat",
   ],
+  scriptDelayTime: 500, // delay prevents connections errors for Pi SSH
+
+  defaultEncoding: "utf8",
+  invalidDataMessage: "Invalid data",
+  readErrorMessage: "Error reading file from disk.",
+  writeErrorMessage: "Error writing file.",
+  serverErrorMessage: "Server error",
+  dataSaveSuccessMessage: "Data saved successfully!",
+  dataLocalSaveCompleteMessage: "Received data and saved it successfully",
+  jsonParseErrorMessage: "Error parsing JSON string.",
+  uploadErrorMessage: "Could not upload",
 } as const;

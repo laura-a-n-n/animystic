@@ -2,6 +2,7 @@ import { appSettings } from "@/constants";
 import { AudioWidget } from "@/objects/audio-widget";
 import { Banner } from "@/objects/banner";
 import { Box } from "@/objects/box/box";
+import { FadingBox } from "@/objects/box/fading-box";
 import { UploadBox } from "@/objects/box/upload-box";
 import { Menu } from "@/objects/menu";
 import { Mouse } from "@/objects/mouse";
@@ -30,7 +31,7 @@ export const postloadSetup = () => {
   p.signalWidget = new SignalWidget(appSettings.angularRange, true);
   p.mouse = new Mouse();
   p.helpBox = new Box(appSettings.helpBoxSelector);
-  p.saveBox = new Box(appSettings.saveBoxSelector);
+  p.saveBox = new FadingBox(appSettings.saveBoxSelector);
   p.helpBox = new Box(appSettings.helpBoxSelector);
   p.uploadBox = new UploadBox(appSettings.uploadBoxSelector);
   p.boxes = [p.helpBox, p.uploadBox];

@@ -1,6 +1,7 @@
 import { AudioWidget } from "@/objects/audio-widget";
 import { Banner } from "@/objects/banner";
 import { Box } from "@/objects/box/box";
+import { FadingBox } from "@/objects/box/fading-box";
 import { UploadBox } from "@/objects/box/upload-box";
 import { Menu } from "@/objects/menu";
 import { Mouse } from "@/objects/mouse";
@@ -18,7 +19,7 @@ export type AnimationEditor = p5 & {
   signalWidget: SignalWidget;
   boxes: Box[];
   helpBox: Box;
-  saveBox: Box;
+  saveBox: FadingBox;
   uploadBox: UploadBox;
 
   data: { [key: string]: { [filename: string]: number[] } };

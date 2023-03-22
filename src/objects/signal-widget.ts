@@ -44,6 +44,7 @@ export class SignalWidget {
     a: this.insertVerticalKeyframe.bind(this),
     d: this.deleteVerticalKeyframe.bind(this),
     c: this.copyCommand.bind(this),
+    v: this.pasteCommand.bind(this),
     s: this.saveCommand.bind(this),
     u: this.uploadCommand.bind(this),
   };
@@ -76,6 +77,7 @@ export class SignalWidget {
 
   bindData(data: number[]) {
     this.currentData = data;
+    this.p.data.zarbalatrax[this.p.menu.lastSelectedFile] = data;
     this.buffer();
   }
 
@@ -86,8 +88,18 @@ export class SignalWidget {
 
   copyCommand() {
     if (!this.p.keyIsDown(this.p.CONTROL)) return;
+    this.p.saveBox.text("<p>Data copied to clipboard!</p>");
     navigator.clipboard.writeText(this.currentData.toString());
     console.log(this.currentData.toString());
+  }
+
+  async pasteCommand() {
+    if (!this.p.keyIsDown(this.p.CONTROL)) return;
+    this.p.saveBox.text("<p>Data pasted from clipboard. Be sure to save if you want to keep these changes, otherwise they will be discarded.</p>");
+    const clipboard = await navigator.clipboard.readText();
+    const data = clipboard.split(",").map((string) => Number(string));
+    console.log(data);
+    this.bindData(data);
   }
 
   saveCommand() {
@@ -96,12 +108,8 @@ export class SignalWidget {
   }
 
   initiateSave() {
-    this.p.saveBox.toggle();
+    this.p.saveBox.text();
     this.saveToFile();
-    setTimeout(
-      this.p.saveBox.toggle.bind(this.p.saveBox),
-      appSettings.boxCloseTimeout
-    );
   }
 
   saveToFile() {
@@ -528,12 +536,14 @@ export class SignalWidget {
       this.p.color(...appSettings.freeIndicatorColor)
     );
     // selection indicator
-    triangle(
-      this.p,
-      this.verticalKeyframePositions[this.selectedVerticalKeyframe],
-      this.indicatorHeight,
-      this.p.color(...appSettings.selectionIndicatorColor)
-    );
+    if (this.selectedVerticalKeyframe >= 0 && this.selectedVerticalKeyframe < this.verticalKeyframePositions.length) {
+      triangle(
+        this.p,
+        this.verticalKeyframePositions[this.selectedVerticalKeyframe],
+        this.indicatorHeight,
+        this.p.color(...appSettings.selectionIndicatorColor)
+      );
+    }
   }
 
   draw() {
