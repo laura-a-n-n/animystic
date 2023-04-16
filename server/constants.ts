@@ -22,7 +22,6 @@ export const appSettings = {
   uploadScriptFiles: [
     ".\\data\\dist\\admin-panel\\sync.bat",
     ".\\data\\dist\\admin-panel\\upload-to-arduino.bat",
-    ".\\data\\dist\\admin-panel\\reboot.bat",
   ],
   scriptDelayTime: 500, // delay prevents connections errors for Pi SSH
 

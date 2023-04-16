@@ -23,3 +23,17 @@ export const getIndexOrDefault = <T>(
 
 export const displayPercent = (percent: number, decimalPlaces: number = 0) =>
   `${(percent * 100).toFixed(decimalPlaces)}%`;
+
+export const arraysAreEqual = <T>(arr1: T[], arr2: T[]): boolean => {
+  if (arr1.length !== arr2.length) {
+    return false;
+  }
+
+  for (let i = 0; i < arr1.length; i++) {
+    if (arr1[i] !== arr2[i]) {
+      return false;
+    }
+  }
+
+  return true;
+}

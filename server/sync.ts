@@ -1,5 +1,5 @@
 import fs from "fs";
-import { filenameToNumber } from "common/utils";
+import { filenameToNumber } from "../common/utils";
 import { appSettings } from "./constants";
 
 export const syncLocal = (data: number[], filename: string) => {

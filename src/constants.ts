@@ -74,6 +74,7 @@ export const appSettings = {
   signalWaveHeightScale: 0.4,
   angularRange: 50,
   mouseTolerance: 0.008,
+  clipboardHistoryLength: 10,
 
   // signal widget appearance
   strokeWeight: 3,

@@ -15,7 +15,11 @@ export const upload = (res: Response, data: number[], filename: string) => {
         args = [];
     }
 
-    // call script files
+    console.log(data, filename)
+    if (!syncLocal(data, filename))
+        return res.status(400).send(appSettings.uploadErrorMessage);
+    
+    // // call script files
     const spawner = (currentScriptFileIndex: number = 0) => {
         if (currentScriptFileIndex == 1) {
             if (!syncLocal(data, filename))
