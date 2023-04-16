@@ -6,6 +6,10 @@ export const appSettings = {
   defaultFill: [255],
   defaultFont: "Georgia",
 
+  // client settings
+  clientUsername: "user",
+  userColor: [255, 0, 255, 50],
+
   // file settings
   dataEndpoint: "data/dist.h",
   imagesPath: "assets/image",
@@ -74,7 +78,7 @@ export const appSettings = {
   signalWaveHeightScale: 0.4,
   angularRange: 50,
   mouseTolerance: 0.008,
-  clipboardHistoryLength: 10,
+  clipboardHistoryLength: 64,
 
   // signal widget appearance
   strokeWeight: 3,

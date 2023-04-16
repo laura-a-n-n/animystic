@@ -32,16 +32,6 @@ export const upload = (res: Response, data: number[], filename: string) => {
         
         const script = spawn(command, [...args, scriptFile]);
 
-        if (
-            currentScriptFileIndex ==
-            appSettings.uploadScriptFiles.length - 1
-        ) {
-            setTimeout(() => {
-                script.kill();
-            }, 5000);
-            res.send("OK");
-        }
-
         script.stdout.on("data", (data) => {
             console.log(`stdout: ${data}`);
         });
@@ -57,6 +47,7 @@ export const upload = (res: Response, data: number[], filename: string) => {
                 setTimeout(() => {
                     spawner(currentScriptFileIndex);
                 }, appSettings.scriptDelayTime);
+            else res.send("OK");
         });
     };
     spawner();

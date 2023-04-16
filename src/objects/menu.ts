@@ -6,8 +6,9 @@ import { isInRectangle } from "@/utilities/p5-utils";
 
 export class Menu {
   p: AnimationEditor;
-  enabled: boolean = true;
+  private _enabled: boolean = true;
   lastSelectedFile: string = "";
+  status: {[name: string]: string} = {};
 
   rows: number = 0;
   cols: number = 0;
@@ -27,6 +28,40 @@ export class Menu {
   constructor() {
     this.p = P5Singleton.getInstance();
     this.computeSize();
+    this.enabled = true;
+  }
+
+  set enabled(value: boolean) {
+    this._enabled = value;
+    const jsonData = JSON.stringify({
+      name: appSettings.clientUsername,
+      filename: this.lastSelectedFile,
+    });
+
+    // Send a POST request to the server with the array data in the request body
+    fetch("/status", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: jsonData,
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Network response was not OK");
+        }
+        return response.json();
+      }).then((data) => {
+        console.log(data);
+        this.status = data;
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
+
+  get enabled() {
+    return this._enabled;
   }
 
   computeSize() {
@@ -56,7 +91,7 @@ export class Menu {
     );
   }
 
-  text(imageName: string, x: number, y: number) {
+  text(imageName: string, x: number, y: number, editingText: string = "") {
     this.p.push();
     this.p.fill(255);
     this.p.noStroke();
@@ -69,7 +104,7 @@ export class Menu {
     this.p.text(imageName, 0, 0);
     this.p.textSize(this.textSize / 2);
     this.p.text(
-      lookupFiletype(Number(imageName.substring(0, imageName.indexOf(".")))),
+      lookupFiletype(Number(imageName.substring(0, imageName.indexOf(".")))) + editingText,
       0,
       appSettings.filenameTextScale * this.p.textAscent()
     );
@@ -117,9 +152,21 @@ export class Menu {
         if (index >= this.p.maxSounds) return;
 
         const [soundName, associatedImageName, x, y] = this.image(index, i, j);
+        let editingText = "";
 
         // background
         this.p.push();
+
+        this.p.fill(...appSettings.menuTileColor);
+
+        // is the current tile being edited?
+        // for (const user in this.status) {
+        //   if (this.status[user] == soundName) {
+        //     this.p.fill(...appSettings.userColor);
+        //     editingText = ` [${user} editing]`
+        //   }
+        // }
+
         // is the current tile highlighted by the user? draw ui feedback
         if (
           isInRectangle(
@@ -135,7 +182,7 @@ export class Menu {
 
           // expose the last hovered filename
           this.lastSelectedFile = soundName;
-        } else this.p.fill(...appSettings.menuTileColor);
+        }
 
         // draw background
         this.p.stroke(0, 0);
@@ -148,7 +195,7 @@ export class Menu {
         );
         this.p.pop();
 
-        this.text(associatedImageName, x, y);
+        this.text(associatedImageName, x, y, editingText);
       }
     }
   }

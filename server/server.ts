@@ -5,6 +5,7 @@ import { appSettings } from "./constants";
 import { getFiles } from "./files";
 import { postData } from "./local-save";
 import { postUpload } from "./upload";
+import { updateStatus } from "./user";
 
 const app = express();
 
@@ -22,3 +23,4 @@ app.listen(appSettings.serverPort, () => {
 app.get("/files", getFiles);
 app.post("/data", postData);
 app.post("/upload", postUpload);
+app.post("/status", updateStatus);

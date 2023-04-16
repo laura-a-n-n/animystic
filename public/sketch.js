@@ -13017,65 +13017,189 @@
 			1,
 			1314,
 			2,
-			0,
+			24,
 			1,
-			1075,
+			506,
+			2,
+			18,
+			1,
+			569,
 			2,
 			50,
 			1,
-			209,
+			289,
 			2,
 			0,
 			1,
-			1403,
+			331,
+			2,
+			21,
+			1,
+			436,
+			2,
+			16,
+			1,
+			466,
 			2,
 			50,
 			1,
-			776,
+			866,
 			2,
-			0,
+			20,
 			1,
-			2717,
+			939,
 			2,
-			50,
+			13,
 			1,
-			328,
+			422,
 			2,
-			0,
+			8,
 			1,
-			1851,
+			496,
 			2,
-			50,
+			20,
 			1,
-			239,
-			2,
-			0,
-			1,
-			2717,
+			858,
 			2,
 			50,
 			1,
-			746,
+			466,
 			2,
-			0,
+			9,
 			1,
-			1940,
+			256,
+			2,
+			20,
+			1,
+			451,
+			2,
+			12,
+			1,
+			331,
+			2,
+			19,
+			1,
+			617,
 			2,
 			50,
 			1,
-			149,
+			299,
 			2,
 			0,
 			1,
-			4090,
+			558,
+			2,
+			20,
+			1,
+			301,
+			2,
+			24,
+			1,
+			120,
+			2,
+			20,
+			1,
+			467,
+			2,
+			23,
+			1,
+			195,
+			2,
+			17,
+			1,
+			452,
+			2,
+			21,
+			1,
+			541,
 			2,
 			50,
 			1,
-			418,
+			829,
 			2,
 			0,
 			1,
-			1463
+			344,
+			2,
+			24,
+			1,
+			452,
+			2,
+			20,
+			1,
+			286,
+			2,
+			24,
+			1,
+			376,
+			2,
+			18,
+			1,
+			300,
+			2,
+			31,
+			1,
+			182,
+			2,
+			50,
+			1,
+			255,
+			2,
+			26,
+			1,
+			286,
+			2,
+			21,
+			1,
+			481,
+			2,
+			34,
+			1,
+			165,
+			2,
+			19,
+			1,
+			271,
+			2,
+			31,
+			1,
+			331,
+			2,
+			25,
+			1,
+			376,
+			2,
+			29,
+			1,
+			406,
+			2,
+			24,
+			1,
+			662,
+			2,
+			32,
+			1,
+			256,
+			2,
+			22,
+			1,
+			662,
+			2,
+			50,
+			1,
+			506,
+			2,
+			26,
+			1,
+			472,
+			2,
+			7,
+			1,
+			466,
+			2,
+			24,
+			1,
+			525
 		],
 		"009.wav": [
 			2,
@@ -17353,7 +17477,7 @@
 		],
 		"008.wav": [
 			2,
-			21835
+			22597
 		],
 		"009.wav": [
 			2,
@@ -17775,6 +17899,9 @@
 	    versionStringTextSize: 8,
 	    defaultFill: [255],
 	    defaultFont: "Georgia",
+	    // client settings
+	    clientUsername: "user",
+	    userColor: [255, 0, 255, 50],
 	    // file settings
 	    dataEndpoint: "data/dist.h",
 	    imagesPath: "assets/image",
@@ -17837,7 +17964,7 @@
 	    signalWaveHeightScale: 0.4,
 	    angularRange: 50,
 	    mouseTolerance: 0.008,
-	    clipboardHistoryLength: 10,
+	    clipboardHistoryLength: 64,
 	    // signal widget appearance
 	    strokeWeight: 3,
 	    indicatorMargin: 0.9,
@@ -18387,15 +18514,52 @@
 
 	var Menu = /** @class */ (function () {
 	    function Menu() {
-	        this.enabled = true;
+	        this._enabled = true;
 	        this.lastSelectedFile = "";
+	        this.status = {};
 	        this.rows = 0;
 	        this.cols = 0;
 	        this.scrollOffset = 0;
 	        this.trueTopOffset = 0;
 	        this.p = P5Singleton.getInstance();
 	        this.computeSize();
+	        this.enabled = true;
 	    }
+	    Object.defineProperty(Menu.prototype, "enabled", {
+	        get: function () {
+	            return this._enabled;
+	        },
+	        set: function (value) {
+	            var _this = this;
+	            this._enabled = value;
+	            var jsonData = JSON.stringify({
+	                name: appSettings.clientUsername,
+	                filename: this.lastSelectedFile,
+	            });
+	            // Send a POST request to the server with the array data in the request body
+	            fetch("/status", {
+	                method: "POST",
+	                headers: {
+	                    "Content-Type": "application/json",
+	                },
+	                body: jsonData,
+	            })
+	                .then(function (response) {
+	                if (!response.ok) {
+	                    throw new Error("Network response was not OK");
+	                }
+	                return response.json();
+	            }).then(function (data) {
+	                console.log(data);
+	                _this.status = data;
+	            })
+	                .catch(function (error) {
+	                console.log(error);
+	            });
+	        },
+	        enumerable: false,
+	        configurable: true
+	    });
 	    Menu.prototype.computeSize = function () {
 	        this.width = this.p.viewport.scaleToWidth(1 - 2 * appSettings.horizontalMargin);
 	        this.height = this.p.viewport.height;
@@ -18413,7 +18577,8 @@
 	        this.scrollOffset += value;
 	        this.scrollOffset = this.p.constrain(this.scrollOffset, 0, (this.p.floor(this.p.maxSounds / this.cols) - 1) * this.trueCellSize);
 	    };
-	    Menu.prototype.text = function (imageName, x, y) {
+	    Menu.prototype.text = function (imageName, x, y, editingText) {
+	        if (editingText === void 0) { editingText = ""; }
 	        this.p.push();
 	        this.p.fill(255);
 	        this.p.noStroke();
@@ -18422,7 +18587,7 @@
 	        this.p.textSize(this.textSize);
 	        this.p.text(imageName, 0, 0);
 	        this.p.textSize(this.textSize / 2);
-	        this.p.text(lookupFiletype(Number(imageName.substring(0, imageName.indexOf(".")))), 0, appSettings.filenameTextScale * this.p.textAscent());
+	        this.p.text(lookupFiletype(Number(imageName.substring(0, imageName.indexOf(".")))) + editingText, 0, appSettings.filenameTextScale * this.p.textAscent());
 	        this.p.pop();
 	    };
 	    Menu.prototype.getGridIndex = function (i, j) {
@@ -18452,21 +18617,28 @@
 	                if (index >= this.p.maxSounds)
 	                    return;
 	                var _c = __read(this.image(index, i, j), 4), soundName = _c[0], associatedImageName = _c[1], x = _c[2], y = _c[3];
+	                var editingText = "";
 	                // background
 	                this.p.push();
+	                (_a = this.p).fill.apply(_a, __spreadArray([], __read(appSettings.menuTileColor), false));
+	                // is the current tile being edited?
+	                // for (const user in this.status) {
+	                //   if (this.status[user] == soundName) {
+	                //     this.p.fill(...appSettings.userColor);
+	                //     editingText = ` [${user} editing]`
+	                //   }
+	                // }
 	                // is the current tile highlighted by the user? draw ui feedback
 	                if (isInRectangle(this.p.viewport.mouseX, this.p.viewport.mouseY, x, y, this.trueCellSize, this.trueCellSize)) {
-	                    (_a = this.p).fill.apply(_a, __spreadArray([], __read(appSettings.menuHoverColor), false));
+	                    (_b = this.p).fill.apply(_b, __spreadArray([], __read(appSettings.menuHoverColor), false));
 	                    // expose the last hovered filename
 	                    this.lastSelectedFile = soundName;
 	                }
-	                else
-	                    (_b = this.p).fill.apply(_b, __spreadArray([], __read(appSettings.menuTileColor), false));
 	                // draw background
 	                this.p.stroke(0, 0);
 	                this.p.rect(x, y, this.trueCellSize, this.trueCellSize, appSettings.menuBorderRadius);
 	                this.p.pop();
-	                this.text(associatedImageName, x, y);
+	                this.text(associatedImageName, x, y, editingText);
 	            }
 	        }
 	    };
@@ -18509,6 +18681,17 @@
 	var getIndexOrDefault = function (haystack, index, otherwise) {
 	    return index in haystack ? haystack[index] : otherwise;
 	};
+	var arraysAreEqual = function (arr1, arr2) {
+	    if (arr1.length !== arr2.length) {
+	        return false;
+	    }
+	    for (var i = 0; i < arr1.length; i++) {
+	        if (arr1[i] !== arr2[i]) {
+	            return false;
+	        }
+	    }
+	    return true;
+	};
 
 	var SignalWidget = /** @class */ (function () {
 	    function SignalWidget(angularRange, rangeInverted, strokeColor, name) {
@@ -18516,6 +18699,9 @@
 	        if (rangeInverted === void 0) { rangeInverted = false; }
 	        if (strokeColor === void 0) { strokeColor = appSettings.defaultSignalStrokeColor; }
 	        if (name === void 0) { name = "zarbalatrax"; }
+	        this._clipboardSize = appSettings.clipboardHistoryLength;
+	        this._data = [];
+	        this._clipboardIndex = 0;
 	        this.verticalKeyframePositions = [];
 	        this.horizontalKeyframePositions = [];
 	        this.angularArgumentDataIndices = [];
@@ -18528,10 +18714,13 @@
 	        this.keyBindings = {
 	            a: this.insertVerticalKeyframe.bind(this),
 	            d: this.deleteVerticalKeyframe.bind(this),
-	            c: this.copyCommand.bind(this),
-	            v: this.pasteCommand.bind(this),
-	            s: this.saveCommand.bind(this),
-	            u: this.uploadCommand.bind(this),
+	            "ctrl+c": this.copyCommand.bind(this),
+	            "ctrl+v": this.pasteCommand.bind(this),
+	            "ctrl+s": this.saveCommand.bind(this),
+	            "ctrl+u": this.uploadCommand.bind(this),
+	            "ctrl+y": this.redoCommand.bind(this),
+	            "ctrl+shift+z": this.redoCommand.bind(this),
+	            "ctrl+z": this.undoCommand.bind(this),
 	        };
 	        this.p = P5Singleton.getInstance();
 	        this.angularRange = angularRange;
@@ -18547,19 +18736,56 @@
 	        this.createBuffer();
 	        this.drawSignal();
 	    };
+	    SignalWidget.prototype.newData = function (data) {
+	        this.checkpointData = data.slice();
+	        this.bindData(data);
+	        this.resetClipboard();
+	    };
 	    SignalWidget.prototype.bindData = function (data) {
 	        this.currentData = data;
 	        this.p.data.zarbalatrax[this.p.menu.lastSelectedFile] = data;
 	        this.buffer();
 	    };
-	    SignalWidget.prototype.uploadCommand = function () {
-	        if (!this.p.keyIsDown(this.p.CONTROL))
+	    SignalWidget.prototype.resetClipboard = function () {
+	        this._clipboardIndex = 0;
+	        this._data = [];
+	        this._data.push(this.checkpointData);
+	    };
+	    SignalWidget.prototype.clipboardAction = function () {
+	        if (arraysAreEqual(this.currentData, this._clipboardIndex < this._data.length ? this._data[this._clipboardIndex] : []))
 	            return;
+	        console.log('clipboard action');
+	        // Update clipboard index to point to the latest data
+	        if (this._clipboardIndex !== this._data.length - 1)
+	            this._data.splice(this._clipboardIndex + 1); // Remove all entries after clipboardIndex
+	        this._data.push(__spreadArray([], __read(this.currentData), false)); // Push new data as the last element
+	        this._clipboardIndex = this._data.length - 1; // Update clipboard index to latest data index
+	        // Keep _data length within the clipboard size limit
+	        if (this._data.length > this._clipboardSize) {
+	            this._data.shift(); // Remove oldest entry from the clipboard
+	            this._clipboardIndex--;
+	        }
+	    };
+	    SignalWidget.prototype.undoCommand = function () {
+	        if (this._clipboardIndex > 0 && this._clipboardIndex < this._data.length) {
+	            // If there is data in the clipboard
+	            this._clipboardIndex--; // Decrement clipboard index
+	            this.currentData = __spreadArray([], __read(this._data[this._clipboardIndex]), false); // Restore data from clipboard
+	            this.buffer(); // Update the buffer
+	        }
+	    };
+	    SignalWidget.prototype.redoCommand = function () {
+	        if (this._clipboardIndex < this._data.length - 1 && this._data.length > 0) {
+	            // If there is data after the current clipboard index
+	            this._clipboardIndex++; // Increment clipboard index
+	            this.currentData = __spreadArray([], __read(this._data[this._clipboardIndex]), false); // Restore data from clipboard
+	            this.buffer(); // Update the buffer
+	        }
+	    };
+	    SignalWidget.prototype.uploadCommand = function () {
 	        this.p.uploadBox.toggle();
 	    };
 	    SignalWidget.prototype.copyCommand = function () {
-	        if (!this.p.keyIsDown(this.p.CONTROL))
-	            return;
 	        this.p.saveBox.text("<p>Data copied to clipboard!</p>");
 	        navigator.clipboard.writeText(this.currentData.toString());
 	        console.log(this.currentData.toString());
@@ -18570,8 +18796,6 @@
 	            return __generator(this, function (_a) {
 	                switch (_a.label) {
 	                    case 0:
-	                        if (!this.p.keyIsDown(this.p.CONTROL))
-	                            return [2 /*return*/];
 	                        this.p.saveBox.text("<p>Data pasted from clipboard. Be sure to save if you want to keep these changes, otherwise they will be discarded.</p>");
 	                        return [4 /*yield*/, navigator.clipboard.readText()];
 	                    case 1:
@@ -18585,8 +18809,6 @@
 	        });
 	    };
 	    SignalWidget.prototype.saveCommand = function () {
-	        if (!this.p.keyIsDown(this.p.CONTROL))
-	            return;
 	        this.initiateSave();
 	    };
 	    SignalWidget.prototype.initiateSave = function () {
@@ -18657,6 +18879,8 @@
 	        var _a, _b, e_2, _c, _d;
 	        if (consolidate === void 0) { consolidate = true; }
 	        this.roundData(); // ensure data is integer
+	        if (!this.userDraggingKeyframe)
+	            this.clipboardAction(); // handle clipboard
 	        var badKeyframes = this.consolidateData(this.userDraggingKeyframe || !consolidate); // always avoid duplicates?
 	        var badKeyframeIndicatorCoordinates = [];
 	        this.drawBuffer.clear(0, 0, 0, 0);
@@ -18842,10 +19066,21 @@
 	    };
 	    SignalWidget.prototype.keyPressed = function () {
 	        var _a, _b;
-	        (_b = (_a = this.keyBindings)[this.p.key]) === null || _b === void 0 ? void 0 : _b.call(_a);
+	        var key = this.p.key;
+	        var modifiers = [];
+	        if (this.p.keyIsDown(this.p.CONTROL)) {
+	            modifiers.push("ctrl");
+	        }
+	        if (this.p.keyIsDown(this.p.SHIFT)) {
+	            modifiers.push("shift");
+	        }
+	        if (this.p.keyIsDown(this.p.ALT)) {
+	            modifiers.push("alt");
+	        }
+	        var keyCombination = __spreadArray(__spreadArray([], __read(modifiers), false), [key], false).join("+");
+	        (_b = (_a = this.keyBindings)[keyCombination.toLowerCase()]) === null || _b === void 0 ? void 0 : _b.call(_a);
 	    };
 	    SignalWidget.prototype.insertVerticalKeyframe = function () {
-	        console.log("???");
 	        var mouseX = this.p.viewport.mouseX;
 	        var newTimeArgument = this.getMillisecondsFromX(mouseX, this.verticalKeyframeToTheRightOfMouse - 1, this.verticalKeyframeToTheRightOfMouse);
 	        console.log(newTimeArgument, this.verticalKeyframeToTheRightOfMouse);
@@ -19124,7 +19359,7 @@
 	    if (p.menu.enabled && p.menu.lastSelectedFile !== "") {
 	        p.menu.enabled = false;
 	        p.audioWidget.bindSound(p.sounds[p.menu.lastSelectedFile]);
-	        p.signalWidget.bindData(p.data.zarbalatrax[p.menu.lastSelectedFile]);
+	        p.signalWidget.newData(p.data.zarbalatrax[p.menu.lastSelectedFile]);
 	    }
 	};
 	var mouseWheel = function (event) { var _a; return (_a = P5Singleton.getInstance().menu) === null || _a === void 0 ? void 0 : _a.scroll(event.deltaY); };

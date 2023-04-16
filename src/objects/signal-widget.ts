@@ -1,6 +1,6 @@
 import { appSettings } from "@/constants";
 import { AnimationEditor } from "@/types/animation-editor";
-import { getIndexOrDefault } from "@/utilities/general";
+import { arraysAreEqual, getIndexOrDefault } from "@/utilities/general";
 import { P5Singleton } from "@/utilities/p5-singleton";
 import { isInBoundingBox, isInRectangle, triangle } from "@/utilities/p5-utils";
 import p5 from "p5";
@@ -8,8 +8,12 @@ import p5 from "p5";
 export class SignalWidget {
   p: AnimationEditor;
   name: string;
-  currentData!: number[];
   drawBuffer!: p5.Graphics;
+  currentData!: number[];
+  checkpointData!: number[];
+  private _clipboardSize: number = appSettings.clipboardHistoryLength;
+  private _data: number[][] = [];
+  private _clipboardIndex: number = 0;
 
   width!: number;
   height!: number;
@@ -43,10 +47,16 @@ export class SignalWidget {
   keyBindings: { [key: string]: () => any } = {
     a: this.insertVerticalKeyframe.bind(this),
     d: this.deleteVerticalKeyframe.bind(this),
-    c: this.copyCommand.bind(this),
-    v: this.pasteCommand.bind(this),
-    s: this.saveCommand.bind(this),
-    u: this.uploadCommand.bind(this),
+
+    "ctrl+c": this.copyCommand.bind(this),
+    "ctrl+v": this.pasteCommand.bind(this),
+
+    "ctrl+s": this.saveCommand.bind(this),
+    "ctrl+u": this.uploadCommand.bind(this),
+
+    "ctrl+y": this.redoCommand.bind(this),
+    "ctrl+shift+z": this.redoCommand.bind(this),
+    "ctrl+z": this.undoCommand.bind(this),
   };
 
   constructor(
@@ -75,26 +85,70 @@ export class SignalWidget {
     this.drawSignal();
   }
 
+  newData(data: number[]) {
+    this.checkpointData = data.slice();
+    this.bindData(data);
+    this.resetClipboard();
+  }
+
   bindData(data: number[]) {
     this.currentData = data;
     this.p.data.zarbalatrax[this.p.menu.lastSelectedFile] = data;
     this.buffer();
   }
 
+  resetClipboard() {
+    this._clipboardIndex = 0;
+    this._data = [];
+    this._data.push(this.checkpointData);
+  }
+
+  clipboardAction() {
+    if (arraysAreEqual(this.currentData, this._clipboardIndex < this._data.length ? this._data[this._clipboardIndex] : [])) return;
+    console.log('clipboard action')
+
+    // Update clipboard index to point to the latest data
+    if (this._clipboardIndex !== this._data.length - 1) this._data.splice(this._clipboardIndex + 1); // Remove all entries after clipboardIndex
+    this._data.push([...this.currentData]); // Push new data as the last element
+    this._clipboardIndex = this._data.length - 1; // Update clipboard index to latest data index
+
+    // Keep _data length within the clipboard size limit
+    if (this._data.length > this._clipboardSize) {
+      this._data.shift(); // Remove oldest entry from the clipboard
+      this._clipboardIndex--;
+    }
+  }
+  
+
+  undoCommand() {
+    if (this._clipboardIndex > 0 && this._clipboardIndex < this._data.length) {
+      // If there is data in the clipboard
+      this._clipboardIndex--; // Decrement clipboard index
+      this.currentData = [...this._data[this._clipboardIndex]]; // Restore data from clipboard
+      this.buffer(); // Update the buffer
+    }
+  }
+
+  redoCommand() {
+    if (this._clipboardIndex < this._data.length - 1 && this._data.length > 0) {
+      // If there is data after the current clipboard index
+      this._clipboardIndex++; // Increment clipboard index
+      this.currentData = [...this._data[this._clipboardIndex]]; // Restore data from clipboard
+      this.buffer(); // Update the buffer
+    }
+  }
+
   uploadCommand() {
-    if (!this.p.keyIsDown(this.p.CONTROL)) return;
     this.p.uploadBox.toggle();
   }
 
   copyCommand() {
-    if (!this.p.keyIsDown(this.p.CONTROL)) return;
     this.p.saveBox.text("<p>Data copied to clipboard!</p>");
     navigator.clipboard.writeText(this.currentData.toString());
     console.log(this.currentData.toString());
   }
 
   async pasteCommand() {
-    if (!this.p.keyIsDown(this.p.CONTROL)) return;
     this.p.saveBox.text("<p>Data pasted from clipboard. Be sure to save if you want to keep these changes, otherwise they will be discarded.</p>");
     const clipboard = await navigator.clipboard.readText();
     const data = clipboard.split(",").map((string) => Number(string));
@@ -103,7 +157,6 @@ export class SignalWidget {
   }
 
   saveCommand() {
-    if (!this.p.keyIsDown(this.p.CONTROL)) return;
     this.initiateSave();
   }
 
@@ -169,6 +222,7 @@ export class SignalWidget {
 
   drawSignal(consolidate: boolean = true) {
     this.roundData(); // ensure data is integer
+    if (!this.userDraggingKeyframe) this.clipboardAction(); // handle clipboard
 
     let badKeyframes = this.consolidateData(
       this.userDraggingKeyframe || !consolidate
@@ -418,11 +472,23 @@ export class SignalWidget {
   }
 
   keyPressed() {
-    this.keyBindings[this.p.key]?.();
+    const key = this.p.key;
+    const modifiers = [];
+    if (this.p.keyIsDown(this.p.CONTROL)) {
+      modifiers.push("ctrl");
+    }
+    if (this.p.keyIsDown(this.p.SHIFT)) {
+      modifiers.push("shift");
+    }
+    if (this.p.keyIsDown(this.p.ALT)) {
+      modifiers.push("alt");
+    }
+  
+    const keyCombination = [...modifiers, key].join("+");
+    this.keyBindings[keyCombination.toLowerCase()]?.();
   }
 
   insertVerticalKeyframe() {
-    console.log("???");
     const mouseX = this.p.viewport.mouseX;
     const newTimeArgument = this.getMillisecondsFromX(
       mouseX,

@@ -40,7 +40,7 @@ export const mouseClicked = () => {
   if (p.menu.enabled && p.menu.lastSelectedFile !== "") {
     p.menu.enabled = false;
     p.audioWidget.bindSound(p.sounds[p.menu.lastSelectedFile]);
-    p.signalWidget.bindData(p.data.zarbalatrax[p.menu.lastSelectedFile]);
+    p.signalWidget.newData(p.data.zarbalatrax[p.menu.lastSelectedFile]);
   }
 };
 
