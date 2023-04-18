@@ -19164,6 +19164,8 @@
 	    // save box settings
 	    saveBoxSelector: "#save",
 	    downloadButtonPadding: 0.5,
+	    // list box settings
+	    listBoxSelector: "#list"
 	};
 
 	function getFilesAsync() {
@@ -19562,6 +19564,8 @@
 	            : [0, _this.angularRange], 2), _this.closedAngle = _a[0], _this.openAngle = _a[1];
 	        _this.strokeColor = __spreadArray([], __read(strokeColor), false);
 	        _this.name = name;
+	        // draw list
+	        _this.drawName();
 	        return _this;
 	    }
 	    SignalWidget.prototype.newData = function (data) {
@@ -19776,8 +19780,6 @@
 	        // draw last line
 	        this.drawBuffer.line(currentX, currentHeight, currentX, loweredHeight);
 	        this.verticalKeyframePositions.push(currentX);
-	        // draw list
-	        this.drawName();
 	        // draw bad keyframe indicators
 	        if (!this.userDraggingKeyframe)
 	            return;
@@ -19802,18 +19804,22 @@
 	    };
 	    SignalWidget.prototype.drawName = function () {
 	        var _a;
-	        this.drawBuffer.push();
-	        this.drawBuffer.noStroke();
-	        this.drawBuffer.textSize(this.p.viewport.textSize * appSettings.signalNameTextScaleRatio);
-	        this.drawBuffer.translate(appSettings.horizontalMargin * this.width, this.height -
-	            this.drawBuffer.textAscent() *
-	                appSettings.signalNameTextHeightScale *
-	                this.creationOrder);
-	        (_a = this.drawBuffer).fill.apply(_a, __spreadArray([], __read(this.strokeColor), false));
-	        this.drawBuffer.textAlign(this.p.LEFT, this.p.CENTER);
-	        this.drawBuffer.text(this.name, this.drawBuffer.textWidth("   "), 0);
-	        this.drawBuffer.square(0, 0, this.drawBuffer.textWidth(" "));
-	        this.drawBuffer.pop();
+	        var _this = this;
+	        var checkbox = this.p.createElement("input");
+	        checkbox.attribute("type", "checkbox");
+	        checkbox.id(this.name);
+	        checkbox.attribute("checked", "true");
+	        checkbox.mouseClicked(function () {
+	            _this.active = !_this.active;
+	            console.log(_this.active);
+	        });
+	        var label = this.p.createElement("label");
+	        label.attribute("for", this.name);
+	        label.html(this.name);
+	        label.style("color", (_a = this.p).color.apply(_a, __spreadArray([], __read(this.strokeColor), false)));
+	        this.p.listBox.div.child(checkbox);
+	        this.p.listBox.div.child(label);
+	        this.p.listBox.div.child(this.p.createElement("br"));
 	    };
 	    SignalWidget.prototype.getSelectedKeyframe = function () {
 	        var e_3, _a;
@@ -20004,11 +20010,15 @@
 	        }
 	    };
 	    SignalWidget.prototype.keyPressed = function () {
+	        if (!this.active)
+	            return;
 	        if (WidgetCollector.getLastFocusedWidget() !== this)
 	            return;
 	        _super.prototype.keyPressed.call(this);
 	    };
 	    SignalWidget.prototype.update = function () {
+	        if (!this.active)
+	            return;
 	        _super.prototype.update.call(this);
 	        this.p.viewport.translate(0, this.topOffset);
 	        this.handleMouse();
@@ -20016,6 +20026,9 @@
 	        this.p.viewport.reset();
 	    };
 	    SignalWidget.prototype.draw = function () {
+	        if (!this.active)
+	            return;
+	        _super.prototype.draw.call(this);
 	        this.p.viewport.translate(0, this.topOffset);
 	        this.p.image(this.drawBuffer, 0, 0);
 	        this.p.viewport.reset();
@@ -20313,7 +20326,8 @@
 	}());
 
 	var Box = /** @class */ (function () {
-	    function Box(selector) {
+	    function Box(selector, closable) {
+	        if (closable === void 0) { closable = true; }
 	        var _this = this;
 	        var _a;
 	        this.mouseOver = false;
@@ -20325,8 +20339,9 @@
 	        this.div.mouseOut(function () {
 	            _this.mouseOver = false;
 	        });
-	        (_a = this.p
-	            .select("".concat(selector, " input, ").concat(selector, " .close-button"))) === null || _a === void 0 ? void 0 : _a.mouseClicked(this.div.hide.bind(this.div));
+	        if (closable)
+	            (_a = this.p
+	                .select("".concat(selector, " input, ").concat(selector, " .close-button"))) === null || _a === void 0 ? void 0 : _a.mouseClicked(this.div.hide.bind(this.div));
 	    }
 	    Object.defineProperty(Box.prototype, "hidden", {
 	        get: function () {
@@ -20352,7 +20367,7 @@
 	            this.div.hide();
 	    };
 	    Box.prototype.update = function () {
-	        this.p.uiProcessed = this.p.uiProcessed || !this.hidden;
+	        this.p.uiProcessed = this.p.uiProcessed || (!this.hidden && this.mouseOver);
 	    };
 	    return Box;
 	}());
@@ -20669,6 +20684,7 @@
 	    var p = P5Singleton.getInstance();
 	    p.banner = new Banner();
 	    p.menu = new Menu();
+	    p.listBox = new Box(appSettings.listBoxSelector, false);
 	    p.audioWidget = new AudioWidget();
 	    try {
 	        for (var _b = __values(Object.entries(appSettings.characters)), _c = _b.next(); !_c.done; _c = _b.next()) {
@@ -20688,7 +20704,7 @@
 	    p.saveBox = new FadingBox(appSettings.saveBoxSelector);
 	    p.helpBox = new Box(appSettings.helpBoxSelector);
 	    p.uploadBox = new UploadBox(appSettings.uploadBoxSelector);
-	    p.boxes = [p.helpBox, p.uploadBox];
+	    p.boxes = [p.helpBox, p.uploadBox, p.listBox];
 	    p.postloadSetupFinished = true;
 	};
 
@@ -20788,6 +20804,7 @@
 	            // user wants to go home
 	            (_c = p.audioWidget.currentSound) === null || _c === void 0 ? void 0 : _c.stop();
 	            p.menu.enabled = true;
+	            p.listBox.hide();
 	            return;
 	        }
 	        else if (p.audioWidget.uiProcessed) {
@@ -20797,6 +20814,8 @@
 	        try {
 	            for (var _d = __values(p.boxes), _e = _d.next(); !_e.done; _e = _d.next()) {
 	                var box = _e.value;
+	                if (box === p.listBox)
+	                    continue;
 	                if (!box.isMouseOver)
 	                    box.hide();
 	            }
@@ -20812,6 +20831,7 @@
 	    if (p.menu.enabled && p.menu.lastSelectedFile !== "") {
 	        p.menu.enabled = false;
 	        p.audioWidget.bindSound(p.sounds[p.menu.lastSelectedFile]);
+	        p.listBox.toggle();
 	        try {
 	            for (var _f = __values(WidgetCollector.filter(SignalWidget)), _g = _f.next(); !_g.done; _g = _f.next()) {
 	                var signalWidget = _g.value;

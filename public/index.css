@@ -2,120 +2,184 @@
 
 html,
 body {
-  margin: 0;
-  padding: 0;
-  height: 100%;
-  overflow: hidden;
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    overflow: hidden;
 }
 
-div#help, div#upload, div#save {
-  text-align: left;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 35%;
-  color: white;
-  font: 18px Georgia;
-  padding: 1em;
-  line-height: 1em;
-  display:none;
-  border-radius: 1em;
+div#help,
+div#upload,
+div#save {
+    text-align: left;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 35%;
+    color: white;
+    font: 18px Georgia;
+    padding: 1em;
+    line-height: 1em;
+    display: none;
+    border-radius: 1em;
+}
+
+div#list {
+    position: absolute;
+    left: 2.5%;
+    bottom: 12%;
+    width: fit-content;
+    height: fit-content;
+    padding: 1em;
+    background: rgba(24, 25, 28, 0.75);
+    display: none;
+    text-transform: capitalize;
+}
+
+/* Styling the checkboxes */
+#list input[type="checkbox"] {
+    /* Set checkbox appearance to none */
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    margin: 0 0.5em 0 0;
+
+    /* Add custom checkbox background color and border */
+    background-color: #040404; /* Change to desired background color */
+    border: 1px solid #111; /* Change to desired border color */
+
+    width: 1em;
+    height: 1em;
+
+    /* Add border-radius to round the checkbox */
+    border-radius: 0.1em; /* Change to desired border radius */
+}
+
+#list label {
+    -webkit-user-select: none; /* Safari */
+    -ms-user-select: none; /* IE 10 and IE 11 */
+    user-select: none; /* Standard syntax */
+}
+
+/* Styling the checkboxes when checked */
+#list input[type="checkbox"]:checked {
+    /* Change the background color when checked */
+    background-color: #ccc;
+}
+
+/* Styling the outline of focused checkboxes */
+#list input[type="checkbox"]:focus {
+    /* Add custom outline style */
+    outline: 2px solid #aaa; /* Change to desired outline color */
 }
 
 div#help {
-  background-color: rgba(24, 25, 28, 0);
-  height: 50%;
+    background-color: rgba(24, 25, 28, 0);
+    height: 50%;
+    overflow-y: scroll;
+    max-height: 50vh;
 }
 
-div#upload, div#save {
-  background-color: rgb(24, 25, 28);
-  height: fit-content;
+div#help {
+    -ms-overflow-style: none; /* Internet Explorer 10+ */
+    scrollbar-width: none; /* Firefox */
+}
+
+div#help::-webkit-scrollbar {
+    display: none; /* Safari and Chrome */
+}
+
+div#upload,
+div#save {
+    background-color: rgb(24, 25, 28);
+    height: fit-content;
 }
 
 div#save {
-  background-color: rgba(24, 25, 28, 0.9) !important;
+    background-color: rgba(24, 25, 28, 0.9) !important;
 }
 
 .button-container {
-  display: flex;
-  justify-content: space-between;
-  width: 100%;
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
 }
 
 .button {
-  width: calc(20%);
-  font: 1vw Georgia;
-  color: #fff;
+    width: calc(20%);
+    font: 1vw Georgia;
+    color: #fff;
 }
 
-.button:focus, .button:active {
-  outline: none;
+.button:focus,
+.button:active {
+    outline: none;
 }
 
 .button:hover {
-  background-color: rgb(24, 25, 28) !important;
-  color: #fff;
+    background-color: rgb(24, 25, 28) !important;
+    color: #fff;
 }
 
 table.help {
-  margin: auto;
-  width: 100%;
-  max-height: 100%;
-  border-collapse: collapse;
+    margin: auto;
+    width: 100%;
+    max-height: 100%;
+    border-collapse: collapse;
 }
 
 td input {
-  height: 100%
+    height: 100%;
 }
 
 .help tr:first-child {
-  background-color: rgb(24, 25, 28);
+    background-color: rgb(24, 25, 28);
 }
 
 .help tr:first-child td {
-  height: 0.8em;
+    height: 0.8em;
 }
 
 .help tr:nth-child(even) {
-  background-color: rgb(55, 57, 62);
+    background-color: rgb(55, 57, 62);
 }
 
 .help tr:nth-child(odd) {
-  background-color: rgb(59, 61, 67);
+    background-color: rgb(59, 61, 67);
 }
 
 .help td {
-  color: white;;
-  padding: 0.5em;
+    color: white;
+    padding: 0.5em;
 }
 
 .help tr:nth-child(even) td {
-  border: 3px solid rgb(55, 57, 62);
+    border: 3px solid rgb(55, 57, 62);
 }
 
 .help tr:nth-child(odd) td {
-  border: 3px solid rgb(59, 61, 67);
+    border: 3px solid rgb(59, 61, 67);
 }
 
 .help td:nth-child(odd) {
-  font-variant: small-caps;
+    font-variant: small-caps;
 }
 
 #upload-yes {
-  background-color: #222;
+    background-color: #222;
 }
 
 #upload-no {
-  background-color: #F00;
+    background-color: #f00;
 }
 
 #upload-text {
-  display: inline-block
+    display: inline-block;
 }
 
 #loading-spinner {
-  display: none;
-  width: 1em;
-  height: 1em;
+    display: none;
+    width: 1em;
+    height: 1em;
 }

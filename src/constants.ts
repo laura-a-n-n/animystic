@@ -115,4 +115,7 @@ export const appSettings = {
   // save box settings
   saveBoxSelector: "#save",
   downloadButtonPadding: 0.5,
+
+  // list box settings
+  listBoxSelector: "#list"  
 } as const;

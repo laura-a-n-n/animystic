@@ -77,6 +77,9 @@ export class SignalWidget extends Widget {
       : [0, this.angularRange];
     this.strokeColor = [...strokeColor];
     this.name = name;
+
+    // draw list
+    this.drawName();
   }
 
   newData(data: number[]) {
@@ -313,9 +316,6 @@ export class SignalWidget extends Widget {
     this.drawBuffer.line(currentX, currentHeight, currentX, loweredHeight);
     this.verticalKeyframePositions.push(currentX);
 
-    // draw list
-    this.drawName();
-
     // draw bad keyframe indicators
     if (!this.userDraggingKeyframe) return;
     this.drawBuffer.push();
@@ -329,23 +329,22 @@ export class SignalWidget extends Widget {
   }
 
   drawName() {
-    this.drawBuffer.push();
-    this.drawBuffer.noStroke();
-    this.drawBuffer.textSize(
-      this.p.viewport.textSize * appSettings.signalNameTextScaleRatio
-    );
-    this.drawBuffer.translate(
-      appSettings.horizontalMargin * this.width,
-      this.height -
-        this.drawBuffer.textAscent() *
-          appSettings.signalNameTextHeightScale *
-          this.creationOrder
-    );
-    this.drawBuffer.fill(...this.strokeColor);
-    this.drawBuffer.textAlign(this.p.LEFT, this.p.CENTER);
-    this.drawBuffer.text(this.name, this.drawBuffer.textWidth("   "), 0);
-    this.drawBuffer.square(0, 0, this.drawBuffer.textWidth(" "));
-    this.drawBuffer.pop();
+    let checkbox = this.p.createElement("input");
+    checkbox.attribute("type", "checkbox");
+    checkbox.id(this.name);
+    checkbox.attribute("checked", "true");
+    checkbox.mouseClicked(() => {
+      this.active = !this.active;
+      console.log(this.active)
+    })
+    
+    let label = this.p.createElement("label");
+    label.attribute("for", this.name);
+    label.html(this.name);
+    label.style("color", this.p.color(...this.strokeColor));
+    this.p.listBox.div.child(checkbox);
+    this.p.listBox.div.child(label);
+    this.p.listBox.div.child(this.p.createElement("br"));
   }
 
   getSelectedKeyframe() {
@@ -635,11 +634,13 @@ export class SignalWidget extends Widget {
   }
 
   keyPressed() {
+    if (!this.active) return;
     if (WidgetCollector.getLastFocusedWidget() !== this) return;
     super.keyPressed();
   }
 
   update() {
+    if (!this.active) return;
     super.update();
     this.p.viewport.translate(0, this.topOffset);
     this.handleMouse();
@@ -648,6 +649,8 @@ export class SignalWidget extends Widget {
   }
 
   draw() {
+    if (!this.active) return;
+    super.draw();
     this.p.viewport.translate(0, this.topOffset);
     this.p.image(this.drawBuffer, 0, 0);
     this.p.viewport.reset();

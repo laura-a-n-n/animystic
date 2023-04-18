@@ -18,6 +18,7 @@ export type AnimationEditor = p5 & {
   audioWidget: AudioWidget;
   boxes: Box[];
   helpBox: Box;
+  listBox: Box;
   saveBox: FadingBox;
   uploadBox: UploadBox;
 

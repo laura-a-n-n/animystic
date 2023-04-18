@@ -29,6 +29,7 @@ export const postloadSetup = () => {
 
   p.banner = new Banner();
   p.menu = new Menu();
+  p.listBox = new Box(appSettings.listBoxSelector, false);
   p.audioWidget = new AudioWidget();
   for (const [name, character] of Object.entries(appSettings.characters)) {
     new SignalWidget(name, character.angularRange, true, character.strokeColor);
@@ -38,7 +39,7 @@ export const postloadSetup = () => {
   p.saveBox = new FadingBox(appSettings.saveBoxSelector);
   p.helpBox = new Box(appSettings.helpBoxSelector);
   p.uploadBox = new UploadBox(appSettings.uploadBoxSelector);
-  p.boxes = [p.helpBox, p.uploadBox];
+  p.boxes = [p.helpBox, p.uploadBox, p.listBox];
 
   p.postloadSetupFinished = true;
 };

@@ -25,12 +25,14 @@ export const mouseClicked = () => {
       // user wants to go home
       p.audioWidget.currentSound?.stop();
       p.menu.enabled = true;
+      p.listBox.hide();
       return;
     } else if (p.audioWidget.uiProcessed) {
       p.audioWidget.mouseClicked();
       return;
     }
     for (const box of p.boxes) {
+      if (box === p.listBox) continue;
       if (!box.isMouseOver) box.hide();
     }
   }
@@ -38,6 +40,7 @@ export const mouseClicked = () => {
   if (p.menu.enabled && p.menu.lastSelectedFile !== "") {
     p.menu.enabled = false;
     p.audioWidget.bindSound(p.sounds[p.menu.lastSelectedFile]);
+    p.listBox.toggle();
     for (const signalWidget of WidgetCollector.filter(SignalWidget))
       signalWidget.newData(p.data[signalWidget.name][p.menu.lastSelectedFile]);
   }
