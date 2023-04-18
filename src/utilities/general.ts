@@ -36,4 +36,4 @@ export const arraysAreEqual = <T>(arr1: T[], arr2: T[]): boolean => {
   }
 
   return true;
-}
+};

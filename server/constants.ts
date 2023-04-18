@@ -1,7 +1,7 @@
 export const appSettings = {
   // server settings
   serverPort: 8080,
-  
+
   // assets
   assetDirectories: {
     sound: "./assets/sound",

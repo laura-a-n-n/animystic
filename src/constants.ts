@@ -82,8 +82,8 @@ export const appSettings = {
     },
     squambo: {
       angularRange: 180,
-      strokeColor: [0, 255, 0]
-    }
+      strokeColor: [0, 255, 0],
+    },
   },
   signalWaveHeightScale: 0.4,
   mouseTolerance: 0.008,

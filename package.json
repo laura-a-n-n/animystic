@@ -7,7 +7,7 @@
     "watch": "rollup --config -w",
     "serve": "ts-node server/server.ts --port 8080",
     "start": "concurrently \"npm:watch\" \"npm:serve\"",
-    "pretty": "prettier --write \"./src/**/*.{js,jsx,ts,tsx,json}\""
+    "pretty": "prettier --write \"./{src,server,common}/**/*.{js,jsx,ts,tsx,json}\""
   },
   "author": "Laura Ann",
   "license": "ISC",

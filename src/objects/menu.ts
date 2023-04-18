@@ -8,7 +8,7 @@ export class Menu {
   p: AnimationEditor;
   private _enabled: boolean = true;
   lastSelectedFile: string = "";
-  status: {[name: string]: string} = {};
+  status: { [name: string]: string } = {};
 
   rows: number = 0;
   cols: number = 0;
@@ -51,7 +51,8 @@ export class Menu {
           throw new Error("Network response was not OK");
         }
         return response.json();
-      }).then((data) => {
+      })
+      .then((data) => {
         console.log(data);
         this.status = data;
       })
@@ -104,7 +105,8 @@ export class Menu {
     this.p.text(imageName, 0, 0);
     this.p.textSize(this.textSize / 2);
     this.p.text(
-      lookupFiletype(Number(imageName.substring(0, imageName.indexOf(".")))) + editingText,
+      lookupFiletype(Number(imageName.substring(0, imageName.indexOf(".")))) +
+        editingText,
       0,
       appSettings.filenameTextScale * this.p.textAscent()
     );

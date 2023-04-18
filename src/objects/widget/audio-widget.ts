@@ -150,7 +150,8 @@ export class AudioWidget extends Widget {
     else if (this.helpButtonHover) this.p.helpBox.toggle();
     else if (this.uploadButtonHover) this.p.uploadBox.toggle();
     else if (this.downloadButtonHover) {
-      for (const widget of WidgetCollector.filter(SignalWidget)) widget.initiateSave();
+      for (const widget of WidgetCollector.filter(SignalWidget))
+        widget.initiateSave();
     }
   }
 
@@ -214,11 +215,7 @@ export class AudioWidget extends Widget {
 
     if (this.p.uiProcessed) return;
     for (const widget of WidgetCollector.filter(SignalWidget)) {
-      if (
-        widget.mouseEngaged ||
-        widget.userDraggingKeyframe
-      )
-        return;
+      if (widget.mouseEngaged || widget.userDraggingKeyframe) return;
     }
     const mouseCoords: [number, number] = [
       this.p.mouseX + this.audioButtonSize / 2,
@@ -263,19 +260,19 @@ export class AudioWidget extends Widget {
       this.uploadButtonHover ||
       this.downloadButtonHover;
     this.uiProcessed = this.p.uiProcessed;
-    
+
     if (this.p.uiProcessed) this.p.mouse.cursor("pointer");
     else if (this.p.mouseIsPressed && this.p.mouseButton == this.p.LEFT)
       this.scrubToPosition(this.p.mouseX);
-}
+  }
 
-draw() {
-  super.draw();
-  
-  this.p.push();
-  this.p.image(this.drawBuffer, 0, 0);
-  this.drawScrubber();
-  this.drawControls();
-  this.p.pop();
+  draw() {
+    super.draw();
+
+    this.p.push();
+    this.p.image(this.drawBuffer, 0, 0);
+    this.drawScrubber();
+    this.drawControls();
+    this.p.pop();
   }
 }

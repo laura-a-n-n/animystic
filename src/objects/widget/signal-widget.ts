@@ -86,9 +86,11 @@ export class SignalWidget extends Widget {
 
   bindData(data: number[]) {
     if (data[0] != appSettings.commands.talk) {
-      console.log("An attempt was made to bind to data without a root node. Restoring a default root node.")
+      console.log(
+        "An attempt was made to bind to data without a root node. Restoring a default root node."
+      );
       data.splice(0, 0, 2, this.closedAngle);
-    } 
+    }
     this.currentData = data;
     this.p.data[this.name][this.p.menu.lastSelectedFile] = data;
     this.buffer();
@@ -101,11 +103,20 @@ export class SignalWidget extends Widget {
   }
 
   clipboardAction() {
-    if (arraysAreEqual(this.currentData, this._clipboardIndex < this._data.length ? this._data[this._clipboardIndex] : [])) return;
-    console.log('clipboard action')
+    if (
+      arraysAreEqual(
+        this.currentData,
+        this._clipboardIndex < this._data.length
+          ? this._data[this._clipboardIndex]
+          : []
+      )
+    )
+      return;
+    console.log("clipboard action");
 
     // Update clipboard index to point to the latest data
-    if (this._clipboardIndex !== this._data.length - 1) this._data.splice(this._clipboardIndex + 1); // Remove all entries after clipboardIndex
+    if (this._clipboardIndex !== this._data.length - 1)
+      this._data.splice(this._clipboardIndex + 1); // Remove all entries after clipboardIndex
     this._data.push([...this.currentData]); // Push new data as the last element
     this._clipboardIndex = this._data.length - 1; // Update clipboard index to latest data index
 
@@ -115,7 +126,6 @@ export class SignalWidget extends Widget {
       this._clipboardIndex--;
     }
   }
-  
 
   undoCommand() {
     if (this._clipboardIndex > 0 && this._clipboardIndex < this._data.length) {
@@ -146,7 +156,9 @@ export class SignalWidget extends Widget {
   }
 
   async pasteCommand() {
-    this.p.saveBox.text("<p>Data pasted from clipboard. Be sure to save if you want to keep these changes, otherwise they will be discarded.</p>");
+    this.p.saveBox.text(
+      "<p>Data pasted from clipboard. Be sure to save if you want to keep these changes, otherwise they will be discarded.</p>"
+    );
     const clipboard = await navigator.clipboard.readText();
     const data = clipboard.split(",").map((string) => Number(string));
     console.log(data);
@@ -323,8 +335,16 @@ export class SignalWidget extends Widget {
   drawName() {
     this.drawBuffer.push();
     this.drawBuffer.noStroke();
-    this.drawBuffer.textSize(this.p.viewport.textSize * appSettings.signalNameTextScaleRatio);
-    this.drawBuffer.translate(appSettings.horizontalMargin * this.width, this.height - this.drawBuffer.textAscent() * appSettings.signalNameTextHeightScale * this.creationOrder);
+    this.drawBuffer.textSize(
+      this.p.viewport.textSize * appSettings.signalNameTextScaleRatio
+    );
+    this.drawBuffer.translate(
+      appSettings.horizontalMargin * this.width,
+      this.height -
+        this.drawBuffer.textAscent() *
+          appSettings.signalNameTextHeightScale *
+          this.creationOrder
+    );
     this.drawBuffer.fill(...this.strokeColor);
     this.drawBuffer.textAlign(this.p.LEFT, this.p.CENTER);
     this.drawBuffer.text(this.name, this.drawBuffer.textWidth("   "), 0);
@@ -606,7 +626,10 @@ export class SignalWidget extends Widget {
       this.p.color(...appSettings.freeIndicatorColor)
     );
     // selection indicator
-    if (this.selectedVerticalKeyframe >= 0 && this.selectedVerticalKeyframe < this.verticalKeyframePositions.length) {
+    if (
+      this.selectedVerticalKeyframe >= 0 &&
+      this.selectedVerticalKeyframe < this.verticalKeyframePositions.length
+    ) {
       triangle(
         this.p,
         this.verticalKeyframePositions[this.selectedVerticalKeyframe],
@@ -628,7 +651,7 @@ export class SignalWidget extends Widget {
     this.handleRenderPriority();
     this.p.viewport.reset();
   }
-  
+
   draw() {
     this.p.viewport.translate(0, this.topOffset);
     this.p.image(this.drawBuffer, 0, 0);

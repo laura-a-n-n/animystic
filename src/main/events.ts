@@ -16,7 +16,6 @@ export const keyPressed = (event: KeyboardEvent) => {
   event.preventDefault();
   const p = P5Singleton.getInstance();
   if (!p.menu.enabled) WidgetCollector.keyPressed();
-
 };
 
 export const mouseClicked = () => {
@@ -39,7 +38,8 @@ export const mouseClicked = () => {
   if (p.menu.enabled && p.menu.lastSelectedFile !== "") {
     p.menu.enabled = false;
     p.audioWidget.bindSound(p.sounds[p.menu.lastSelectedFile]);
-    for (const signalWidget of WidgetCollector.filter(SignalWidget)) signalWidget.newData(p.data[signalWidget.name][p.menu.lastSelectedFile]);
+    for (const signalWidget of WidgetCollector.filter(SignalWidget))
+      signalWidget.newData(p.data[signalWidget.name][p.menu.lastSelectedFile]);
   }
 };
 
