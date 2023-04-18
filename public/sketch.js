@@ -19136,8 +19136,8 @@
 	        },
 	        squambo: {
 	            angularRange: 180,
-	            strokeColor: [0, 255, 0]
-	        }
+	            strokeColor: [0, 255, 0],
+	        },
 	    },
 	    signalWaveHeightScale: 0.4,
 	    mouseTolerance: 0.008,
@@ -19538,6 +19538,7 @@
 	        _this.horizontalKeyframePositions = [];
 	        _this.angularArgumentDataIndices = [];
 	        _this.timeArgumentDataIndices = [];
+	        _this.createVerticalKeyframeThisFrame = false;
 	        _this.selectedVerticalKeyframe = -1;
 	        _this.selectedHorizontalKeyframe = -1;
 	        _this.verticalKeyframeToTheRightOfMouse = -1;
@@ -19583,9 +19584,10 @@
 	        this._data.push(this.checkpointData);
 	    };
 	    SignalWidget.prototype.clipboardAction = function () {
-	        if (arraysAreEqual(this.currentData, this._clipboardIndex < this._data.length ? this._data[this._clipboardIndex] : []))
+	        if (arraysAreEqual(this.currentData, this._clipboardIndex < this._data.length
+	            ? this._data[this._clipboardIndex]
+	            : []))
 	            return;
-	        console.log('clipboard action');
 	        // Update clipboard index to point to the latest data
 	        if (this._clipboardIndex !== this._data.length - 1)
 	            this._data.splice(this._clipboardIndex + 1); // Remove all entries after clipboardIndex
@@ -19619,7 +19621,6 @@
 	    SignalWidget.prototype.copyCommand = function () {
 	        this.p.saveBox.text("<p>Data copied to clipboard!</p>");
 	        navigator.clipboard.writeText(this.currentData.toString());
-	        console.log(this.currentData.toString());
 	    };
 	    SignalWidget.prototype.pasteCommand = function () {
 	        return __awaiter(this, void 0, void 0, function () {
@@ -19632,7 +19633,6 @@
 	                    case 1:
 	                        clipboard = _a.sent();
 	                        data = clipboard.split(",").map(function (string) { return Number(string); });
-	                        console.log(data);
 	                        this.bindData(data);
 	                        return [2 /*return*/];
 	                }
@@ -19665,7 +19665,6 @@
 	            if (!response.ok) {
 	                throw new Error("Network response was not OK");
 	            }
-	            console.log("Data saved successfully");
 	        })
 	            .catch(function (error) {
 	            console.error("There was a problem saving the data:", error);
@@ -19695,7 +19694,7 @@
 	        try {
 	            for (var _b = __values(this.currentData.entries()), _c = _b.next(); !_c.done; _c = _b.next()) {
 	                var _d = __read(_c.value, 2), index = _d[0], datum = _d[1];
-	                this.currentData[index] = Math.round(datum);
+	                this.currentData[index] = Math.max(Math.round(datum), 0);
 	            }
 	        }
 	        catch (e_1_1) { e_1 = { error: e_1_1 }; }
@@ -19777,7 +19776,6 @@
 	        // draw last line
 	        this.drawBuffer.line(currentX, currentHeight, currentX, loweredHeight);
 	        this.verticalKeyframePositions.push(currentX);
-	        console.log(this.currentData);
 	        // draw list
 	        this.drawName();
 	        // draw bad keyframe indicators
@@ -19807,7 +19805,10 @@
 	        this.drawBuffer.push();
 	        this.drawBuffer.noStroke();
 	        this.drawBuffer.textSize(this.p.viewport.textSize * appSettings.signalNameTextScaleRatio);
-	        this.drawBuffer.translate(appSettings.horizontalMargin * this.width, this.height - this.drawBuffer.textAscent() * appSettings.signalNameTextHeightScale * this.creationOrder);
+	        this.drawBuffer.translate(appSettings.horizontalMargin * this.width, this.height -
+	            this.drawBuffer.textAscent() *
+	                appSettings.signalNameTextHeightScale *
+	                this.creationOrder);
 	        (_a = this.drawBuffer).fill.apply(_a, __spreadArray([], __read(this.strokeColor), false));
 	        this.drawBuffer.textAlign(this.p.LEFT, this.p.CENTER);
 	        this.drawBuffer.text(this.name, this.drawBuffer.textWidth("   "), 0);
@@ -19873,6 +19874,10 @@
 	        return angle;
 	    };
 	    SignalWidget.prototype.handleMouse = function () {
+	        if (this.createVerticalKeyframeThisFrame) {
+	            this.createVerticalKeyframeThisFrame = false;
+	            this.createVerticalKeyframe();
+	        }
 	        if (WidgetCollector.isWidgetFocused())
 	            return;
 	        this.getSelectedKeyframe();
@@ -19894,7 +19899,6 @@
 	                var mouseX = this.p.viewport.mouseX;
 	                newArgument = this.getMillisecondsFromX(mouseX, selectedIndex - 1, selectedIndex + 1);
 	                var nextArgumentIndex = getIndexOrDefault(argumentIndices, selectedIndex + 1, -1);
-	                console.log(argumentIndices, selectedIndex + 1, nextArgumentIndex);
 	                if (nextArgumentIndex >= 1) {
 	                    var oldArgument = this.currentData[argumentIndex];
 	                    this.currentData[nextArgumentIndex] -= newArgument - oldArgument;
@@ -19921,21 +19925,21 @@
 	        WidgetCollector.updateRenderPriority();
 	    };
 	    SignalWidget.prototype.insertVerticalKeyframe = function () {
+	        this.createVerticalKeyframeThisFrame = true;
+	    };
+	    SignalWidget.prototype.createVerticalKeyframe = function () {
 	        var mouseX = this.p.viewport.mouseX;
 	        var newTimeArgument = this.getMillisecondsFromX(mouseX, this.verticalKeyframeToTheRightOfMouse - 1, this.verticalKeyframeToTheRightOfMouse);
-	        console.log(newTimeArgument, this.verticalKeyframeToTheRightOfMouse);
 	        if (
 	        // this.verticalKeyframeToTheRightOfMouse >
 	        // this.angularArgumentDataIndices.length - 1 ||
 	        this.verticalKeyframeToTheRightOfMouse === undefined)
 	            return;
-	        var verticalKeyframeDataIndex = this.angularArgumentDataIndices[this.verticalKeyframeToTheRightOfMouse];
+	        this.angularArgumentDataIndices[this.verticalKeyframeToTheRightOfMouse];
 	        var associatedHorizontalKeyframeDataIndex = this.timeArgumentDataIndices[this.verticalKeyframeToTheRightOfMouse];
-	        console.log(this.currentData);
 	        var oldTimeArgument = this.currentData[associatedHorizontalKeyframeDataIndex];
 	        this.currentData[associatedHorizontalKeyframeDataIndex] = newTimeArgument;
 	        this.currentData.splice(associatedHorizontalKeyframeDataIndex + 1, 0, appSettings.commands.talk, this.getAngleFromY(), appSettings.commands.delay, oldTimeArgument - newTimeArgument);
-	        console.log(this.currentData, mouseX, newTimeArgument, verticalKeyframeDataIndex, associatedHorizontalKeyframeDataIndex);
 	        this.drawToBuffer(false);
 	    };
 	    SignalWidget.prototype.deleteVerticalKeyframe = function () {
@@ -19994,7 +19998,8 @@
 	        // "free" indicator
 	        triangle(this.p, this.p.mouseX, this.indicatorHeight, (_a = this.p).color.apply(_a, __spreadArray([], __read(appSettings.freeIndicatorColor), false)));
 	        // selection indicator
-	        if (this.selectedVerticalKeyframe >= 0 && this.selectedVerticalKeyframe < this.verticalKeyframePositions.length) {
+	        if (this.selectedVerticalKeyframe >= 0 &&
+	            this.selectedVerticalKeyframe < this.verticalKeyframePositions.length) {
 	            triangle(this.p, this.verticalKeyframePositions[this.selectedVerticalKeyframe], this.indicatorHeight, (_b = this.p).color.apply(_b, __spreadArray([], __read(appSettings.selectionIndicatorColor), false)));
 	        }
 	    };
@@ -20216,8 +20221,7 @@
 	        try {
 	            for (var _b = __values(WidgetCollector.filter(SignalWidget)), _c = _b.next(); !_c.done; _c = _b.next()) {
 	                var widget = _c.value;
-	                if (widget.mouseEngaged ||
-	                    widget.userDraggingKeyframe)
+	                if (widget.mouseEngaged || widget.userDraggingKeyframe)
 	                    return;
 	            }
 	        }
@@ -20284,7 +20288,6 @@
 	    };
 	    Banner.prototype.update = function () {
 	        var mouseYGood = this.p.mouseY <= this.height;
-	        console.log(this.p.mouseY, this.height, mouseYGood);
 	        this.mouseHoverHome =
 	            !this.p.uiProcessed &&
 	                mouseYGood &&
@@ -20474,13 +20477,11 @@
 	                    throw new Error("Network response was not OK");
 	                }
 	                return response.json();
-	            }).then(function (data) {
-	                console.log(data);
+	            })
+	                .then(function (data) {
 	                _this.status = data;
 	            })
-	                .catch(function (error) {
-	                console.log(error);
-	            });
+	                .catch(function (error) { });
 	        },
 	        enumerable: false,
 	        configurable: true
@@ -20512,7 +20513,8 @@
 	        this.p.textSize(this.textSize);
 	        this.p.text(imageName, 0, 0);
 	        this.p.textSize(this.textSize / 2);
-	        this.p.text(lookupFiletype(Number(imageName.substring(0, imageName.indexOf(".")))) + editingText, 0, appSettings.filenameTextScale * this.p.textAscent());
+	        this.p.text(lookupFiletype(Number(imageName.substring(0, imageName.indexOf(".")))) +
+	            editingText, 0, appSettings.filenameTextScale * this.p.textAscent());
 	        this.p.pop();
 	    };
 	    Menu.prototype.getGridIndex = function (i, j) {

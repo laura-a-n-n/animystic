@@ -53,12 +53,9 @@ export class Menu {
         return response.json();
       })
       .then((data) => {
-        console.log(data);
         this.status = data;
       })
-      .catch((error) => {
-        console.log(error);
-      });
+      .catch((error) => {});
   }
 
   get enabled() {

@@ -28,7 +28,6 @@ export class Banner {
 
   update() {
     const mouseYGood = this.p.mouseY <= this.height;
-    console.log(this.p.mouseY, this.height, mouseYGood);
     this.mouseHoverHome =
       !this.p.uiProcessed &&
       mouseYGood &&

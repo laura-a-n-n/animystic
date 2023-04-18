@@ -34,6 +34,7 @@ export class SignalWidget extends Widget {
   loweredHeight!: number;
   mouseTolerance!: number;
   indicatorHeight!: number;
+  createVerticalKeyframeThisFrame: boolean = false;
 
   selectedVerticalKeyframe: number = -1;
   selectedHorizontalKeyframe: number = -1;
@@ -112,7 +113,6 @@ export class SignalWidget extends Widget {
       )
     )
       return;
-    console.log("clipboard action");
 
     // Update clipboard index to point to the latest data
     if (this._clipboardIndex !== this._data.length - 1)
@@ -152,7 +152,6 @@ export class SignalWidget extends Widget {
   copyCommand() {
     this.p.saveBox.text("<p>Data copied to clipboard!</p>");
     navigator.clipboard.writeText(this.currentData.toString());
-    console.log(this.currentData.toString());
   }
 
   async pasteCommand() {
@@ -161,7 +160,6 @@ export class SignalWidget extends Widget {
     );
     const clipboard = await navigator.clipboard.readText();
     const data = clipboard.split(",").map((string) => Number(string));
-    console.log(data);
     this.bindData(data);
   }
 
@@ -194,7 +192,6 @@ export class SignalWidget extends Widget {
         if (!response.ok) {
           throw new Error("Network response was not OK");
         }
-        console.log("Data saved successfully");
       })
       .catch((error) => {
         console.error("There was a problem saving the data:", error);
@@ -225,7 +222,7 @@ export class SignalWidget extends Widget {
 
   roundData() {
     for (const [index, datum] of this.currentData.entries()) {
-      this.currentData[index] = Math.round(datum);
+      this.currentData[index] = Math.max(Math.round(datum), 0);
     }
   }
 
@@ -315,7 +312,6 @@ export class SignalWidget extends Widget {
     // draw last line
     this.drawBuffer.line(currentX, currentHeight, currentX, loweredHeight);
     this.verticalKeyframePositions.push(currentX);
-    console.log(this.currentData);
 
     // draw list
     this.drawName();
@@ -453,6 +449,10 @@ export class SignalWidget extends Widget {
   }
 
   handleMouse() {
+    if (this.createVerticalKeyframeThisFrame) {
+      this.createVerticalKeyframeThisFrame = false;
+      this.createVerticalKeyframe();
+    }
     if (WidgetCollector.isWidgetFocused()) return;
     this.getSelectedKeyframe();
 
@@ -487,7 +487,6 @@ export class SignalWidget extends Widget {
           selectedIndex + 1,
           -1
         );
-        console.log(argumentIndices, selectedIndex + 1, nextArgumentIndex);
         if (nextArgumentIndex >= 1) {
           const oldArgument = this.currentData[argumentIndex];
           this.currentData[nextArgumentIndex] -= newArgument - oldArgument;
@@ -513,13 +512,16 @@ export class SignalWidget extends Widget {
   }
 
   insertVerticalKeyframe() {
+    this.createVerticalKeyframeThisFrame = true;
+  }
+
+  createVerticalKeyframe() {
     const mouseX = this.p.viewport.mouseX;
     const newTimeArgument = this.getMillisecondsFromX(
       mouseX,
       this.verticalKeyframeToTheRightOfMouse - 1,
       this.verticalKeyframeToTheRightOfMouse
     );
-    console.log(newTimeArgument, this.verticalKeyframeToTheRightOfMouse);
 
     if (
       // this.verticalKeyframeToTheRightOfMouse >
@@ -532,7 +534,6 @@ export class SignalWidget extends Widget {
       this.angularArgumentDataIndices[this.verticalKeyframeToTheRightOfMouse];
     const associatedHorizontalKeyframeDataIndex =
       this.timeArgumentDataIndices[this.verticalKeyframeToTheRightOfMouse];
-    console.log(this.currentData);
     const oldTimeArgument =
       this.currentData[associatedHorizontalKeyframeDataIndex];
     this.currentData[associatedHorizontalKeyframeDataIndex] = newTimeArgument;
@@ -544,13 +545,7 @@ export class SignalWidget extends Widget {
       appSettings.commands.delay,
       oldTimeArgument - newTimeArgument
     );
-    console.log(
-      this.currentData,
-      mouseX,
-      newTimeArgument,
-      verticalKeyframeDataIndex,
-      associatedHorizontalKeyframeDataIndex
-    );
+
     this.drawToBuffer(false);
   }
 
