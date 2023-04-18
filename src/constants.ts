@@ -75,8 +75,17 @@ export const appSettings = {
   scrubberColor: [255, 0, 0],
 
   // signal widget settings
+  characters: {
+    zarbalatrax: {
+      angularRange: 50,
+      strokeColor: [255, 0, 255],
+    },
+    squambo: {
+      angularRange: 180,
+      strokeColor: [0, 255, 0]
+    }
+  },
   signalWaveHeightScale: 0.4,
-  angularRange: 50,
   mouseTolerance: 0.008,
   clipboardHistoryLength: 64,
 
@@ -87,6 +96,8 @@ export const appSettings = {
   badKeyframeColor: [0, 0, 255],
   freeIndicatorColor: [255, 0, 0],
   selectionIndicatorColor: [0, 0, 255],
+  signalNameTextScaleRatio: 0.25,
+  signalNameTextHeightScale: 1.25,
 
   // command settings for servo widget
   commands: {

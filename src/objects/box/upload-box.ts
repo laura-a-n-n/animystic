@@ -34,7 +34,6 @@ export class UploadBox extends Box {
     this.noButton.hide();
     // Convert the currentData array to JSON format
     const jsonData = JSON.stringify({
-      name: this.p.signalWidget.name,
       filename: this.p.menu.lastSelectedFile,
     });
 

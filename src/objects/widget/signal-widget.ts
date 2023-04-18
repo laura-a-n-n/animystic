@@ -2,11 +2,12 @@ import { appSettings } from "@/constants";
 import { AnimationEditor } from "@/types/animation-editor";
 import { arraysAreEqual, getIndexOrDefault } from "@/utilities/general";
 import { P5Singleton } from "@/utilities/p5-singleton";
+import { Widget } from "@/objects/widget/widget";
 import { isInBoundingBox, isInRectangle, triangle } from "@/utilities/p5-utils";
 import p5 from "p5";
+import { WidgetCollector } from "./widget-collector";
 
-export class SignalWidget {
-  p: AnimationEditor;
+export class SignalWidget extends Widget {
   name: string;
   drawBuffer!: p5.Graphics;
   currentData!: number[];
@@ -15,8 +16,6 @@ export class SignalWidget {
   private _data: number[][] = [];
   private _clipboardIndex: number = 0;
 
-  width!: number;
-  height!: number;
   topOffset!: number;
 
   angularRange: number;
@@ -60,16 +59,16 @@ export class SignalWidget {
   };
 
   constructor(
+    name: string,
     angularRange: number,
     rangeInverted: boolean = false,
     strokeColor: readonly [
       number,
       number,
       number
-    ] = appSettings.defaultSignalStrokeColor,
-    name = "zarbalatrax"
+    ] = appSettings.defaultSignalStrokeColor
   ) {
-    this.p = P5Singleton.getInstance();
+    super(name);
     this.angularRange = angularRange;
     this.rangeInverted = rangeInverted;
     [this.closedAngle, this.openAngle] = this.rangeInverted
@@ -79,12 +78,6 @@ export class SignalWidget {
     this.name = name;
   }
 
-  buffer() {
-    this.computeSize();
-    this.createBuffer();
-    this.drawSignal();
-  }
-
   newData(data: number[]) {
     this.checkpointData = data.slice();
     this.bindData(data);
@@ -92,8 +85,12 @@ export class SignalWidget {
   }
 
   bindData(data: number[]) {
+    if (data[0] != appSettings.commands.talk) {
+      console.log("An attempt was made to bind to data without a root node. Restoring a default root node.")
+      data.splice(0, 0, 2, this.closedAngle);
+    } 
     this.currentData = data;
-    this.p.data.zarbalatrax[this.p.menu.lastSelectedFile] = data;
+    this.p.data[this.name][this.p.menu.lastSelectedFile] = data;
     this.buffer();
   }
 
@@ -208,7 +205,7 @@ export class SignalWidget {
   }
 
   createBuffer() {
-    this.drawBuffer = this.p.createGraphics(this.width, this.height);
+    super.createBuffer();
     this.drawBuffer.fill(...this.strokeColor, 10);
     this.drawBuffer.stroke(...this.strokeColor);
     this.drawBuffer.strokeWeight(appSettings.strokeWeight);
@@ -220,7 +217,7 @@ export class SignalWidget {
     }
   }
 
-  drawSignal(consolidate: boolean = true) {
+  drawToBuffer(consolidate: boolean = true) {
     this.roundData(); // ensure data is integer
     if (!this.userDraggingKeyframe) this.clipboardAction(); // handle clipboard
 
@@ -308,6 +305,9 @@ export class SignalWidget {
     this.verticalKeyframePositions.push(currentX);
     console.log(this.currentData);
 
+    // draw list
+    this.drawName();
+
     // draw bad keyframe indicators
     if (!this.userDraggingKeyframe) return;
     this.drawBuffer.push();
@@ -317,6 +317,18 @@ export class SignalWidget {
     for (const coords of badKeyframeIndicatorCoordinates) {
       this.drawBuffer.square(...coords);
     }
+    this.drawBuffer.pop();
+  }
+
+  drawName() {
+    this.drawBuffer.push();
+    this.drawBuffer.noStroke();
+    this.drawBuffer.textSize(this.p.viewport.textSize * appSettings.signalNameTextScaleRatio);
+    this.drawBuffer.translate(appSettings.horizontalMargin * this.width, this.height - this.drawBuffer.textAscent() * appSettings.signalNameTextHeightScale * this.creationOrder);
+    this.drawBuffer.fill(...this.strokeColor);
+    this.drawBuffer.textAlign(this.p.LEFT, this.p.CENTER);
+    this.drawBuffer.text(this.name, this.drawBuffer.textWidth("   "), 0);
+    this.drawBuffer.square(0, 0, this.drawBuffer.textWidth(" "));
     this.drawBuffer.pop();
   }
 
@@ -421,6 +433,7 @@ export class SignalWidget {
   }
 
   handleMouse() {
+    if (WidgetCollector.isWidgetFocused()) return;
     this.getSelectedKeyframe();
 
     if (
@@ -462,30 +475,21 @@ export class SignalWidget {
       } else newArgument = this.getAngleFromY();
 
       this.currentData[argumentIndex] = newArgument;
-      this.drawSignal();
+      this.drawToBuffer();
     } else if (!this.p.mouseIsPressed && this.userDraggingKeyframe) {
       this.userDraggingKeyframe = false;
-      this.drawSignal();
+      this.drawToBuffer();
     }
 
     this.drawIndicators();
   }
 
-  keyPressed() {
-    const key = this.p.key;
-    const modifiers = [];
-    if (this.p.keyIsDown(this.p.CONTROL)) {
-      modifiers.push("ctrl");
-    }
-    if (this.p.keyIsDown(this.p.SHIFT)) {
-      modifiers.push("shift");
-    }
-    if (this.p.keyIsDown(this.p.ALT)) {
-      modifiers.push("alt");
-    }
-  
-    const keyCombination = [...modifiers, key].join("+");
-    this.keyBindings[keyCombination.toLowerCase()]?.();
+  handleRenderPriority() {
+    if (this.mouseEngaged && !WidgetCollector.isWidgetFocused()) {
+      this.renderPriority = 2;
+      WidgetCollector.focusWidget(this);
+    } else this.renderPriority = 1;
+    WidgetCollector.updateRenderPriority();
   }
 
   insertVerticalKeyframe() {
@@ -527,7 +531,7 @@ export class SignalWidget {
       verticalKeyframeDataIndex,
       associatedHorizontalKeyframeDataIndex
     );
-    this.drawSignal(false);
+    this.drawToBuffer(false);
   }
 
   deleteVerticalKeyframe() {
@@ -540,7 +544,7 @@ export class SignalWidget {
         this.angularArgumentDataIndices[this.selectedVerticalKeyframe];
       const commandIndex = argumentIndex - 1;
       this.currentData.splice(commandIndex, 2);
-      this.drawSignal();
+      this.drawToBuffer();
     }
   }
 
@@ -612,9 +616,21 @@ export class SignalWidget {
     }
   }
 
-  draw() {
+  keyPressed() {
+    if (WidgetCollector.getLastFocusedWidget() !== this) return;
+    super.keyPressed();
+  }
+
+  update() {
+    super.update();
     this.p.viewport.translate(0, this.topOffset);
     this.handleMouse();
+    this.handleRenderPriority();
+    this.p.viewport.reset();
+  }
+  
+  draw() {
+    this.p.viewport.translate(0, this.topOffset);
     this.p.image(this.drawBuffer, 0, 0);
     this.p.viewport.reset();
   }

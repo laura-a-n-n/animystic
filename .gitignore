@@ -9,3 +9,5 @@ assets/image/zarbalatrax/content/**
 assets/sound/**
 data/*
 !data/example-data.json
+ZarbData.h
+data.json

@@ -15,10 +15,10 @@ export const upload = (res: Response, data: number[], filename: string) => {
         args = [];
     }
 
-    console.log(data, filename)
+    console.log(data, filename);
     if (!syncLocal(data, filename))
         return res.status(400).send(appSettings.uploadErrorMessage);
-    
+
     // // call script files
     const spawner = (currentScriptFileIndex: number = 0) => {
         if (currentScriptFileIndex == 1) {
@@ -29,7 +29,7 @@ export const upload = (res: Response, data: number[], filename: string) => {
         const scriptFile =
             appSettings.uploadScriptFiles[currentScriptFileIndex];
         console.log(`Script ${currentScriptFileIndex}: ${scriptFile}`);
-        
+
         const script = spawn(command, [...args, scriptFile]);
 
         script.stdout.on("data", (data) => {
@@ -56,7 +56,6 @@ export const upload = (res: Response, data: number[], filename: string) => {
 };
 
 export const postUpload = (req: Request, res: Response) => {
-    const name = req.body.name;
     const filename = req.body.filename;
 
     // get the local data
@@ -71,15 +70,10 @@ export const postUpload = (req: Request, res: Response) => {
             }
             try {
                 const jsonDictionary = JSON.parse(jsonString);
-                if (
-                    !(
-                        name in jsonDictionary &&
-                        filename in jsonDictionary[name]
-                    )
-                )
-                    return res.status(400).send(appSettings.invalidDataMessage);
-                data = jsonDictionary[name][filename];
-                upload(res, data, filename);
+                for (const name in jsonDictionary) {
+                    data = jsonDictionary[name][filename];
+                    upload(res, data, filename);
+                }
             } catch {
                 console.log(appSettings.jsonParseErrorMessage, err);
                 return res.status(400).send(appSettings.jsonParseErrorMessage);

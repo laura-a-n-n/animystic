@@ -17449,262 +17449,1044 @@
 	var squambo = {
 		"001.wav": [
 			2,
+			180,
+			1,
 			16851
 		],
 		"002.wav": [
 			2,
-			21696
+			180,
+			1,
+			0,
+			2,
+			180,
+			1,
+			20400
 		],
 		"003.wav": [
 			2,
-			24911
+			180,
+			1,
+			0,
+			2,
+			180,
+			1,
+			24511
 		],
 		"004.wav": [
 			2,
-			19536
+			180,
+			1,
+			19136
 		],
 		"005.wav": [
 			2,
-			17053
+			180,
+			1,
+			0,
+			2,
+			180,
+			1,
+			16753
 		],
 		"006.wav": [
 			2,
-			20047
+			180,
+			1,
+			0,
+			2,
+			180,
+			1,
+			18930
 		],
 		"007.wav": [
 			2,
-			39015
+			180,
+			1,
+			0,
+			2,
+			180,
+			1,
+			38465
 		],
 		"008.wav": [
 			2,
-			22597
+			180,
+			1,
+			0,
+			2,
+			180,
+			1,
+			21435
 		],
 		"009.wav": [
 			2,
-			25591
+			180,
+			1,
+			0,
+			2,
+			180,
+			1,
+			25191
 		],
 		"010.wav": [
 			2,
+			180,
+			1,
 			27096
 		],
 		"011.wav": [
 			2,
-			26823
+			180,
+			1,
+			0,
+			2,
+			180,
+			1,
+			26323
 		],
 		"012.wav": [
 			2,
-			35246
+			180,
+			1,
+			0,
+			2,
+			180,
+			1,
+			34646
 		],
 		"013.wav": [
 			2,
-			20702
+			180,
+			1,
+			0,
+			2,
+			180,
+			1,
+			20302
 		],
 		"014.wav": [
 			2,
-			24100
+			180,
+			1,
+			0,
+			2,
+			180,
+			1,
+			23650
 		],
 		"015.wav": [
 			2,
-			25350
+			180,
+			1,
+			0,
+			2,
+			180,
+			1,
+			24900
 		],
 		"016.wav": [
 			2,
-			26600
+			180,
+			1,
+			0,
+			2,
+			180,
+			1,
+			26250
 		],
 		"017.wav": [
 			2,
-			15900
+			180,
+			1,
+			0,
+			2,
+			180,
+			1,
+			15650
 		],
 		"018.wav": [
 			2,
-			15223
+			180,
+			1,
+			0,
+			2,
+			180,
+			1,
+			14973
 		],
 		"019.wav": [
 			2,
-			18400
+			180,
+			1,
+			0,
+			2,
+			180,
+			1,
+			18050
 		],
 		"020.wav": [
 			2,
-			18650
+			180,
+			1,
+			0,
+			2,
+			180,
+			1,
+			18350
 		],
 		"021.wav": [
 			2,
-			28250
+			180,
+			1,
+			0,
+			2,
+			180,
+			1,
+			27600
 		],
 		"022.wav": [
 			2,
-			19550
+			180,
+			1,
+			0,
+			2,
+			180,
+			1,
+			19150
 		],
 		"023.wav": [
 			2,
-			12550
+			180,
+			1,
+			0,
+			2,
+			180,
+			1,
+			12300
 		],
 		"024.wav": [
 			2,
-			34400
+			180,
+			1,
+			0,
+			2,
+			180,
+			1,
+			33750
 		],
 		"025.wav": [
 			2,
-			26200
+			180,
+			1,
+			0,
+			2,
+			180,
+			1,
+			25750
 		],
 		"026.wav": [
 			2,
-			40850
+			180,
+			1,
+			0,
+			2,
+			180,
+			1,
+			40100
 		],
 		"027.wav": [
 			2,
-			49900
+			180,
+			1,
+			0,
+			2,
+			180,
+			1,
+			48850
 		],
 		"028.wav": [
 			2,
-			32450
+			180,
+			1,
+			0,
+			2,
+			180,
+			1,
+			31900
 		],
 		"029.wav": [
 			2,
-			42550
+			180,
+			1,
+			0,
+			2,
+			180,
+			1,
+			41750
 		],
 		"030.wav": [
 			2,
-			37000
+			180,
+			1,
+			0,
+			2,
+			180,
+			1,
+			36300
 		],
 		"031.wav": [
 			2,
-			37353
+			180,
+			1,
+			500,
+			2,
+			0,
+			1,
+			532,
+			2,
+			20,
+			1,
+			1425,
+			2,
+			170,
+			1,
+			1474,
+			2,
+			130,
+			1,
+			3244,
+			2,
+			170,
+			1,
+			5701,
+			2,
+			0,
+			1,
+			1130,
+			2,
+			150,
+			1,
+			2359,
+			2,
+			120,
+			1,
+			1917,
+			2,
+			170,
+			1,
+			2064,
+			2,
+			120,
+			1,
+			541,
+			2,
+			170,
+			1,
+			2850,
+			2,
+			150,
+			1,
+			2064,
+			2,
+			180,
+			1,
+			2015,
+			2,
+			120,
+			1,
+			3637,
+			2,
+			180,
+			1,
+			5750
 		],
 		"032.wav": [
 			2,
-			15455
+			180,
+			1,
+			809,
+			2,
+			170,
+			1,
+			897,
+			2,
+			140,
+			1,
+			3938,
+			2,
+			140,
+			1,
+			1575,
+			2,
+			0,
+			1,
+			1510,
+			2,
+			20,
+			1,
+			1000,
+			2,
+			50,
+			1,
+			5476,
+			2,
+			170,
+			1,
+			0
 		],
 		"033.wav": [
 			2,
-			26229
+			180,
+			1,
+			3411,
+			2,
+			160,
+			1,
+			940,
+			2,
+			130,
+			1,
+			3933,
+			2,
+			180,
+			1,
+			1845,
+			2,
+			160,
+			1,
+			1750,
+			2,
+			120,
+			1,
+			1801,
+			2,
+			160,
+			1,
+			7832,
+			2,
+			0,
+			1,
+			1114,
+			2,
+			40,
+			1,
+			3203
 		],
 		"034.wav": [
 			2,
-			34309
+			180,
+			1,
+			6909,
+			2,
+			20,
+			1,
+			12215,
+			2,
+			150,
+			1,
+			1000,
+			2,
+			170,
+			1,
+			1608,
+			2,
+			30,
+			1,
+			6313,
+			2,
+			40,
+			1,
+			778,
+			2,
+			50,
+			1,
+			3659,
+			2,
+			60,
+			1,
+			1327,
+			2,
+			140,
+			1,
+			0,
+			2,
+			160,
+			1,
+			0
 		],
 		"035.wav": [
 			2,
-			45852
+			180,
+			1,
+			658,
+			2,
+			130,
+			1,
+			1436,
+			2,
+			160,
+			1,
+			2273,
+			2,
+			130,
+			1,
+			2034,
+			2,
+			150,
+			1,
+			2931,
+			2,
+			120,
+			1,
+			2692,
+			2,
+			50,
+			1,
+			22851,
+			2,
+			10,
+			1,
+			1500,
+			2,
+			30,
+			1,
+			1670,
+			2,
+			10,
+			1,
+			7357,
+			2,
+			180,
+			1,
+			0
 		],
 		"036.wav": [
 			2,
-			12238
+			180,
+			1,
+			12038
 		],
 		"037.wav": [
 			2,
-			35290
+			180,
+			1,
+			21270,
+			2,
+			20,
+			1,
+			2772,
+			2,
+			50,
+			1,
+			10798,
+			2,
+			180,
+			1,
+			0
 		],
 		"038.wav": [
 			2,
-			37568
+			180,
+			1,
+			15786,
+			2,
+			170,
+			1,
+			2098,
+			2,
+			150,
+			1,
+			15188,
+			2,
+			50,
+			1,
+			1249,
+			2,
+			20,
+			1,
+			2697,
+			2,
+			180,
+			1,
+			0
 		],
 		"039.wav": [
 			2,
-			19748
+			180,
+			1,
+			708,
+			2,
+			160,
+			1,
+			1264,
+			2,
+			120,
+			1,
+			1744,
+			2,
+			150,
+			1,
+			1870,
+			2,
+			170,
+			1,
+			11249,
+			2,
+			30,
+			1,
+			1163,
+			2,
+			60,
+			1,
+			1500,
+			2,
+			180,
+			1,
+			0
 		],
 		"040.wav": [
 			2,
-			19879
+			180,
+			1,
+			19579
 		],
 		"041.wav": [
 			2,
-			17270
+			180,
+			1,
+			1527,
+			2,
+			10,
+			1,
+			4957,
+			2,
+			40,
+			1,
+			1104,
+			2,
+			20,
+			1,
+			8529,
+			2,
+			40,
+			1,
+			803,
+			2,
+			180,
+			1,
+			0
 		],
 		"042.wav": [
 			2,
-			6889
+			180,
+			1,
+			6739
 		],
 		"043.wav": [
 			2,
-			18762
+			180,
+			1,
+			18412
 		],
 		"044.wav": [
 			2,
-			18425
+			180,
+			1,
+			11775,
+			2,
+			20,
+			1,
+			725,
+			2,
+			50,
+			1,
+			1625,
+			2,
+			40,
+			1,
+			4000,
+			2,
+			180,
+			1,
+			0
 		],
 		"045.wav": [
 			2,
-			14928
+			180,
+			1,
+			13045,
+			2,
+			20,
+			1,
+			883,
+			2,
+			140,
+			1,
+			800,
+			2,
+			180,
+			1,
+			0
 		],
 		"046.wav": [
 			2,
-			6894
+			180,
+			1,
+			6744
 		],
 		"047.wav": [
 			2,
-			9977
+			180,
+			1,
+			9827
 		],
 		"048.wav": [
 			2,
-			34415
+			180,
+			1,
+			34015
 		],
 		"049.wav": [
 			2,
-			9840
+			180,
+			1,
+			9590
 		],
 		"050.wav": [
 			2,
-			7170
+			180,
+			1,
+			7070
 		],
 		"051.wav": [
 			2,
-			14832
+			180,
+			1,
+			14632
 		],
 		"052.wav": [
 			2,
-			9273
+			180,
+			1,
+			7495,
+			2,
+			170,
+			1,
+			531,
+			2,
+			140,
+			1,
+			897,
+			2,
+			160,
+			1,
+			200,
+			2,
+			180,
+			1,
+			0
 		],
 		"053.wav": [
 			2,
-			15176
+			180,
+			1,
+			14826
 		],
 		"054.wav": [
 			2,
-			9249
+			180,
+			1,
+			7627,
+			2,
+			150,
+			1,
+			972,
+			2,
+			170,
+			1,
+			400,
+			2,
+			180,
+			1,
+			0
 		],
 		"055.wav": [
 			2,
-			17216
+			180,
+			1,
+			16916
 		],
 		"056.wav": [
 			2,
-			30195
+			180,
+			1,
+			29645
 		],
 		"057.wav": [
 			2,
-			28796
+			180,
+			1,
+			826,
+			2,
+			0,
+			1,
+			1062,
+			2,
+			20,
+			1,
+			1052,
+			2,
+			10,
+			1,
+			5331,
+			2,
+			40,
+			1,
+			1170,
+			2,
+			20,
+			1,
+			1632,
+			2,
+			40,
+			1,
+			2036,
+			2,
+			20,
+			1,
+			1122,
+			2,
+			10,
+			1,
+			1996,
+			2,
+			30,
+			1,
+			1426,
+			2,
+			50,
+			1,
+			1377,
+			2,
+			10,
+			1,
+			1534,
+			2,
+			20,
+			1,
+			344,
+			2,
+			50,
+			1,
+			1839,
+			2,
+			40,
+			1,
+			1878,
+			2,
+			60,
+			1,
+			1396,
+			2,
+			20,
+			1,
+			2075,
+			2,
+			50,
+			1,
+			500,
+			2,
+			180,
+			1,
+			0
 		],
 		"058.wav": [
 			2,
-			12702
+			180,
+			1,
+			12502
 		],
 		"059.wav": [
 			2,
-			10368
+			180,
+			1,
+			10218
 		],
 		"060.wav": [
 			2,
-			750
+			180,
+			1,
+			0,
+			2,
+			0,
+			1,
+			100,
+			2,
+			30,
+			1,
+			100,
+			2,
+			60,
+			1,
+			100,
+			2,
+			90,
+			1,
+			100,
+			2,
+			120,
+			1,
+			100,
+			2,
+			150,
+			1,
+			100,
+			2,
+			180,
+			1,
+			100
 		],
 		"061.wav": [
 			2,
-			750
+			180,
+			1,
+			0,
+			2,
+			0,
+			1,
+			100,
+			2,
+			30,
+			1,
+			100,
+			2,
+			60,
+			1,
+			100,
+			2,
+			90,
+			1,
+			100,
+			2,
+			120,
+			1,
+			100,
+			2,
+			150,
+			1,
+			100,
+			2,
+			180,
+			1,
+			100
 		],
 		"062.wav": [
 			2,
-			750
+			180,
+			1,
+			0,
+			2,
+			0,
+			1,
+			100,
+			2,
+			30,
+			1,
+			100,
+			2,
+			60,
+			1,
+			100,
+			2,
+			90,
+			1,
+			100,
+			2,
+			120,
+			1,
+			100,
+			2,
+			150,
+			1,
+			100,
+			2,
+			180,
+			1,
+			100
 		],
 		"063.wav": [
 			2,
-			750
+			180,
+			1,
+			0,
+			2,
+			0,
+			1,
+			100,
+			2,
+			30,
+			1,
+			100,
+			2,
+			60,
+			1,
+			100,
+			2,
+			90,
+			1,
+			100,
+			2,
+			120,
+			1,
+			100,
+			2,
+			150,
+			1,
+			100,
+			2,
+			180,
+			1,
+			100
 		],
 		"064.wav": [
 			2,
-			750
+			180,
+			1,
+			0,
+			2,
+			0,
+			1,
+			100,
+			2,
+			30,
+			1,
+			100,
+			2,
+			60,
+			1,
+			100,
+			2,
+			90,
+			1,
+			100,
+			2,
+			120,
+			1,
+			100,
+			2,
+			150,
+			1,
+			100,
+			2,
+			180,
+			1,
+			100
 		],
 		"065.wav": [
 			2,
+			180,
+			1,
 			0,
 			2,
 			0,
@@ -17713,6 +18495,8 @@
 		],
 		"066.wav": [
 			2,
+			180,
+			1,
 			0,
 			2,
 			0,
@@ -17721,6 +18505,8 @@
 		],
 		"067.wav": [
 			2,
+			180,
+			1,
 			0,
 			2,
 			0,
@@ -17729,6 +18515,8 @@
 		],
 		"068.wav": [
 			2,
+			180,
+			1,
 			0,
 			2,
 			0,
@@ -17737,6 +18525,8 @@
 		],
 		"069.wav": [
 			2,
+			180,
+			1,
 			0,
 			2,
 			0,
@@ -17745,6 +18535,8 @@
 		],
 		"070.wav": [
 			2,
+			180,
+			1,
 			0,
 			2,
 			0,
@@ -17753,102 +18545,380 @@
 		],
 		"071.wav": [
 			2,
-			2372
+			180,
+			1,
+			0,
+			2,
+			0,
+			1,
+			464,
+			2,
+			180,
+			1,
+			555,
+			2,
+			130,
+			1,
+			489,
+			2,
+			180,
+			1,
+			814
 		],
 		"072.wav": [
 			2,
-			3036
+			180,
+			1,
+			0,
+			2,
+			180,
+			1,
+			743,
+			2,
+			130,
+			1,
+			689,
+			2,
+			150,
+			1,
+			439,
+			2,
+			170,
+			1,
+			1115,
+			2,
+			180,
+			1,
+			0
 		],
 		"073.wav": [
 			2,
-			1919
+			180,
+			1,
+			0,
+			2,
+			0,
+			1,
+			716,
+			2,
+			180,
+			1,
+			971,
+			2,
+			150,
+			1,
+			182,
+			2,
+			170,
+			1,
+			0
 		],
 		"074.wav": [
 			2,
-			4197
+			180,
+			1,
+			4047
 		],
 		"075.wav": [
 			2,
-			5656
+			180,
+			1,
+			5506
 		],
 		"076.wav": [
 			2,
-			6831
+			180,
+			1,
+			6631
 		],
 		"077.wav": [
 			2,
-			6406
+			180,
+			1,
+			6256
 		],
 		"078.wav": [
 			2,
-			16975
+			180,
+			1,
+			13530,
+			2,
+			130,
+			1,
+			1080,
+			2,
+			180,
+			1,
+			2115
 		],
 		"079.wav": [
 			2,
-			14606
+			180,
+			1,
+			9952,
+			2,
+			180,
+			1,
+			528,
+			2,
+			0,
+			1,
+			1131,
+			2,
+			30,
+			1,
+			622,
+			2,
+			0,
+			1,
+			2073
 		],
 		"080.wav": [
 			2,
-			13100
+			180,
+			1,
+			9228,
+			2,
+			180,
+			1,
+			827,
+			2,
+			150,
+			1,
+			1012,
+			2,
+			170,
+			1,
+			1783
 		],
 		"081.wav": [
 			2,
-			9451
+			180,
+			1,
+			9301
 		],
 		"082.wav": [
 			2,
-			9277
+			180,
+			1,
+			7219,
+			2,
+			180,
+			1,
+			924,
+			2,
+			150,
+			1,
+			734,
+			2,
+			180,
+			1,
+			200,
+			2,
+			130,
+			1,
+			0
 		],
 		"083.wav": [
 			2,
-			14273
+			180,
+			1,
+			10033,
+			2,
+			180,
+			1,
+			2099,
+			2,
+			0,
+			1,
+			1841
 		],
 		"084.wav": [
 			2,
-			8145
+			180,
+			1,
+			6116,
+			2,
+			150,
+			1,
+			895,
+			2,
+			80,
+			1,
+			984,
+			2,
+			180,
+			1,
+			0
 		],
 		"085.wav": [
 			2,
-			10159
+			180,
+			1,
+			7530,
+			2,
+			180,
+			1,
+			910,
+			2,
+			90,
+			1,
+			1569
 		],
 		"086.wav": [
 			2,
-			13854
+			180,
+			1,
+			11589,
+			2,
+			180,
+			1,
+			822,
+			2,
+			0,
+			1,
+			1143
 		],
 		"087.wav": [
 			2,
-			5892
+			180,
+			1,
+			5742
 		],
 		"088.wav": [
 			2,
-			13130
+			180,
+			1,
+			8620,
+			2,
+			180,
+			1,
+			750,
+			2,
+			160,
+			1,
+			528,
+			2,
+			180,
+			1,
+			920,
+			2,
+			150,
+			1,
+			2112
 		],
 		"089.wav": [
 			2,
-			16775
+			180,
+			1,
+			12047,
+			2,
+			180,
+			1,
+			1259,
+			2,
+			0,
+			1,
+			3169
 		],
 		"090.wav": [
 			2,
-			13361
+			180,
+			1,
+			6672,
+			2,
+			180,
+			1,
+			1516,
+			2,
+			0,
+			1,
+			1644,
+			2,
+			180,
+			1,
+			3379
 		],
 		"091.wav": [
 			2,
-			19699
+			180,
+			1,
+			14576,
+			2,
+			0,
+			1,
+			996,
+			2,
+			180,
+			1,
+			708,
+			2,
+			160,
+			1,
+			3119
 		],
 		"092.wav": [
 			2,
-			10876
+			180,
+			1,
+			8327,
+			2,
+			180,
+			1,
+			900,
+			2,
+			150,
+			1,
+			506,
+			2,
+			180,
+			1,
+			943
 		],
 		"093.wav": [
 			2,
-			15790
+			180,
+			1,
+			6794,
+			2,
+			180,
+			1,
+			2692,
+			2,
+			90,
+			1,
+			2528,
+			2,
+			180,
+			1,
+			1870,
+			2,
+			0,
+			1,
+			1706
 		],
 		"094.wav": [
 			2,
-			8409
+			180,
+			1,
+			5326,
+			2,
+			180,
+			1,
+			825,
+			2,
+			160,
+			1,
+			611,
+			2,
+			180,
+			1,
+			1447
 		],
 		"095.wav": [
 			2,
+			180,
+			1,
 			0,
 			2,
 			0,
@@ -17857,6 +18927,8 @@
 		],
 		"096.wav": [
 			2,
+			180,
+			1,
 			0,
 			2,
 			0,
@@ -17865,10 +18937,14 @@
 		],
 		"097.wav": [
 			2,
-			2768
+			180,
+			1,
+			2668
 		],
 		"098.wav": [
 			2,
+			180,
+			1,
 			0,
 			2,
 			0,
@@ -17877,6 +18953,8 @@
 		],
 		"099.wav": [
 			2,
+			180,
+			1,
 			0,
 			2,
 			0,
@@ -17885,7 +18963,97 @@
 		],
 		"100.wav": [
 			2,
-			85283
+			180,
+			1,
+			0,
+			2,
+			120,
+			1,
+			590,
+			2,
+			180,
+			1,
+			670,
+			2,
+			120,
+			1,
+			542,
+			2,
+			180,
+			1,
+			479,
+			2,
+			120,
+			1,
+			447,
+			2,
+			180,
+			1,
+			41779,
+			2,
+			70,
+			1,
+			128,
+			2,
+			180,
+			1,
+			734,
+			2,
+			70,
+			1,
+			845,
+			2,
+			180,
+			1,
+			686,
+			2,
+			70,
+			1,
+			1069,
+			2,
+			150,
+			1,
+			782,
+			2,
+			130,
+			1,
+			4579,
+			2,
+			180,
+			1,
+			2504,
+			2,
+			140,
+			1,
+			1707,
+			2,
+			120,
+			1,
+			526,
+			2,
+			180,
+			1,
+			1021,
+			2,
+			140,
+			1,
+			11868,
+			2,
+			150,
+			1,
+			798,
+			2,
+			180,
+			1,
+			1212,
+			2,
+			140,
+			1,
+			6652,
+			2,
+			180,
+			1,
+			4865
 		]
 	};
 	var data = {
@@ -17961,8 +19129,17 @@
 	    // audio widget appearance
 	    scrubberColor: [255, 0, 0],
 	    // signal widget settings
+	    characters: {
+	        zarbalatrax: {
+	            angularRange: 50,
+	            strokeColor: [255, 0, 255],
+	        },
+	        squambo: {
+	            angularRange: 180,
+	            strokeColor: [0, 255, 0]
+	        }
+	    },
 	    signalWaveHeightScale: 0.4,
-	    angularRange: 50,
 	    mouseTolerance: 0.008,
 	    clipboardHistoryLength: 64,
 	    // signal widget appearance
@@ -17972,6 +19149,8 @@
 	    badKeyframeColor: [0, 0, 255],
 	    freeIndicatorColor: [255, 0, 0],
 	    selectionIndicatorColor: [0, 0, 255],
+	    signalNameTextScaleRatio: 0.25,
+	    signalNameTextHeightScale: 1.25,
 	    // command settings for servo widget
 	    commands: {
 	        delay: 1,
@@ -18118,25 +19297,749 @@
 	    return p0 >= x0 && p0 <= x1 && p1 >= y0 && p1 <= y1;
 	}
 
-	var AudioWidget = /** @class */ (function () {
-	    function AudioWidget() {
-	        this.currentTime = 0;
-	        this.currentPosition = 0;
-	        this.loading = true;
-	        this.paused = false;
-	        this.uiProcessed = false;
-	        this.keyBindings = {
-	            " ": this.toggle.bind(this),
-	            r: this.resetTime.bind(this),
+	var WidgetCollector = /** @class */ (function () {
+	    function WidgetCollector() {
+	    }
+	    WidgetCollector.setInstance = function () {
+	        WidgetCollector.clearAllInstances();
+	    };
+	    WidgetCollector.getAllInstances = function () {
+	        return this.sortedCollection;
+	    };
+	    WidgetCollector.addInstance = function (name, widget) {
+	        if (name in widget)
+	            return widget;
+	        WidgetCollector.collection[name] = widget;
+	        WidgetCollector.updateRenderPriority();
+	        return widget;
+	    };
+	    WidgetCollector.clearAllInstances = function () {
+	        WidgetCollector.collection = {};
+	    };
+	    WidgetCollector.updateRenderPriority = function () {
+	        var widgets = Object.values(WidgetCollector.collection).flat();
+	        WidgetCollector.sortedCollection = widgets.sort(function (a, b) { return a.renderPriority - b.renderPriority; });
+	    };
+	    WidgetCollector.draw = function () {
+	        var e_1, _a, e_2, _b;
+	        try {
+	            // update widgets
+	            for (var _c = __values(WidgetCollector.sortedCollection.reverse()), _d = _c.next(); !_d.done; _d = _c.next()) {
+	                var widget = _d.value;
+	                widget.update();
+	            } // render priority is opposite of update priority.
+	        }
+	        catch (e_1_1) { e_1 = { error: e_1_1 }; }
+	        finally {
+	            try {
+	                if (_d && !_d.done && (_a = _c.return)) _a.call(_c);
+	            }
+	            finally { if (e_1) throw e_1.error; }
+	        }
+	        // default to last selected if focus cannot be resolved this frame
+	        if (!WidgetCollector.isWidgetFocused() &&
+	            WidgetCollector.lastWidgetFocused !== undefined &&
+	            WidgetCollector.lastWidgetFocused.active) {
+	            WidgetCollector.lastWidgetFocused.renderPriority = 2;
+	            WidgetCollector.updateRenderPriority();
+	        }
+	        try {
+	            // draw widgets
+	            for (var WidgetCollector_1 = __values(WidgetCollector), WidgetCollector_1_1 = WidgetCollector_1.next(); !WidgetCollector_1_1.done; WidgetCollector_1_1 = WidgetCollector_1.next()) {
+	                var widget = WidgetCollector_1_1.value;
+	                widget.draw();
+	            }
+	        }
+	        catch (e_2_1) { e_2 = { error: e_2_1 }; }
+	        finally {
+	            try {
+	                if (WidgetCollector_1_1 && !WidgetCollector_1_1.done && (_b = WidgetCollector_1.return)) _b.call(WidgetCollector_1);
+	            }
+	            finally { if (e_2) throw e_2.error; }
+	        }
+	        this.widgetFocused = false;
+	    };
+	    WidgetCollector[Symbol.iterator] = function () {
+	        var collectionValues = Object.values(WidgetCollector.sortedCollection);
+	        var index = 0;
+	        return {
+	            next: function () {
+	                if (index < collectionValues.length) {
+	                    return {
+	                        value: collectionValues[index++],
+	                        done: false,
+	                    };
+	                }
+	                else {
+	                    return {
+	                        value: undefined,
+	                        done: true,
+	                    };
+	                }
+	            },
 	        };
+	    };
+	    WidgetCollector.filter = function (widgetType) {
+	        var WidgetCollector_2, WidgetCollector_2_1, widget, e_3_1;
+	        var e_3, _a;
+	        return __generator(this, function (_b) {
+	            switch (_b.label) {
+	                case 0:
+	                    _b.trys.push([0, 5, 6, 7]);
+	                    WidgetCollector_2 = __values(WidgetCollector), WidgetCollector_2_1 = WidgetCollector_2.next();
+	                    _b.label = 1;
+	                case 1:
+	                    if (!!WidgetCollector_2_1.done) return [3 /*break*/, 4];
+	                    widget = WidgetCollector_2_1.value;
+	                    if (!(widget instanceof widgetType)) return [3 /*break*/, 3];
+	                    return [4 /*yield*/, widget];
+	                case 2:
+	                    _b.sent();
+	                    _b.label = 3;
+	                case 3:
+	                    WidgetCollector_2_1 = WidgetCollector_2.next();
+	                    return [3 /*break*/, 1];
+	                case 4: return [3 /*break*/, 7];
+	                case 5:
+	                    e_3_1 = _b.sent();
+	                    e_3 = { error: e_3_1 };
+	                    return [3 /*break*/, 7];
+	                case 6:
+	                    try {
+	                        if (WidgetCollector_2_1 && !WidgetCollector_2_1.done && (_a = WidgetCollector_2.return)) _a.call(WidgetCollector_2);
+	                    }
+	                    finally { if (e_3) throw e_3.error; }
+	                    return [7 /*endfinally*/];
+	                case 7: return [2 /*return*/];
+	            }
+	        });
+	    };
+	    WidgetCollector.windowResized = function () {
+	        var e_4, _a;
+	        try {
+	            for (var WidgetCollector_3 = __values(WidgetCollector), WidgetCollector_3_1 = WidgetCollector_3.next(); !WidgetCollector_3_1.done; WidgetCollector_3_1 = WidgetCollector_3.next()) {
+	                var widget = WidgetCollector_3_1.value;
+	                widget.buffer();
+	            }
+	        }
+	        catch (e_4_1) { e_4 = { error: e_4_1 }; }
+	        finally {
+	            try {
+	                if (WidgetCollector_3_1 && !WidgetCollector_3_1.done && (_a = WidgetCollector_3.return)) _a.call(WidgetCollector_3);
+	            }
+	            finally { if (e_4) throw e_4.error; }
+	        }
+	    };
+	    WidgetCollector.keyPressed = function () {
+	        var e_5, _a;
+	        try {
+	            for (var WidgetCollector_4 = __values(WidgetCollector), WidgetCollector_4_1 = WidgetCollector_4.next(); !WidgetCollector_4_1.done; WidgetCollector_4_1 = WidgetCollector_4.next()) {
+	                var widget = WidgetCollector_4_1.value;
+	                widget.keyPressed();
+	            }
+	        }
+	        catch (e_5_1) { e_5 = { error: e_5_1 }; }
+	        finally {
+	            try {
+	                if (WidgetCollector_4_1 && !WidgetCollector_4_1.done && (_a = WidgetCollector_4.return)) _a.call(WidgetCollector_4);
+	            }
+	            finally { if (e_5) throw e_5.error; }
+	        }
+	    };
+	    WidgetCollector.isWidgetFocused = function () {
+	        return WidgetCollector.widgetFocused !== false;
+	    };
+	    WidgetCollector.getLastFocusedWidget = function () {
+	        return WidgetCollector.lastWidgetFocused;
+	    };
+	    WidgetCollector.focusWidget = function (widget) {
+	        WidgetCollector.widgetFocused = widget;
+	        WidgetCollector.lastWidgetFocused = widget;
+	    };
+	    WidgetCollector.widgetFocused = false;
+	    return WidgetCollector;
+	}());
+
+	var Widget = /** @class */ (function () {
+	    function Widget(name) {
+	        this.active = true;
+	        this.renderPriority = 0;
 	        this.p = P5Singleton.getInstance();
-	        this.currentPlaybackImage = this.p.images.pauseButton;
-	        this.playbackImages = [this.p.images.pauseButton, this.p.images.playButton];
+	        WidgetCollector.addInstance(name, this);
+	        this.creationOrder = WidgetCollector.getAllInstances().length;
+	    }
+	    Widget.prototype.setRenderPriority = function (priority) {
+	        this.renderPriority = priority;
+	        WidgetCollector.updateRenderPriority();
+	    };
+	    Widget.prototype.buffer = function () {
+	        this.computeSize();
+	        this.createBuffer();
+	        this.drawToBuffer();
+	    };
+	    Widget.prototype.createBuffer = function () {
+	        this.drawBuffer = this.p.createGraphics(this.width, this.height);
+	    };
+	    Widget.prototype.keyPressed = function () {
+	        var _a, _b;
+	        if (!this.active)
+	            return;
+	        var key = this.p.key;
+	        var modifiers = [];
+	        if (this.p.keyIsDown(this.p.CONTROL)) {
+	            modifiers.push("ctrl");
+	        }
+	        if (this.p.keyIsDown(this.p.SHIFT)) {
+	            modifiers.push("shift");
+	        }
+	        if (this.p.keyIsDown(this.p.ALT)) {
+	            modifiers.push("alt");
+	        }
+	        var keyCombination = __spreadArray(__spreadArray([], __read(modifiers), false), [key], false).join("+");
+	        (_b = (_a = this.keyBindings)[keyCombination.toLowerCase()]) === null || _b === void 0 ? void 0 : _b.call(_a);
+	    };
+	    Widget.prototype.update = function () {
+	        if (!this.active)
+	            return;
+	    };
+	    Widget.prototype.draw = function () {
+	        if (!this.active)
+	            return;
+	    };
+	    return Widget;
+	}());
+
+	var getIndexOrDefault = function (haystack, index, otherwise) {
+	    return index in haystack ? haystack[index] : otherwise;
+	};
+	var arraysAreEqual = function (arr1, arr2) {
+	    if (arr1.length !== arr2.length) {
+	        return false;
+	    }
+	    for (var i = 0; i < arr1.length; i++) {
+	        if (arr1[i] !== arr2[i]) {
+	            return false;
+	        }
+	    }
+	    return true;
+	};
+
+	var SignalWidget = /** @class */ (function (_super) {
+	    __extends(SignalWidget, _super);
+	    function SignalWidget(name, angularRange, rangeInverted, strokeColor) {
+	        var _a;
+	        if (rangeInverted === void 0) { rangeInverted = false; }
+	        if (strokeColor === void 0) { strokeColor = appSettings.defaultSignalStrokeColor; }
+	        var _this = _super.call(this, name) || this;
+	        _this._clipboardSize = appSettings.clipboardHistoryLength;
+	        _this._data = [];
+	        _this._clipboardIndex = 0;
+	        _this.verticalKeyframePositions = [];
+	        _this.horizontalKeyframePositions = [];
+	        _this.angularArgumentDataIndices = [];
+	        _this.timeArgumentDataIndices = [];
+	        _this.selectedVerticalKeyframe = -1;
+	        _this.selectedHorizontalKeyframe = -1;
+	        _this.verticalKeyframeToTheRightOfMouse = -1;
+	        _this.userDraggingKeyframe = false;
+	        _this.mouseEngaged = false;
+	        _this.keyBindings = {
+	            a: _this.insertVerticalKeyframe.bind(_this),
+	            d: _this.deleteVerticalKeyframe.bind(_this),
+	            "ctrl+c": _this.copyCommand.bind(_this),
+	            "ctrl+v": _this.pasteCommand.bind(_this),
+	            "ctrl+s": _this.saveCommand.bind(_this),
+	            "ctrl+u": _this.uploadCommand.bind(_this),
+	            "ctrl+y": _this.redoCommand.bind(_this),
+	            "ctrl+shift+z": _this.redoCommand.bind(_this),
+	            "ctrl+z": _this.undoCommand.bind(_this),
+	        };
+	        _this.angularRange = angularRange;
+	        _this.rangeInverted = rangeInverted;
+	        _a = __read(_this.rangeInverted
+	            ? [_this.angularRange, 0]
+	            : [0, _this.angularRange], 2), _this.closedAngle = _a[0], _this.openAngle = _a[1];
+	        _this.strokeColor = __spreadArray([], __read(strokeColor), false);
+	        _this.name = name;
+	        return _this;
+	    }
+	    SignalWidget.prototype.newData = function (data) {
+	        this.checkpointData = data.slice();
+	        this.bindData(data);
+	        this.resetClipboard();
+	    };
+	    SignalWidget.prototype.bindData = function (data) {
+	        if (data[0] != appSettings.commands.talk) {
+	            console.log("An attempt was made to bind to data without a root node. Restoring a default root node.");
+	            data.splice(0, 0, 2, this.closedAngle);
+	        }
+	        this.currentData = data;
+	        this.p.data[this.name][this.p.menu.lastSelectedFile] = data;
+	        this.buffer();
+	    };
+	    SignalWidget.prototype.resetClipboard = function () {
+	        this._clipboardIndex = 0;
+	        this._data = [];
+	        this._data.push(this.checkpointData);
+	    };
+	    SignalWidget.prototype.clipboardAction = function () {
+	        if (arraysAreEqual(this.currentData, this._clipboardIndex < this._data.length ? this._data[this._clipboardIndex] : []))
+	            return;
+	        console.log('clipboard action');
+	        // Update clipboard index to point to the latest data
+	        if (this._clipboardIndex !== this._data.length - 1)
+	            this._data.splice(this._clipboardIndex + 1); // Remove all entries after clipboardIndex
+	        this._data.push(__spreadArray([], __read(this.currentData), false)); // Push new data as the last element
+	        this._clipboardIndex = this._data.length - 1; // Update clipboard index to latest data index
+	        // Keep _data length within the clipboard size limit
+	        if (this._data.length > this._clipboardSize) {
+	            this._data.shift(); // Remove oldest entry from the clipboard
+	            this._clipboardIndex--;
+	        }
+	    };
+	    SignalWidget.prototype.undoCommand = function () {
+	        if (this._clipboardIndex > 0 && this._clipboardIndex < this._data.length) {
+	            // If there is data in the clipboard
+	            this._clipboardIndex--; // Decrement clipboard index
+	            this.currentData = __spreadArray([], __read(this._data[this._clipboardIndex]), false); // Restore data from clipboard
+	            this.buffer(); // Update the buffer
+	        }
+	    };
+	    SignalWidget.prototype.redoCommand = function () {
+	        if (this._clipboardIndex < this._data.length - 1 && this._data.length > 0) {
+	            // If there is data after the current clipboard index
+	            this._clipboardIndex++; // Increment clipboard index
+	            this.currentData = __spreadArray([], __read(this._data[this._clipboardIndex]), false); // Restore data from clipboard
+	            this.buffer(); // Update the buffer
+	        }
+	    };
+	    SignalWidget.prototype.uploadCommand = function () {
+	        this.p.uploadBox.toggle();
+	    };
+	    SignalWidget.prototype.copyCommand = function () {
+	        this.p.saveBox.text("<p>Data copied to clipboard!</p>");
+	        navigator.clipboard.writeText(this.currentData.toString());
+	        console.log(this.currentData.toString());
+	    };
+	    SignalWidget.prototype.pasteCommand = function () {
+	        return __awaiter(this, void 0, void 0, function () {
+	            var clipboard, data;
+	            return __generator(this, function (_a) {
+	                switch (_a.label) {
+	                    case 0:
+	                        this.p.saveBox.text("<p>Data pasted from clipboard. Be sure to save if you want to keep these changes, otherwise they will be discarded.</p>");
+	                        return [4 /*yield*/, navigator.clipboard.readText()];
+	                    case 1:
+	                        clipboard = _a.sent();
+	                        data = clipboard.split(",").map(function (string) { return Number(string); });
+	                        console.log(data);
+	                        this.bindData(data);
+	                        return [2 /*return*/];
+	                }
+	            });
+	        });
+	    };
+	    SignalWidget.prototype.saveCommand = function () {
+	        this.initiateSave();
+	    };
+	    SignalWidget.prototype.initiateSave = function () {
+	        this.p.saveBox.text();
+	        this.saveToFile();
+	    };
+	    SignalWidget.prototype.saveToFile = function () {
+	        // Convert the currentData array to JSON format
+	        var jsonData = JSON.stringify({
+	            name: this.name,
+	            filename: this.p.menu.lastSelectedFile,
+	            data: this.currentData,
+	        });
+	        // Send a POST request to the server with the array data in the request body
+	        fetch("/data", {
+	            method: "POST",
+	            headers: {
+	                "Content-Type": "application/json",
+	            },
+	            body: jsonData,
+	        })
+	            .then(function (response) {
+	            if (!response.ok) {
+	                throw new Error("Network response was not OK");
+	            }
+	            console.log("Data saved successfully");
+	        })
+	            .catch(function (error) {
+	            console.error("There was a problem saving the data:", error);
+	        });
+	    };
+	    SignalWidget.prototype.computeSize = function () {
+	        var _a;
+	        this.width = this.p.width;
+	        this.height = this.p.viewport.scaleToHeight(2 * appSettings.maxWaveHeightProportion);
+	        this.topOffset = (((_a = this.p.audioWidget) === null || _a === void 0 ? void 0 : _a.height) - this.height) / 2;
+	        this.signalHeight = appSettings.signalWaveHeightScale * this.height;
+	        this.signalVerticalMargin = (this.height - this.signalHeight) / 2;
+	        this.resolution = this.p.audioWidget.resolution / 1000.0;
+	        this.mouseTolerance = this.width * appSettings.mouseTolerance;
+	        this.indicatorHeight =
+	            this.height - appSettings.indicatorMargin * this.signalVerticalMargin;
+	    };
+	    SignalWidget.prototype.createBuffer = function () {
+	        var _a, _b;
+	        _super.prototype.createBuffer.call(this);
+	        (_a = this.drawBuffer).fill.apply(_a, __spreadArray(__spreadArray([], __read(this.strokeColor), false), [10], false));
+	        (_b = this.drawBuffer).stroke.apply(_b, __spreadArray([], __read(this.strokeColor), false));
+	        this.drawBuffer.strokeWeight(appSettings.strokeWeight);
+	    };
+	    SignalWidget.prototype.roundData = function () {
+	        var e_1, _a;
+	        try {
+	            for (var _b = __values(this.currentData.entries()), _c = _b.next(); !_c.done; _c = _b.next()) {
+	                var _d = __read(_c.value, 2), index = _d[0], datum = _d[1];
+	                this.currentData[index] = Math.round(datum);
+	            }
+	        }
+	        catch (e_1_1) { e_1 = { error: e_1_1 }; }
+	        finally {
+	            try {
+	                if (_c && !_c.done && (_a = _b.return)) _a.call(_b);
+	            }
+	            finally { if (e_1) throw e_1.error; }
+	        }
+	    };
+	    SignalWidget.prototype.drawToBuffer = function (consolidate) {
+	        var _a, _b, e_2, _c, _d;
+	        if (consolidate === void 0) { consolidate = true; }
+	        this.roundData(); // ensure data is integer
+	        if (!this.userDraggingKeyframe)
+	            this.clipboardAction(); // handle clipboard
+	        var badKeyframes = this.consolidateData(this.userDraggingKeyframe || !consolidate); // always avoid duplicates?
+	        var badKeyframeIndicatorCoordinates = [];
+	        this.drawBuffer.clear(0, 0, 0, 0);
+	        this.drawBuffer.rect(0, 0, this.width, this.height);
+	        var raisedHeight = this.signalVerticalMargin;
+	        var loweredHeight = raisedHeight + this.signalHeight;
+	        this.raisedHeight = raisedHeight;
+	        this.loweredHeight = loweredHeight;
+	        this.verticalKeyframePositions = [];
+	        this.horizontalKeyframePositions = [];
+	        this.timeArgumentDataIndices = [];
+	        this.angularArgumentDataIndices = [];
+	        var _e = __read([
+	            0,
+	            0,
+	            loweredHeight,
+	            loweredHeight,
+	        ], 4), lastX = _e[0], currentX = _e[1], lastHeight = _e[2], currentHeight = _e[3];
+	        for (var i = 0; i < this.currentData.length; i += 2) {
+	            var _f = __read([
+	                this.currentData[i],
+	                this.currentData[i + 1],
+	            ], 2), command = _f[0], argument = _f[1];
+	            switch (command) {
+	                case appSettings.commands.delay:
+	                    currentX = lastX + this.resolution * argument; // move in time
+	                    // draw horizontal line
+	                    this.drawBuffer.line(lastX, currentHeight, currentX, currentHeight);
+	                    lastX = currentX; // keep track of how far along we are
+	                    this.horizontalKeyframePositions.push(currentHeight);
+	                    this.timeArgumentDataIndices.push(i + 1);
+	                    break;
+	                case appSettings.commands.talk:
+	                    // compute how "open" the servo is
+	                    var percentOpen = argument / this.angularRange;
+	                    if (this.rangeInverted)
+	                        percentOpen = 1 - percentOpen;
+	                    // calculate wave height
+	                    lastHeight = currentHeight;
+	                    currentHeight = loweredHeight - percentOpen * this.signalHeight;
+	                    // draw vertical line
+	                    this.drawBuffer.line(currentX, lastHeight, currentX, currentHeight);
+	                    // draw bulb to show existence of keyframe
+	                    if (this.userDraggingKeyframe && i in badKeyframes) {
+	                        badKeyframeIndicatorCoordinates.push([
+	                            currentX,
+	                            currentHeight,
+	                            appSettings.strokeWeight,
+	                        ]);
+	                    }
+	                    else {
+	                        this.drawBuffer.push();
+	                        this.drawBuffer.rectMode(this.p.CENTER);
+	                        this.drawBuffer.square(currentX, currentHeight, appSettings.strokeWeight);
+	                        this.drawBuffer.pop();
+	                    }
+	                    if (currentX > 0)
+	                        this.verticalKeyframePositions.push(currentX);
+	                    this.angularArgumentDataIndices.push(i + 1);
+	                    break;
+	            }
+	        }
+	        // draw last line
+	        this.drawBuffer.line(currentX, currentHeight, currentX, loweredHeight);
+	        this.verticalKeyframePositions.push(currentX);
+	        console.log(this.currentData);
+	        // draw list
+	        this.drawName();
+	        // draw bad keyframe indicators
+	        if (!this.userDraggingKeyframe)
+	            return;
+	        this.drawBuffer.push();
+	        this.drawBuffer.rectMode(this.p.CENTER);
+	        (_a = this.drawBuffer).fill.apply(_a, __spreadArray([], __read(appSettings.badKeyframeColor), false));
+	        (_b = this.drawBuffer).stroke.apply(_b, __spreadArray([], __read(appSettings.badKeyframeColor), false));
+	        try {
+	            for (var badKeyframeIndicatorCoordinates_1 = __values(badKeyframeIndicatorCoordinates), badKeyframeIndicatorCoordinates_1_1 = badKeyframeIndicatorCoordinates_1.next(); !badKeyframeIndicatorCoordinates_1_1.done; badKeyframeIndicatorCoordinates_1_1 = badKeyframeIndicatorCoordinates_1.next()) {
+	                var coords = badKeyframeIndicatorCoordinates_1_1.value;
+	                (_d = this.drawBuffer).square.apply(_d, __spreadArray([], __read(coords), false));
+	            }
+	        }
+	        catch (e_2_1) { e_2 = { error: e_2_1 }; }
+	        finally {
+	            try {
+	                if (badKeyframeIndicatorCoordinates_1_1 && !badKeyframeIndicatorCoordinates_1_1.done && (_c = badKeyframeIndicatorCoordinates_1.return)) _c.call(badKeyframeIndicatorCoordinates_1);
+	            }
+	            finally { if (e_2) throw e_2.error; }
+	        }
+	        this.drawBuffer.pop();
+	    };
+	    SignalWidget.prototype.drawName = function () {
+	        var _a;
+	        this.drawBuffer.push();
+	        this.drawBuffer.noStroke();
+	        this.drawBuffer.textSize(this.p.viewport.textSize * appSettings.signalNameTextScaleRatio);
+	        this.drawBuffer.translate(appSettings.horizontalMargin * this.width, this.height - this.drawBuffer.textAscent() * appSettings.signalNameTextHeightScale * this.creationOrder);
+	        (_a = this.drawBuffer).fill.apply(_a, __spreadArray([], __read(this.strokeColor), false));
+	        this.drawBuffer.textAlign(this.p.LEFT, this.p.CENTER);
+	        this.drawBuffer.text(this.name, this.drawBuffer.textWidth("   "), 0);
+	        this.drawBuffer.square(0, 0, this.drawBuffer.textWidth(" "));
+	        this.drawBuffer.pop();
+	    };
+	    SignalWidget.prototype.getSelectedKeyframe = function () {
+	        var e_3, _a;
+	        var _b = __read([this.p.viewport.mouseX, this.p.viewport.mouseY], 2), mouseX = _b[0], mouseY = _b[1];
+	        var toleranceRadius = this.mouseTolerance / 2;
+	        var mouseEngaged = false;
+	        var verticalKeyframeToTheRightOfMouse = 0;
+	        try {
+	            for (var _c = __values(this.horizontalKeyframePositions.entries()), _d = _c.next(); !_d.done; _d = _c.next()) {
+	                var _e = __read(_d.value, 2), index = _e[0], horizontalKeyframe = _e[1];
+	                var lastX = getIndexOrDefault(this.verticalKeyframePositions, index - 1, 0);
+	                var currentX = this.verticalKeyframePositions[index];
+	                var nextHeight = getIndexOrDefault(this.horizontalKeyframePositions, index + 1, this.loweredHeight);
+	                var currentHeight = horizontalKeyframe;
+	                if (currentX <= mouseX)
+	                    verticalKeyframeToTheRightOfMouse += 1;
+	                if (this.userDraggingKeyframe)
+	                    return;
+	                // is user selecting a horizontal keyframe?
+	                if (isInBoundingBox(mouseX, mouseY, lastX + toleranceRadius, currentHeight - toleranceRadius, currentX - toleranceRadius, currentHeight + toleranceRadius)) {
+	                    this.p.mouse.cursor("ns-resize");
+	                    this.selectedHorizontalKeyframe = index;
+	                    if (!this.userDraggingKeyframe)
+	                        this.selectedVerticalKeyframe = -1;
+	                    mouseEngaged = true;
+	                }
+	                // is user selecting a vertical keyframe?
+	                else if (isInBoundingBox(mouseX, mouseY, currentX - toleranceRadius, nextHeight, currentX + toleranceRadius, currentHeight)) {
+	                    this.p.mouse.cursor("ew-resize");
+	                    this.selectedVerticalKeyframe = index;
+	                    this.selectedHorizontalKeyframe = -1;
+	                    mouseEngaged = true;
+	                }
+	            }
+	        }
+	        catch (e_3_1) { e_3 = { error: e_3_1 }; }
+	        finally {
+	            try {
+	                if (_d && !_d.done && (_a = _c.return)) _a.call(_c);
+	            }
+	            finally { if (e_3) throw e_3.error; }
+	        }
+	        this.mouseEngaged = mouseEngaged;
+	        this.verticalKeyframeToTheRightOfMouse = verticalKeyframeToTheRightOfMouse;
+	    };
+	    SignalWidget.prototype.getMillisecondsFromX = function (x, leftIndex, rightIndex) {
+	        var previousVerticalKeyframe = getIndexOrDefault(this.verticalKeyframePositions, leftIndex, 0);
+	        var nextVerticalKeyframe = getIndexOrDefault(this.verticalKeyframePositions, rightIndex, this.p.audioWidget.width);
+	        var distanceBetweenKeyframes = nextVerticalKeyframe - previousVerticalKeyframe;
+	        var percentRight = this.p.constrain((x - previousVerticalKeyframe) / distanceBetweenKeyframes, 0, 1);
+	        return (this.p.lerp(0, distanceBetweenKeyframes, percentRight) / this.resolution);
+	    };
+	    SignalWidget.prototype.getAngleFromY = function () {
+	        var mouseY = this.p.viewport.mouseY;
+	        var percentOpen = this.p.constrain((this.loweredHeight + this.mouseTolerance - mouseY) /
+	            (this.signalHeight + this.mouseTolerance), 0, 1);
+	        var angle = this.p.lerp(this.closedAngle, this.openAngle, percentOpen);
+	        return angle;
+	    };
+	    SignalWidget.prototype.handleMouse = function () {
+	        if (WidgetCollector.isWidgetFocused())
+	            return;
+	        this.getSelectedKeyframe();
+	        if (!this.p.uiProcessed &&
+	            this.p.mouseIsPressed &&
+	            this.p.mouseButton == this.p.LEFT &&
+	            this.mouseEngaged) {
+	            this.userDraggingKeyframe = true;
+	            var isVerticalKeyframe = this.selectedVerticalKeyframe >= 0;
+	            var argumentIndices = isVerticalKeyframe
+	                ? this.timeArgumentDataIndices
+	                : this.angularArgumentDataIndices;
+	            var selectedIndex = isVerticalKeyframe
+	                ? this.selectedVerticalKeyframe
+	                : this.selectedHorizontalKeyframe;
+	            var argumentIndex = argumentIndices[selectedIndex];
+	            var newArgument = void 0;
+	            if (isVerticalKeyframe) {
+	                var mouseX = this.p.viewport.mouseX;
+	                newArgument = this.getMillisecondsFromX(mouseX, selectedIndex - 1, selectedIndex + 1);
+	                var nextArgumentIndex = getIndexOrDefault(argumentIndices, selectedIndex + 1, -1);
+	                console.log(argumentIndices, selectedIndex + 1, nextArgumentIndex);
+	                if (nextArgumentIndex >= 1) {
+	                    var oldArgument = this.currentData[argumentIndex];
+	                    this.currentData[nextArgumentIndex] -= newArgument - oldArgument;
+	                }
+	            }
+	            else
+	                newArgument = this.getAngleFromY();
+	            this.currentData[argumentIndex] = newArgument;
+	            this.drawToBuffer();
+	        }
+	        else if (!this.p.mouseIsPressed && this.userDraggingKeyframe) {
+	            this.userDraggingKeyframe = false;
+	            this.drawToBuffer();
+	        }
+	        this.drawIndicators();
+	    };
+	    SignalWidget.prototype.handleRenderPriority = function () {
+	        if (this.mouseEngaged && !WidgetCollector.isWidgetFocused()) {
+	            this.renderPriority = 2;
+	            WidgetCollector.focusWidget(this);
+	        }
+	        else
+	            this.renderPriority = 1;
+	        WidgetCollector.updateRenderPriority();
+	    };
+	    SignalWidget.prototype.insertVerticalKeyframe = function () {
+	        var mouseX = this.p.viewport.mouseX;
+	        var newTimeArgument = this.getMillisecondsFromX(mouseX, this.verticalKeyframeToTheRightOfMouse - 1, this.verticalKeyframeToTheRightOfMouse);
+	        console.log(newTimeArgument, this.verticalKeyframeToTheRightOfMouse);
+	        if (
+	        // this.verticalKeyframeToTheRightOfMouse >
+	        // this.angularArgumentDataIndices.length - 1 ||
+	        this.verticalKeyframeToTheRightOfMouse === undefined)
+	            return;
+	        var verticalKeyframeDataIndex = this.angularArgumentDataIndices[this.verticalKeyframeToTheRightOfMouse];
+	        var associatedHorizontalKeyframeDataIndex = this.timeArgumentDataIndices[this.verticalKeyframeToTheRightOfMouse];
+	        console.log(this.currentData);
+	        var oldTimeArgument = this.currentData[associatedHorizontalKeyframeDataIndex];
+	        this.currentData[associatedHorizontalKeyframeDataIndex] = newTimeArgument;
+	        this.currentData.splice(associatedHorizontalKeyframeDataIndex + 1, 0, appSettings.commands.talk, this.getAngleFromY(), appSettings.commands.delay, oldTimeArgument - newTimeArgument);
+	        console.log(this.currentData, mouseX, newTimeArgument, verticalKeyframeDataIndex, associatedHorizontalKeyframeDataIndex);
+	        this.drawToBuffer(false);
+	    };
+	    SignalWidget.prototype.deleteVerticalKeyframe = function () {
+	        if (this.selectedVerticalKeyframe >= 0 &&
+	            this.verticalKeyframePositions.length >= 3 &&
+	            this.selectedVerticalKeyframe < this.angularArgumentDataIndices.length) {
+	            var argumentIndex = this.angularArgumentDataIndices[this.selectedVerticalKeyframe];
+	            var commandIndex = argumentIndex - 1;
+	            this.currentData.splice(commandIndex, 2);
+	            this.drawToBuffer();
+	        }
+	    };
+	    /**
+	     * consolidateData
+	     *
+	     * This function merges all consecutive time commands in currentData.
+	     * Also, if there are repeated talk commands separated by a single delay, we merge.
+	     *
+	     * Arguments:
+	     *  test: boolean -- if true, then does not actually consolidate; just returns a map with potential deletes.
+	     */
+	    SignalWidget.prototype.consolidateData = function (test) {
+	        if (test === void 0) { test = false; }
+	        var badKeyframes = {};
+	        for (var i = 0; i < this.currentData.length - 2; i += 2) {
+	            // consecutiveness condition
+	            if (this.currentData[i] == appSettings.commands.delay &&
+	                this.currentData[i + 2] == appSettings.commands.delay) {
+	                badKeyframes[i + 3] = true;
+	                if (test)
+	                    continue;
+	                this.currentData[i + 1] += this.currentData[i + 3]; // merge into one
+	                this.currentData.splice(i + 2, 2); // delete the latter 2 items
+	            }
+	            else if (i < this.currentData.length - 5 &&
+	                this.currentData[i] == appSettings.commands.talk &&
+	                this.currentData[i + 2] == appSettings.commands.delay &&
+	                this.currentData[i + 4] == appSettings.commands.talk &&
+	                this.currentData[i + 1] == this.currentData[i + 5]) {
+	                badKeyframes[i + 4] = true;
+	                if (test)
+	                    continue;
+	                var deleteCount = 2;
+	                if (i < this.currentData.length - 7 &&
+	                    this.currentData[i + 6] == appSettings.commands.delay) {
+	                    this.currentData[i + 3] += this.currentData[i + 7];
+	                    deleteCount = 4;
+	                }
+	                this.currentData.splice(i + 4, deleteCount); // delete the extraneous items
+	            }
+	        }
+	        return badKeyframes;
+	    };
+	    SignalWidget.prototype.drawIndicators = function () {
+	        var _a, _b;
+	        // "free" indicator
+	        triangle(this.p, this.p.mouseX, this.indicatorHeight, (_a = this.p).color.apply(_a, __spreadArray([], __read(appSettings.freeIndicatorColor), false)));
+	        // selection indicator
+	        if (this.selectedVerticalKeyframe >= 0 && this.selectedVerticalKeyframe < this.verticalKeyframePositions.length) {
+	            triangle(this.p, this.verticalKeyframePositions[this.selectedVerticalKeyframe], this.indicatorHeight, (_b = this.p).color.apply(_b, __spreadArray([], __read(appSettings.selectionIndicatorColor), false)));
+	        }
+	    };
+	    SignalWidget.prototype.keyPressed = function () {
+	        if (WidgetCollector.getLastFocusedWidget() !== this)
+	            return;
+	        _super.prototype.keyPressed.call(this);
+	    };
+	    SignalWidget.prototype.update = function () {
+	        _super.prototype.update.call(this);
+	        this.p.viewport.translate(0, this.topOffset);
+	        this.handleMouse();
+	        this.handleRenderPriority();
+	        this.p.viewport.reset();
+	    };
+	    SignalWidget.prototype.draw = function () {
+	        this.p.viewport.translate(0, this.topOffset);
+	        this.p.image(this.drawBuffer, 0, 0);
+	        this.p.viewport.reset();
+	    };
+	    return SignalWidget;
+	}(Widget));
+
+	var AudioWidget = /** @class */ (function (_super) {
+	    __extends(AudioWidget, _super);
+	    function AudioWidget(name) {
+	        if (name === void 0) { name = "audioWidget"; }
+	        var _this = _super.call(this, name) || this;
+	        _this.currentTime = 0;
+	        _this.currentPosition = 0;
+	        _this.loading = true;
+	        _this.paused = false;
+	        _this.uiProcessed = false;
+	        _this.keyBindings = {
+	            " ": _this.toggle.bind(_this),
+	            r: _this.resetTime.bind(_this),
+	        };
+	        _this.currentPlaybackImage = _this.p.images.pauseButton;
+	        _this.playbackImages = [_this.p.images.pauseButton, _this.p.images.playButton];
+	        return _this;
 	    }
 	    AudioWidget.prototype.buffer = function () {
 	        this.computeSize();
 	        this.createBuffer();
-	        this.drawAudioWave();
+	        this.drawToBuffer();
 	    };
 	    AudioWidget.prototype.computeSize = function () {
 	        this.width = this.p.width;
@@ -18180,7 +20083,7 @@
 	    };
 	    AudioWidget.prototype.createBuffer = function () {
 	        var _a, _b;
-	        this.drawBuffer = this.p.createGraphics(this.width, this.height);
+	        _super.prototype.createBuffer.call(this);
 	        (_a = this.drawBuffer).fill.apply(_a, __spreadArray([], __read(appSettings.defaultFill), false));
 	        (_b = this.drawBuffer).stroke.apply(_b, __spreadArray([], __read(appSettings.defaultFill), false));
 	    };
@@ -18192,7 +20095,7 @@
 	        this.p.line(this.currentPosition, 0, this.currentPosition, this.p.height);
 	        this.p.pop();
 	    };
-	    AudioWidget.prototype.drawAudioWave = function (reset) {
+	    AudioWidget.prototype.drawToBuffer = function (reset) {
 	        var e_1, _a;
 	        if (reset === void 0) { reset = false; }
 	        // compute data
@@ -18233,19 +20136,29 @@
 	        (_e = this.p).image.apply(_e, __spreadArray([this.p.images.downloadButton], __read(this.downloadButtonBox), false));
 	        this.p.pop();
 	    };
-	    AudioWidget.prototype.keyPressed = function () {
-	        var _a, _b;
-	        (_b = (_a = this.keyBindings)[this.p.key]) === null || _b === void 0 ? void 0 : _b.call(_a);
-	    };
 	    AudioWidget.prototype.mouseClicked = function () {
+	        var e_2, _a;
 	        if (this.playbackButtonHover)
 	            this.toggle();
 	        else if (this.helpButtonHover)
 	            this.p.helpBox.toggle();
 	        else if (this.uploadButtonHover)
 	            this.p.uploadBox.toggle();
-	        else if (this.downloadButtonHover)
-	            this.p.signalWidget.initiateSave();
+	        else if (this.downloadButtonHover) {
+	            try {
+	                for (var _b = __values(WidgetCollector.filter(SignalWidget)), _c = _b.next(); !_c.done; _c = _b.next()) {
+	                    var widget = _c.value;
+	                    widget.initiateSave();
+	                }
+	            }
+	            catch (e_2_1) { e_2 = { error: e_2_1 }; }
+	            finally {
+	                try {
+	                    if (_c && !_c.done && (_a = _b.return)) _a.call(_b);
+	                }
+	                finally { if (e_2) throw e_2.error; }
+	            }
+	        }
 	    };
 	    AudioWidget.prototype.toggle = function () {
 	        if (this.currentSound.isPlaying() && !this.paused) {
@@ -18296,13 +20209,25 @@
 	        this.currentPosition = this.currentTime * this.resolution;
 	    };
 	    AudioWidget.prototype.handleMouse = function () {
-	        var _a, _b;
+	        var e_3, _a;
 	        this.uiProcessed = this.playbackButtonHover = this.helpButtonHover = false;
 	        if (this.p.uiProcessed)
 	            return;
-	        if (((_a = this.p.signalWidget) === null || _a === void 0 ? void 0 : _a.mouseEngaged) ||
-	            ((_b = this.p.signalWidget) === null || _b === void 0 ? void 0 : _b.userDraggingKeyframe))
-	            return;
+	        try {
+	            for (var _b = __values(WidgetCollector.filter(SignalWidget)), _c = _b.next(); !_c.done; _c = _b.next()) {
+	                var widget = _c.value;
+	                if (widget.mouseEngaged ||
+	                    widget.userDraggingKeyframe)
+	                    return;
+	            }
+	        }
+	        catch (e_3_1) { e_3 = { error: e_3_1 }; }
+	        finally {
+	            try {
+	                if (_c && !_c.done && (_a = _b.return)) _a.call(_b);
+	            }
+	            finally { if (e_3) throw e_3.error; }
+	        }
 	        var mouseCoords = [
 	            this.p.mouseX + this.audioButtonSize / 2,
 	            this.p.viewport.mouseY + this.audioButtonSize / 2,
@@ -18333,7 +20258,7 @@
 	            this.scrubToPosition(this.p.mouseX);
 	    };
 	    AudioWidget.prototype.draw = function () {
-	        this.update();
+	        _super.prototype.draw.call(this);
 	        this.p.push();
 	        this.p.image(this.drawBuffer, 0, 0);
 	        this.drawScrubber();
@@ -18341,7 +20266,7 @@
 	        this.p.pop();
 	    };
 	    return AudioWidget;
-	}());
+	}(Widget));
 
 	var Banner = /** @class */ (function () {
 	    function Banner() {
@@ -18359,6 +20284,7 @@
 	    };
 	    Banner.prototype.update = function () {
 	        var mouseYGood = this.p.mouseY <= this.height;
+	        console.log(this.p.mouseY, this.height, mouseYGood);
 	        this.mouseHoverHome =
 	            !this.p.uiProcessed &&
 	                mouseYGood &&
@@ -18484,7 +20410,6 @@
 	        this.noButton.hide();
 	        // Convert the currentData array to JSON format
 	        var jsonData = JSON.stringify({
-	            name: this.p.signalWidget.name,
 	            filename: this.p.menu.lastSelectedFile,
 	        });
 	        // Send a POST request to the server with the array data in the request body
@@ -18678,499 +20603,11 @@
 	    return Mouse;
 	}());
 
-	var getIndexOrDefault = function (haystack, index, otherwise) {
-	    return index in haystack ? haystack[index] : otherwise;
-	};
-	var arraysAreEqual = function (arr1, arr2) {
-	    if (arr1.length !== arr2.length) {
-	        return false;
-	    }
-	    for (var i = 0; i < arr1.length; i++) {
-	        if (arr1[i] !== arr2[i]) {
-	            return false;
-	        }
-	    }
-	    return true;
-	};
-
-	var SignalWidget = /** @class */ (function () {
-	    function SignalWidget(angularRange, rangeInverted, strokeColor, name) {
-	        var _a;
-	        if (rangeInverted === void 0) { rangeInverted = false; }
-	        if (strokeColor === void 0) { strokeColor = appSettings.defaultSignalStrokeColor; }
-	        if (name === void 0) { name = "zarbalatrax"; }
-	        this._clipboardSize = appSettings.clipboardHistoryLength;
-	        this._data = [];
-	        this._clipboardIndex = 0;
-	        this.verticalKeyframePositions = [];
-	        this.horizontalKeyframePositions = [];
-	        this.angularArgumentDataIndices = [];
-	        this.timeArgumentDataIndices = [];
-	        this.selectedVerticalKeyframe = -1;
-	        this.selectedHorizontalKeyframe = -1;
-	        this.verticalKeyframeToTheRightOfMouse = -1;
-	        this.userDraggingKeyframe = false;
-	        this.mouseEngaged = false;
-	        this.keyBindings = {
-	            a: this.insertVerticalKeyframe.bind(this),
-	            d: this.deleteVerticalKeyframe.bind(this),
-	            "ctrl+c": this.copyCommand.bind(this),
-	            "ctrl+v": this.pasteCommand.bind(this),
-	            "ctrl+s": this.saveCommand.bind(this),
-	            "ctrl+u": this.uploadCommand.bind(this),
-	            "ctrl+y": this.redoCommand.bind(this),
-	            "ctrl+shift+z": this.redoCommand.bind(this),
-	            "ctrl+z": this.undoCommand.bind(this),
-	        };
-	        this.p = P5Singleton.getInstance();
-	        this.angularRange = angularRange;
-	        this.rangeInverted = rangeInverted;
-	        _a = __read(this.rangeInverted
-	            ? [this.angularRange, 0]
-	            : [0, this.angularRange], 2), this.closedAngle = _a[0], this.openAngle = _a[1];
-	        this.strokeColor = __spreadArray([], __read(strokeColor), false);
-	        this.name = name;
-	    }
-	    SignalWidget.prototype.buffer = function () {
-	        this.computeSize();
-	        this.createBuffer();
-	        this.drawSignal();
-	    };
-	    SignalWidget.prototype.newData = function (data) {
-	        this.checkpointData = data.slice();
-	        this.bindData(data);
-	        this.resetClipboard();
-	    };
-	    SignalWidget.prototype.bindData = function (data) {
-	        this.currentData = data;
-	        this.p.data.zarbalatrax[this.p.menu.lastSelectedFile] = data;
-	        this.buffer();
-	    };
-	    SignalWidget.prototype.resetClipboard = function () {
-	        this._clipboardIndex = 0;
-	        this._data = [];
-	        this._data.push(this.checkpointData);
-	    };
-	    SignalWidget.prototype.clipboardAction = function () {
-	        if (arraysAreEqual(this.currentData, this._clipboardIndex < this._data.length ? this._data[this._clipboardIndex] : []))
-	            return;
-	        console.log('clipboard action');
-	        // Update clipboard index to point to the latest data
-	        if (this._clipboardIndex !== this._data.length - 1)
-	            this._data.splice(this._clipboardIndex + 1); // Remove all entries after clipboardIndex
-	        this._data.push(__spreadArray([], __read(this.currentData), false)); // Push new data as the last element
-	        this._clipboardIndex = this._data.length - 1; // Update clipboard index to latest data index
-	        // Keep _data length within the clipboard size limit
-	        if (this._data.length > this._clipboardSize) {
-	            this._data.shift(); // Remove oldest entry from the clipboard
-	            this._clipboardIndex--;
-	        }
-	    };
-	    SignalWidget.prototype.undoCommand = function () {
-	        if (this._clipboardIndex > 0 && this._clipboardIndex < this._data.length) {
-	            // If there is data in the clipboard
-	            this._clipboardIndex--; // Decrement clipboard index
-	            this.currentData = __spreadArray([], __read(this._data[this._clipboardIndex]), false); // Restore data from clipboard
-	            this.buffer(); // Update the buffer
-	        }
-	    };
-	    SignalWidget.prototype.redoCommand = function () {
-	        if (this._clipboardIndex < this._data.length - 1 && this._data.length > 0) {
-	            // If there is data after the current clipboard index
-	            this._clipboardIndex++; // Increment clipboard index
-	            this.currentData = __spreadArray([], __read(this._data[this._clipboardIndex]), false); // Restore data from clipboard
-	            this.buffer(); // Update the buffer
-	        }
-	    };
-	    SignalWidget.prototype.uploadCommand = function () {
-	        this.p.uploadBox.toggle();
-	    };
-	    SignalWidget.prototype.copyCommand = function () {
-	        this.p.saveBox.text("<p>Data copied to clipboard!</p>");
-	        navigator.clipboard.writeText(this.currentData.toString());
-	        console.log(this.currentData.toString());
-	    };
-	    SignalWidget.prototype.pasteCommand = function () {
-	        return __awaiter(this, void 0, void 0, function () {
-	            var clipboard, data;
-	            return __generator(this, function (_a) {
-	                switch (_a.label) {
-	                    case 0:
-	                        this.p.saveBox.text("<p>Data pasted from clipboard. Be sure to save if you want to keep these changes, otherwise they will be discarded.</p>");
-	                        return [4 /*yield*/, navigator.clipboard.readText()];
-	                    case 1:
-	                        clipboard = _a.sent();
-	                        data = clipboard.split(",").map(function (string) { return Number(string); });
-	                        console.log(data);
-	                        this.bindData(data);
-	                        return [2 /*return*/];
-	                }
-	            });
-	        });
-	    };
-	    SignalWidget.prototype.saveCommand = function () {
-	        this.initiateSave();
-	    };
-	    SignalWidget.prototype.initiateSave = function () {
-	        this.p.saveBox.text();
-	        this.saveToFile();
-	    };
-	    SignalWidget.prototype.saveToFile = function () {
-	        // Convert the currentData array to JSON format
-	        var jsonData = JSON.stringify({
-	            name: this.name,
-	            filename: this.p.menu.lastSelectedFile,
-	            data: this.currentData,
-	        });
-	        // Send a POST request to the server with the array data in the request body
-	        fetch("/data", {
-	            method: "POST",
-	            headers: {
-	                "Content-Type": "application/json",
-	            },
-	            body: jsonData,
-	        })
-	            .then(function (response) {
-	            if (!response.ok) {
-	                throw new Error("Network response was not OK");
-	            }
-	            console.log("Data saved successfully");
-	        })
-	            .catch(function (error) {
-	            console.error("There was a problem saving the data:", error);
-	        });
-	    };
-	    SignalWidget.prototype.computeSize = function () {
-	        var _a;
-	        this.width = this.p.width;
-	        this.height = this.p.viewport.scaleToHeight(2 * appSettings.maxWaveHeightProportion);
-	        this.topOffset = (((_a = this.p.audioWidget) === null || _a === void 0 ? void 0 : _a.height) - this.height) / 2;
-	        this.signalHeight = appSettings.signalWaveHeightScale * this.height;
-	        this.signalVerticalMargin = (this.height - this.signalHeight) / 2;
-	        this.resolution = this.p.audioWidget.resolution / 1000.0;
-	        this.mouseTolerance = this.width * appSettings.mouseTolerance;
-	        this.indicatorHeight =
-	            this.height - appSettings.indicatorMargin * this.signalVerticalMargin;
-	    };
-	    SignalWidget.prototype.createBuffer = function () {
-	        var _a, _b;
-	        this.drawBuffer = this.p.createGraphics(this.width, this.height);
-	        (_a = this.drawBuffer).fill.apply(_a, __spreadArray(__spreadArray([], __read(this.strokeColor), false), [10], false));
-	        (_b = this.drawBuffer).stroke.apply(_b, __spreadArray([], __read(this.strokeColor), false));
-	        this.drawBuffer.strokeWeight(appSettings.strokeWeight);
-	    };
-	    SignalWidget.prototype.roundData = function () {
-	        var e_1, _a;
-	        try {
-	            for (var _b = __values(this.currentData.entries()), _c = _b.next(); !_c.done; _c = _b.next()) {
-	                var _d = __read(_c.value, 2), index = _d[0], datum = _d[1];
-	                this.currentData[index] = Math.round(datum);
-	            }
-	        }
-	        catch (e_1_1) { e_1 = { error: e_1_1 }; }
-	        finally {
-	            try {
-	                if (_c && !_c.done && (_a = _b.return)) _a.call(_b);
-	            }
-	            finally { if (e_1) throw e_1.error; }
-	        }
-	    };
-	    SignalWidget.prototype.drawSignal = function (consolidate) {
-	        var _a, _b, e_2, _c, _d;
-	        if (consolidate === void 0) { consolidate = true; }
-	        this.roundData(); // ensure data is integer
-	        if (!this.userDraggingKeyframe)
-	            this.clipboardAction(); // handle clipboard
-	        var badKeyframes = this.consolidateData(this.userDraggingKeyframe || !consolidate); // always avoid duplicates?
-	        var badKeyframeIndicatorCoordinates = [];
-	        this.drawBuffer.clear(0, 0, 0, 0);
-	        this.drawBuffer.rect(0, 0, this.width, this.height);
-	        var raisedHeight = this.signalVerticalMargin;
-	        var loweredHeight = raisedHeight + this.signalHeight;
-	        this.raisedHeight = raisedHeight;
-	        this.loweredHeight = loweredHeight;
-	        this.verticalKeyframePositions = [];
-	        this.horizontalKeyframePositions = [];
-	        this.timeArgumentDataIndices = [];
-	        this.angularArgumentDataIndices = [];
-	        var _e = __read([
-	            0,
-	            0,
-	            loweredHeight,
-	            loweredHeight,
-	        ], 4), lastX = _e[0], currentX = _e[1], lastHeight = _e[2], currentHeight = _e[3];
-	        for (var i = 0; i < this.currentData.length; i += 2) {
-	            var _f = __read([
-	                this.currentData[i],
-	                this.currentData[i + 1],
-	            ], 2), command = _f[0], argument = _f[1];
-	            switch (command) {
-	                case appSettings.commands.delay:
-	                    currentX = lastX + this.resolution * argument; // move in time
-	                    // draw horizontal line
-	                    this.drawBuffer.line(lastX, currentHeight, currentX, currentHeight);
-	                    lastX = currentX; // keep track of how far along we are
-	                    this.horizontalKeyframePositions.push(currentHeight);
-	                    this.timeArgumentDataIndices.push(i + 1);
-	                    break;
-	                case appSettings.commands.talk:
-	                    // compute how "open" the servo is
-	                    var percentOpen = argument / this.angularRange;
-	                    if (this.rangeInverted)
-	                        percentOpen = 1 - percentOpen;
-	                    // calculate wave height
-	                    lastHeight = currentHeight;
-	                    currentHeight = loweredHeight - percentOpen * this.signalHeight;
-	                    // draw vertical line
-	                    this.drawBuffer.line(currentX, lastHeight, currentX, currentHeight);
-	                    // draw bulb to show existence of keyframe
-	                    if (this.userDraggingKeyframe && i in badKeyframes) {
-	                        badKeyframeIndicatorCoordinates.push([
-	                            currentX,
-	                            currentHeight,
-	                            appSettings.strokeWeight,
-	                        ]);
-	                    }
-	                    else {
-	                        this.drawBuffer.push();
-	                        this.drawBuffer.rectMode(this.p.CENTER);
-	                        this.drawBuffer.square(currentX, currentHeight, appSettings.strokeWeight);
-	                        this.drawBuffer.pop();
-	                    }
-	                    if (currentX > 0)
-	                        this.verticalKeyframePositions.push(currentX);
-	                    this.angularArgumentDataIndices.push(i + 1);
-	                    break;
-	            }
-	        }
-	        // draw last line
-	        this.drawBuffer.line(currentX, currentHeight, currentX, loweredHeight);
-	        this.verticalKeyframePositions.push(currentX);
-	        console.log(this.currentData);
-	        // draw bad keyframe indicators
-	        if (!this.userDraggingKeyframe)
-	            return;
-	        this.drawBuffer.push();
-	        this.drawBuffer.rectMode(this.p.CENTER);
-	        (_a = this.drawBuffer).fill.apply(_a, __spreadArray([], __read(appSettings.badKeyframeColor), false));
-	        (_b = this.drawBuffer).stroke.apply(_b, __spreadArray([], __read(appSettings.badKeyframeColor), false));
-	        try {
-	            for (var badKeyframeIndicatorCoordinates_1 = __values(badKeyframeIndicatorCoordinates), badKeyframeIndicatorCoordinates_1_1 = badKeyframeIndicatorCoordinates_1.next(); !badKeyframeIndicatorCoordinates_1_1.done; badKeyframeIndicatorCoordinates_1_1 = badKeyframeIndicatorCoordinates_1.next()) {
-	                var coords = badKeyframeIndicatorCoordinates_1_1.value;
-	                (_d = this.drawBuffer).square.apply(_d, __spreadArray([], __read(coords), false));
-	            }
-	        }
-	        catch (e_2_1) { e_2 = { error: e_2_1 }; }
-	        finally {
-	            try {
-	                if (badKeyframeIndicatorCoordinates_1_1 && !badKeyframeIndicatorCoordinates_1_1.done && (_c = badKeyframeIndicatorCoordinates_1.return)) _c.call(badKeyframeIndicatorCoordinates_1);
-	            }
-	            finally { if (e_2) throw e_2.error; }
-	        }
-	        this.drawBuffer.pop();
-	    };
-	    SignalWidget.prototype.getSelectedKeyframe = function () {
-	        var e_3, _a;
-	        var _b = __read([this.p.viewport.mouseX, this.p.viewport.mouseY], 2), mouseX = _b[0], mouseY = _b[1];
-	        var toleranceRadius = this.mouseTolerance / 2;
-	        var mouseEngaged = false;
-	        var verticalKeyframeToTheRightOfMouse = 0;
-	        try {
-	            for (var _c = __values(this.horizontalKeyframePositions.entries()), _d = _c.next(); !_d.done; _d = _c.next()) {
-	                var _e = __read(_d.value, 2), index = _e[0], horizontalKeyframe = _e[1];
-	                var lastX = getIndexOrDefault(this.verticalKeyframePositions, index - 1, 0);
-	                var currentX = this.verticalKeyframePositions[index];
-	                var nextHeight = getIndexOrDefault(this.horizontalKeyframePositions, index + 1, this.loweredHeight);
-	                var currentHeight = horizontalKeyframe;
-	                if (currentX <= mouseX)
-	                    verticalKeyframeToTheRightOfMouse += 1;
-	                if (this.userDraggingKeyframe)
-	                    return;
-	                // is user selecting a horizontal keyframe?
-	                if (isInBoundingBox(mouseX, mouseY, lastX + toleranceRadius, currentHeight - toleranceRadius, currentX - toleranceRadius, currentHeight + toleranceRadius)) {
-	                    this.p.mouse.cursor("ns-resize");
-	                    this.selectedHorizontalKeyframe = index;
-	                    if (!this.userDraggingKeyframe)
-	                        this.selectedVerticalKeyframe = -1;
-	                    mouseEngaged = true;
-	                }
-	                // is user selecting a vertical keyframe?
-	                else if (isInBoundingBox(mouseX, mouseY, currentX - toleranceRadius, nextHeight, currentX + toleranceRadius, currentHeight)) {
-	                    this.p.mouse.cursor("ew-resize");
-	                    this.selectedVerticalKeyframe = index;
-	                    this.selectedHorizontalKeyframe = -1;
-	                    mouseEngaged = true;
-	                }
-	            }
-	        }
-	        catch (e_3_1) { e_3 = { error: e_3_1 }; }
-	        finally {
-	            try {
-	                if (_d && !_d.done && (_a = _c.return)) _a.call(_c);
-	            }
-	            finally { if (e_3) throw e_3.error; }
-	        }
-	        this.mouseEngaged = mouseEngaged;
-	        this.verticalKeyframeToTheRightOfMouse = verticalKeyframeToTheRightOfMouse;
-	    };
-	    SignalWidget.prototype.getMillisecondsFromX = function (x, leftIndex, rightIndex) {
-	        var previousVerticalKeyframe = getIndexOrDefault(this.verticalKeyframePositions, leftIndex, 0);
-	        var nextVerticalKeyframe = getIndexOrDefault(this.verticalKeyframePositions, rightIndex, this.p.audioWidget.width);
-	        var distanceBetweenKeyframes = nextVerticalKeyframe - previousVerticalKeyframe;
-	        var percentRight = this.p.constrain((x - previousVerticalKeyframe) / distanceBetweenKeyframes, 0, 1);
-	        return (this.p.lerp(0, distanceBetweenKeyframes, percentRight) / this.resolution);
-	    };
-	    SignalWidget.prototype.getAngleFromY = function () {
-	        var mouseY = this.p.viewport.mouseY;
-	        var percentOpen = this.p.constrain((this.loweredHeight + this.mouseTolerance - mouseY) /
-	            (this.signalHeight + this.mouseTolerance), 0, 1);
-	        var angle = this.p.lerp(this.closedAngle, this.openAngle, percentOpen);
-	        return angle;
-	    };
-	    SignalWidget.prototype.handleMouse = function () {
-	        this.getSelectedKeyframe();
-	        if (!this.p.uiProcessed &&
-	            this.p.mouseIsPressed &&
-	            this.p.mouseButton == this.p.LEFT &&
-	            this.mouseEngaged) {
-	            this.userDraggingKeyframe = true;
-	            var isVerticalKeyframe = this.selectedVerticalKeyframe >= 0;
-	            var argumentIndices = isVerticalKeyframe
-	                ? this.timeArgumentDataIndices
-	                : this.angularArgumentDataIndices;
-	            var selectedIndex = isVerticalKeyframe
-	                ? this.selectedVerticalKeyframe
-	                : this.selectedHorizontalKeyframe;
-	            var argumentIndex = argumentIndices[selectedIndex];
-	            var newArgument = void 0;
-	            if (isVerticalKeyframe) {
-	                var mouseX = this.p.viewport.mouseX;
-	                newArgument = this.getMillisecondsFromX(mouseX, selectedIndex - 1, selectedIndex + 1);
-	                var nextArgumentIndex = getIndexOrDefault(argumentIndices, selectedIndex + 1, -1);
-	                console.log(argumentIndices, selectedIndex + 1, nextArgumentIndex);
-	                if (nextArgumentIndex >= 1) {
-	                    var oldArgument = this.currentData[argumentIndex];
-	                    this.currentData[nextArgumentIndex] -= newArgument - oldArgument;
-	                }
-	            }
-	            else
-	                newArgument = this.getAngleFromY();
-	            this.currentData[argumentIndex] = newArgument;
-	            this.drawSignal();
-	        }
-	        else if (!this.p.mouseIsPressed && this.userDraggingKeyframe) {
-	            this.userDraggingKeyframe = false;
-	            this.drawSignal();
-	        }
-	        this.drawIndicators();
-	    };
-	    SignalWidget.prototype.keyPressed = function () {
-	        var _a, _b;
-	        var key = this.p.key;
-	        var modifiers = [];
-	        if (this.p.keyIsDown(this.p.CONTROL)) {
-	            modifiers.push("ctrl");
-	        }
-	        if (this.p.keyIsDown(this.p.SHIFT)) {
-	            modifiers.push("shift");
-	        }
-	        if (this.p.keyIsDown(this.p.ALT)) {
-	            modifiers.push("alt");
-	        }
-	        var keyCombination = __spreadArray(__spreadArray([], __read(modifiers), false), [key], false).join("+");
-	        (_b = (_a = this.keyBindings)[keyCombination.toLowerCase()]) === null || _b === void 0 ? void 0 : _b.call(_a);
-	    };
-	    SignalWidget.prototype.insertVerticalKeyframe = function () {
-	        var mouseX = this.p.viewport.mouseX;
-	        var newTimeArgument = this.getMillisecondsFromX(mouseX, this.verticalKeyframeToTheRightOfMouse - 1, this.verticalKeyframeToTheRightOfMouse);
-	        console.log(newTimeArgument, this.verticalKeyframeToTheRightOfMouse);
-	        if (
-	        // this.verticalKeyframeToTheRightOfMouse >
-	        // this.angularArgumentDataIndices.length - 1 ||
-	        this.verticalKeyframeToTheRightOfMouse === undefined)
-	            return;
-	        var verticalKeyframeDataIndex = this.angularArgumentDataIndices[this.verticalKeyframeToTheRightOfMouse];
-	        var associatedHorizontalKeyframeDataIndex = this.timeArgumentDataIndices[this.verticalKeyframeToTheRightOfMouse];
-	        console.log(this.currentData);
-	        var oldTimeArgument = this.currentData[associatedHorizontalKeyframeDataIndex];
-	        this.currentData[associatedHorizontalKeyframeDataIndex] = newTimeArgument;
-	        this.currentData.splice(associatedHorizontalKeyframeDataIndex + 1, 0, appSettings.commands.talk, this.getAngleFromY(), appSettings.commands.delay, oldTimeArgument - newTimeArgument);
-	        console.log(this.currentData, mouseX, newTimeArgument, verticalKeyframeDataIndex, associatedHorizontalKeyframeDataIndex);
-	        this.drawSignal(false);
-	    };
-	    SignalWidget.prototype.deleteVerticalKeyframe = function () {
-	        if (this.selectedVerticalKeyframe >= 0 &&
-	            this.verticalKeyframePositions.length >= 3 &&
-	            this.selectedVerticalKeyframe < this.angularArgumentDataIndices.length) {
-	            var argumentIndex = this.angularArgumentDataIndices[this.selectedVerticalKeyframe];
-	            var commandIndex = argumentIndex - 1;
-	            this.currentData.splice(commandIndex, 2);
-	            this.drawSignal();
-	        }
-	    };
-	    /**
-	     * consolidateData
-	     *
-	     * This function merges all consecutive time commands in currentData.
-	     * Also, if there are repeated talk commands separated by a single delay, we merge.
-	     *
-	     * Arguments:
-	     *  test: boolean -- if true, then does not actually consolidate; just returns a map with potential deletes.
-	     */
-	    SignalWidget.prototype.consolidateData = function (test) {
-	        if (test === void 0) { test = false; }
-	        var badKeyframes = {};
-	        for (var i = 0; i < this.currentData.length - 2; i += 2) {
-	            // consecutiveness condition
-	            if (this.currentData[i] == appSettings.commands.delay &&
-	                this.currentData[i + 2] == appSettings.commands.delay) {
-	                badKeyframes[i + 3] = true;
-	                if (test)
-	                    continue;
-	                this.currentData[i + 1] += this.currentData[i + 3]; // merge into one
-	                this.currentData.splice(i + 2, 2); // delete the latter 2 items
-	            }
-	            else if (i < this.currentData.length - 5 &&
-	                this.currentData[i] == appSettings.commands.talk &&
-	                this.currentData[i + 2] == appSettings.commands.delay &&
-	                this.currentData[i + 4] == appSettings.commands.talk &&
-	                this.currentData[i + 1] == this.currentData[i + 5]) {
-	                badKeyframes[i + 4] = true;
-	                if (test)
-	                    continue;
-	                var deleteCount = 2;
-	                if (i < this.currentData.length - 7 &&
-	                    this.currentData[i + 6] == appSettings.commands.delay) {
-	                    this.currentData[i + 3] += this.currentData[i + 7];
-	                    deleteCount = 4;
-	                }
-	                this.currentData.splice(i + 4, deleteCount); // delete the extraneous items
-	            }
-	        }
-	        return badKeyframes;
-	    };
-	    SignalWidget.prototype.drawIndicators = function () {
-	        var _a, _b;
-	        // "free" indicator
-	        triangle(this.p, this.p.mouseX, this.indicatorHeight, (_a = this.p).color.apply(_a, __spreadArray([], __read(appSettings.freeIndicatorColor), false)));
-	        // selection indicator
-	        if (this.selectedVerticalKeyframe >= 0 && this.selectedVerticalKeyframe < this.verticalKeyframePositions.length) {
-	            triangle(this.p, this.verticalKeyframePositions[this.selectedVerticalKeyframe], this.indicatorHeight, (_b = this.p).color.apply(_b, __spreadArray([], __read(appSettings.selectionIndicatorColor), false)));
-	        }
-	    };
-	    SignalWidget.prototype.draw = function () {
-	        this.p.viewport.translate(0, this.topOffset);
-	        this.handleMouse();
-	        this.p.image(this.drawBuffer, 0, 0);
-	        this.p.viewport.reset();
-	    };
-	    return SignalWidget;
-	}());
-
 	var Viewport = /** @class */ (function () {
 	    function Viewport() {
 	        this.translationX = 0;
 	        this.translationY = 0;
+	        this.frameStack = [];
 	        this.p = P5Singleton.getInstance();
 	        this.computeSize();
 	        this.computeTextSize();
@@ -19185,11 +20622,17 @@
 	        this.p.translate(x, y);
 	        this.translationX += x;
 	        this.translationY += y;
+	        this.frameStack.push([x, y]);
 	        this.updateMouse();
 	    };
 	    Viewport.prototype.reset = function () {
-	        this.translationX = this.translationY = 0;
+	        if (this.frameStack.length == 0)
+	            return;
+	        var _a = __read(this.frameStack.pop(), 2), x = _a[0], y = _a[1];
+	        this.translationX -= x;
+	        this.translationY -= y;
 	        this.p.pop();
+	        this.updateMouse();
 	    };
 	    Viewport.prototype.computeSize = function () {
 	        return [
@@ -19212,6 +20655,7 @@
 	var setup = function () {
 	    var p = P5Singleton.getInstance();
 	    p.viewport = new Viewport();
+	    WidgetCollector.setInstance();
 	    p.createCanvas(p.viewport.width, p.viewport.height);
 	    p.fill.apply(p, __spreadArray([], __read(appSettings.defaultFill), false));
 	    p.noStroke();
@@ -19219,11 +20663,24 @@
 	    p.textSize(p.viewport.textSize);
 	};
 	var postloadSetup = function () {
+	    var e_1, _a;
 	    var p = P5Singleton.getInstance();
 	    p.banner = new Banner();
 	    p.menu = new Menu();
 	    p.audioWidget = new AudioWidget();
-	    p.signalWidget = new SignalWidget(appSettings.angularRange, true);
+	    try {
+	        for (var _b = __values(Object.entries(appSettings.characters)), _c = _b.next(); !_c.done; _c = _b.next()) {
+	            var _d = __read(_c.value, 2), name_1 = _d[0], character = _d[1];
+	            new SignalWidget(name_1, character.angularRange, true, character.strokeColor);
+	        }
+	    }
+	    catch (e_1_1) { e_1 = { error: e_1_1 }; }
+	    finally {
+	        try {
+	            if (_c && !_c.done && (_a = _b.return)) _a.call(_b);
+	        }
+	        finally { if (e_1) throw e_1.error; }
+	    }
 	    p.mouse = new Mouse();
 	    p.helpBox = new Box(appSettings.helpBoxSelector);
 	    p.saveBox = new FadingBox(appSettings.saveBoxSelector);
@@ -19295,45 +20752,39 @@
 	    p.viewport.translate(0, p.banner.height); // move viewport below banner
 	    if (p.files !== undefined && p.menu !== undefined && p.menu.enabled)
 	        p.menu.draw();
-	    if (p.menu !== undefined && !p.menu.enabled) {
-	        p.audioWidget.draw();
-	        p.signalWidget.draw();
-	    }
+	    if (p.menu !== undefined && !p.menu.enabled)
+	        WidgetCollector.draw();
 	    p.viewport.reset();
-	    // call banner draw functions
 	    p.banner.draw();
+	    // end-of-frame mouse update
 	    p.mouse.draw();
 	    // draw version string
 	    drawVersionText();
 	};
 
 	var windowResized = function () {
-	    var _a, _b;
 	    var p = P5Singleton.getInstance();
-	    var _c = __read(p.viewport.computeSize(), 2), width = _c[0], height = _c[1];
+	    var _a = __read(p.viewport.computeSize(), 2), width = _a[0], height = _a[1];
 	    p.resizeCanvas(width, height);
 	    p.textSize(p.viewport.computeTextSize());
 	    p.banner.computeSize();
 	    p.menu.computeSize();
-	    (_a = p.audioWidget) === null || _a === void 0 ? void 0 : _a.buffer();
-	    (_b = p.signalWidget) === null || _b === void 0 ? void 0 : _b.buffer();
+	    WidgetCollector.windowResized();
 	};
 	var keyPressed = function (event) {
 	    event.preventDefault();
 	    var p = P5Singleton.getInstance();
-	    if (!p.menu.enabled) {
-	        p.audioWidget.keyPressed();
-	        p.signalWidget.keyPressed();
-	    }
+	    if (!p.menu.enabled)
+	        WidgetCollector.keyPressed();
 	};
 	var mouseClicked = function () {
-	    var e_1, _a;
-	    var _b;
+	    var e_1, _a, e_2, _b;
+	    var _c;
 	    var p = P5Singleton.getInstance();
 	    if (p.uiProcessed) {
 	        if (p.banner.mouseHoverHome) {
 	            // user wants to go home
-	            (_b = p.audioWidget.currentSound) === null || _b === void 0 ? void 0 : _b.stop();
+	            (_c = p.audioWidget.currentSound) === null || _c === void 0 ? void 0 : _c.stop();
 	            p.menu.enabled = true;
 	            return;
 	        }
@@ -19342,8 +20793,8 @@
 	            return;
 	        }
 	        try {
-	            for (var _c = __values(p.boxes), _d = _c.next(); !_d.done; _d = _c.next()) {
-	                var box = _d.value;
+	            for (var _d = __values(p.boxes), _e = _d.next(); !_e.done; _e = _d.next()) {
+	                var box = _e.value;
 	                if (!box.isMouseOver)
 	                    box.hide();
 	            }
@@ -19351,7 +20802,7 @@
 	        catch (e_1_1) { e_1 = { error: e_1_1 }; }
 	        finally {
 	            try {
-	                if (_d && !_d.done && (_a = _c.return)) _a.call(_c);
+	                if (_e && !_e.done && (_a = _d.return)) _a.call(_d);
 	            }
 	            finally { if (e_1) throw e_1.error; }
 	        }
@@ -19359,7 +20810,19 @@
 	    if (p.menu.enabled && p.menu.lastSelectedFile !== "") {
 	        p.menu.enabled = false;
 	        p.audioWidget.bindSound(p.sounds[p.menu.lastSelectedFile]);
-	        p.signalWidget.newData(p.data.zarbalatrax[p.menu.lastSelectedFile]);
+	        try {
+	            for (var _f = __values(WidgetCollector.filter(SignalWidget)), _g = _f.next(); !_g.done; _g = _f.next()) {
+	                var signalWidget = _g.value;
+	                signalWidget.newData(p.data[signalWidget.name][p.menu.lastSelectedFile]);
+	            }
+	        }
+	        catch (e_2_1) { e_2 = { error: e_2_1 }; }
+	        finally {
+	            try {
+	                if (_g && !_g.done && (_b = _f.return)) _b.call(_f);
+	            }
+	            finally { if (e_2) throw e_2.error; }
+	        }
 	    }
 	};
 	var mouseWheel = function (event) { var _a; return (_a = P5Singleton.getInstance().menu) === null || _a === void 0 ? void 0 : _a.scroll(event.deltaY); };

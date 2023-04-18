@@ -13,6 +13,8 @@ export class Viewport {
   mouseX!: number;
   mouseY!: number;
 
+  frameStack: [number, number][] = [];
+
   constructor() {
     this.p = P5Singleton.getInstance();
     this.computeSize();
@@ -29,12 +31,17 @@ export class Viewport {
     this.p.translate(x, y);
     this.translationX += x;
     this.translationY += y;
+    this.frameStack.push([x, y]);
     this.updateMouse();
   }
 
   reset() {
-    this.translationX = this.translationY = 0;
+    if (this.frameStack.length == 0) return;
+    const [x, y] = this.frameStack.pop() as [number, number];
+    this.translationX -= x;
+    this.translationY -= y;
     this.p.pop();
+    this.updateMouse();
   }
 
   computeSize() {

@@ -2,10 +2,12 @@ import { appSettings } from "@/constants";
 import { AnimationEditor } from "@/types/animation-editor";
 import { P5Singleton } from "@/utilities/p5-singleton";
 import { isInRectangle, safelyStopAudio } from "@/utilities/p5-utils";
+import { Widget } from "@/objects/widget/widget";
 import p5 from "p5";
+import { WidgetCollector } from "./widget-collector";
+import { SignalWidget } from "./signal-widget";
 
-export class AudioWidget {
-  p: AnimationEditor;
+export class AudioWidget extends Widget {
   drawBuffer!: p5.Graphics;
   currentSound!: p5.SoundFile;
 
@@ -14,8 +16,6 @@ export class AudioWidget {
   loading = true;
   paused = false;
 
-  width!: number;
-  height!: number;
   resolution!: number;
   topOffset!: number;
   controlsHeight!: number;
@@ -40,8 +40,8 @@ export class AudioWidget {
   currentPlaybackImage: p5.Image;
   playbackImages: [p5.Image, p5.Image];
 
-  constructor() {
-    this.p = P5Singleton.getInstance();
+  constructor(name: string = "audioWidget") {
+    super(name);
     this.currentPlaybackImage = this.p.images.pauseButton;
     this.playbackImages = [this.p.images.pauseButton, this.p.images.playButton];
   }
@@ -49,7 +49,7 @@ export class AudioWidget {
   buffer() {
     this.computeSize();
     this.createBuffer();
-    this.drawAudioWave();
+    this.drawToBuffer();
   }
 
   computeSize() {
@@ -97,7 +97,7 @@ export class AudioWidget {
   }
 
   createBuffer() {
-    this.drawBuffer = this.p.createGraphics(this.width, this.height);
+    super.createBuffer();
     this.drawBuffer.fill(...appSettings.defaultFill);
     this.drawBuffer.stroke(...appSettings.defaultFill);
   }
@@ -110,7 +110,7 @@ export class AudioWidget {
     this.p.pop();
   }
 
-  drawAudioWave(reset = false) {
+  drawToBuffer(reset = false) {
     // compute data
     const numSamples = this.p.viewport.scaleToWidth(
       appSettings.samplingResolution
@@ -145,15 +145,13 @@ export class AudioWidget {
     this.p.pop();
   }
 
-  keyPressed() {
-    this.keyBindings[this.p.key]?.();
-  }
-
   mouseClicked() {
     if (this.playbackButtonHover) this.toggle();
     else if (this.helpButtonHover) this.p.helpBox.toggle();
     else if (this.uploadButtonHover) this.p.uploadBox.toggle();
-    else if (this.downloadButtonHover) this.p.signalWidget.initiateSave();
+    else if (this.downloadButtonHover) {
+      for (const widget of WidgetCollector.filter(SignalWidget)) widget.initiateSave();
+    }
   }
 
   toggle() {
@@ -215,11 +213,13 @@ export class AudioWidget {
     this.uiProcessed = this.playbackButtonHover = this.helpButtonHover = false;
 
     if (this.p.uiProcessed) return;
-    if (
-      this.p.signalWidget?.mouseEngaged ||
-      this.p.signalWidget?.userDraggingKeyframe
-    )
-      return;
+    for (const widget of WidgetCollector.filter(SignalWidget)) {
+      if (
+        widget.mouseEngaged ||
+        widget.userDraggingKeyframe
+      )
+        return;
+    }
     const mouseCoords: [number, number] = [
       this.p.mouseX + this.audioButtonSize / 2,
       this.p.viewport.mouseY + this.audioButtonSize / 2,
@@ -263,18 +263,19 @@ export class AudioWidget {
       this.uploadButtonHover ||
       this.downloadButtonHover;
     this.uiProcessed = this.p.uiProcessed;
+    
     if (this.p.uiProcessed) this.p.mouse.cursor("pointer");
     else if (this.p.mouseIsPressed && this.p.mouseButton == this.p.LEFT)
       this.scrubToPosition(this.p.mouseX);
-  }
+}
 
-  draw() {
-    this.update();
-
-    this.p.push();
-    this.p.image(this.drawBuffer, 0, 0);
-    this.drawScrubber();
-    this.drawControls();
-    this.p.pop();
+draw() {
+  super.draw();
+  
+  this.p.push();
+  this.p.image(this.drawBuffer, 0, 0);
+  this.drawScrubber();
+  this.drawControls();
+  this.p.pop();
   }
 }

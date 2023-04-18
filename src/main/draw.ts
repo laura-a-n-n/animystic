@@ -3,6 +3,7 @@ import { handleMessage } from "@/objects/message";
 import { P5Singleton } from "@/utilities/p5-singleton";
 import { postloadSetup } from "@/main/setup";
 import { drawVersionText } from "@/utilities/version-text";
+import { WidgetCollector } from "@/objects/widget/widget-collector";
 
 export const draw = () => {
   const p = P5Singleton.getInstance();
@@ -22,14 +23,11 @@ export const draw = () => {
   p.viewport.translate(0, p.banner.height); // move viewport below banner
   if (p.files !== undefined && p.menu !== undefined && p.menu.enabled)
     p.menu.draw();
-  if (p.menu !== undefined && !p.menu.enabled) {
-    p.audioWidget.draw();
-    p.signalWidget.draw();
-  }
+  if (p.menu !== undefined && !p.menu.enabled) WidgetCollector.draw();
   p.viewport.reset();
-
-  // call banner draw functions
   p.banner.draw();
+
+  // end-of-frame mouse update
   p.mouse.draw();
 
   // draw version string

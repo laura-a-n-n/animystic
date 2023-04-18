@@ -1,3 +1,5 @@
+import { SignalWidget } from "@/objects/widget/signal-widget";
+import { WidgetCollector } from "@/objects/widget/widget-collector";
 import { P5Singleton } from "@/utilities/p5-singleton";
 
 export const windowResized = () => {
@@ -7,17 +9,14 @@ export const windowResized = () => {
   p.textSize(p.viewport.computeTextSize());
   p.banner.computeSize();
   p.menu.computeSize();
-  p.audioWidget?.buffer();
-  p.signalWidget?.buffer();
+  WidgetCollector.windowResized();
 };
 
 export const keyPressed = (event: KeyboardEvent) => {
   event.preventDefault();
   const p = P5Singleton.getInstance();
-  if (!p.menu.enabled) {
-    p.audioWidget.keyPressed();
-    p.signalWidget.keyPressed();
-  }
+  if (!p.menu.enabled) WidgetCollector.keyPressed();
+
 };
 
 export const mouseClicked = () => {
@@ -40,7 +39,7 @@ export const mouseClicked = () => {
   if (p.menu.enabled && p.menu.lastSelectedFile !== "") {
     p.menu.enabled = false;
     p.audioWidget.bindSound(p.sounds[p.menu.lastSelectedFile]);
-    p.signalWidget.newData(p.data.zarbalatrax[p.menu.lastSelectedFile]);
+    for (const signalWidget of WidgetCollector.filter(SignalWidget)) signalWidget.newData(p.data[signalWidget.name][p.menu.lastSelectedFile]);
   }
 };
 
