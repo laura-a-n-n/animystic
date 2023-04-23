@@ -1,16 +1,19 @@
 node_modules
 package-lock.json
 
-assets/image/zarbalatrax/special
+assets/image/zarbalatrax/special/**
 assets/image/zarbalatrax/content/**
 !assets/image/zarbalatrax/content/001.png
+!assets/image/zarbalatrax/special/sound.png
 
 assets/sound/**
 !assets/sound/001.wav
 
 data/*
 !data/example-data.json
+!data/data.json
 ZarbData.h
-data.json
+./data.json
 
 tests/logs
+tests/test-server.spec.ts
