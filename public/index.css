@@ -94,6 +94,7 @@ div#upload,
 div#save {
     background-color: rgb(24, 25, 28);
     height: fit-content;
+    padding: 1.5em;
 }
 
 div#save {
@@ -101,6 +102,7 @@ div#save {
 }
 
 .button-container {
+    margin-top:0.5em;
     display: flex;
     justify-content: space-between;
     width: 100%;
@@ -175,7 +177,7 @@ td input {
 }
 
 #upload-text {
-    display: inline-block;
+    display: inline;
 }
 
 #loading-spinner {

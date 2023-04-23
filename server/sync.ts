@@ -2,7 +2,7 @@ import fs from "fs";
 import { filenameToNumber } from "../common/utils";
 import { appSettings } from "./constants";
 
-export const syncLocal = (data: number[], filename: string) => {
+export const syncLocal = (data: string[], filename: string) => {
   const fileContents = fs.readFileSync(appSettings.dataInputPath, "utf8");
   // extract the vector from the file
   const regex = appSettings.dataRegex;
@@ -14,7 +14,11 @@ export const syncLocal = (data: number[], filename: string) => {
         .trim()
         .slice(1, -1)
         .split(",")
-        .map((str) => parseInt(str.trim()))
+        .map((str) =>
+          Number.isNaN(parseInt(str.trim()))
+            ? str.trim()
+            : parseInt(str.trim()).toString()
+        )
     );
 
     // update the vector at the given index
@@ -31,7 +35,7 @@ export const syncLocal = (data: number[], filename: string) => {
       fileContents.slice(0, startIndex + startString.length - 1) +
       "{\n" +
       newCommands.join(",\n") +
-      "\n};\n\n" +
+      "\n};" +
       fileContents.slice(endIndex);
 
     // write new contents to file

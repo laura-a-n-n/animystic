@@ -1,6 +1,9 @@
 import fs from "fs";
 import { assert, expect } from "chai";
-import { appSettings as serverAppSettings } from "server/constants";
+import {
+  appSettings,
+  appSettings as serverAppSettings,
+} from "server/constants";
 import { appSettings as clientAppSettings } from "@/constants";
 
 import { getAudioDurationInSeconds } from "get-audio-duration";
@@ -165,6 +168,31 @@ describe("Signal input data", () => {
         expect(sum).to.equal(soundDurationInMs);
       }
     }
+    Promise.resolve();
+  });
+
+  it("should not contain any duplicate commands", async () => {
+    let duplicates = 0;
+    for (const character in data) {
+      for (const filename in data[character]) {
+        const array = data[character][filename];
+        for (let i = 0; i < array.length; i += 2) {
+          if (
+            (i < array.length - 2 && array[i] == array[i + 2]) ||
+            (array[i] == clientAppSettings.commands.delay && array[i + 1] == 0)
+          ) {
+            array.splice(i, 2);
+            i -= 2;
+            duplicates++;
+          }
+        }
+      }
+    }
+    if (duplicates > 0) {
+      await fs.promises.writeFile(filePath, JSON.stringify(data, null, 2));
+      console.log(`${duplicates} duplicates resolved`);
+    }
+    expect(duplicates).to.equal(0);
     Promise.resolve();
   });
 });

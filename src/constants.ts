@@ -80,16 +80,19 @@ export const appSettings = {
       angularRange: 50,
       rangeInverted: true,
       strokeColor: [255, 0, 255],
+      command: 2
     },
     squambo: {
       angularRange: 180,
       rangeInverted: true,
       strokeColor: [0, 255, 0],
+      command: 3
     },
   },
   signalWaveHeightScale: 0.4,
   mouseTolerance: 0.008,
   clipboardHistoryLength: 64,
+  minimumKeyframeLength: 10,
 
   // signal widget appearance
   strokeWeight: 3,

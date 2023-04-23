@@ -16,7 +16,7 @@ def diagnose(command_list):
 
 def commands_to_wave(command_list, insert_commands=True):
   zarb = []
-  squambo = [2, 0]
+  squambo = []
   last_zarb_state = command_list[0]
 
   if len(command_list) % 2 == 1:
@@ -37,8 +37,11 @@ def commands_to_wave(command_list, insert_commands=True):
       squambo += [0]
       continue
     else:
-      squambo[-1] += command_list[i+1]
       zarb_state = command_list[i]
+      if zarb_state == 1:
+        if len(squambo) == 0:
+           squambo = [1, 0]
+        squambo[-1] += command_list[i+1]
     if zarb_state != last_zarb_state or len(zarb) == 0:
         zarb += [zarb_state]
         zarb += [command_list[i+1]]
@@ -60,6 +63,9 @@ if __name__ == "__main__":
     contents = file.read()
 
     # trim string and convert to list
+    DELAY = 1
+    TALK = 2
+    SQUAMBO = 3
     data_string = contents.split(" = {")[1].split("};")[0]
     data_string = data_string.replace("{", "[").replace("}", "]")
     data_string = "".join(data_string.split())

@@ -14,7 +14,12 @@ export const appSettings = {
   dataInputPath: "./data/dist/zarbalatrax-3/zarbalatrax/ZarbData.h",
   dataInputSearchString: "const std::vector<std::vector<int>> commands = {",
   dataInputStopString: "};",
-  dataRegex: /{\s*((\d+,?\s*)+)\s*}/g,
+  dataRegex: /{\s*(([\d\w]+,?\s*)+)\s*}/g,
+  commandAliases: {
+    1: "DELAY",
+    2: "TALK",
+    3: "SQUAMBO",
+  },
 
   // script files
   windowsScriptExecutor: "cmd.exe",

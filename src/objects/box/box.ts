@@ -36,9 +36,13 @@ export class Box {
     this.div.hide();
   }
 
+  show() {
+    this.div.show();
+  }
+
   toggle() {
-    if (this.hidden) this.div.show();
-    else this.div.hide();
+    if (this.hidden) this.show();
+    else this.hide();
   }
 
   update() {

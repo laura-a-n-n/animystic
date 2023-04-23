@@ -2,9 +2,10 @@ import fs from "fs";
 import { Request, Response } from "express";
 import { syncLocal } from "./sync";
 import { appSettings } from "./constants";
+import { appSettings as clientAppSettings } from "../src/constants";
 import { spawn } from "child_process";
 
-export const upload = (res: Response, data: number[], filename: string) => {
+export const upload = (res: Response, data: string[], filename: string) => {
   let command: string, args: string[];
   if (process.platform === "win32") {
     command = appSettings.windowsScriptExecutor;
@@ -21,44 +22,116 @@ export const upload = (res: Response, data: number[], filename: string) => {
 
   // // call script files
   const spawner = (currentScriptFileIndex: number = 0) => {
-    if (currentScriptFileIndex == 1) {
-      if (!syncLocal(data, filename))
-        return res.status(400).send(appSettings.uploadErrorMessage);
-    }
-
     const scriptFile = appSettings.uploadScriptFiles[currentScriptFileIndex];
     console.log(`Script ${currentScriptFileIndex}: ${scriptFile}`);
 
     const script = spawn(command, [...args, scriptFile]);
+    let failed = false;
 
     script.stdout.on("data", (data) => {
       console.log(`stdout: ${data}`);
     });
 
     script.stderr.on("data", (data) => {
+      res.status(400).send(data.toString().trim());
       console.log(`stderr: ${data}`);
+      failed = true;
     });
 
     script.on("close", (code) => {
       console.log(`child process exited with code ${code}`);
+      if (failed) return;
       currentScriptFileIndex++;
       if (currentScriptFileIndex < appSettings.uploadScriptFiles.length)
         setTimeout(() => {
           spawner(currentScriptFileIndex);
         }, appSettings.scriptDelayTime);
-      else res.send("OK");
+      else return res.send("OK");
     });
   };
   spawner();
+};
 
-  return true;
+export const mergeAllData = (filename: string, jsonDictionary: any) => {
+  let indices: { [name: keyof typeof jsonDictionary]: number } = {};
+  let characterIdentifiers: {
+    [name: keyof typeof jsonDictionary]: number;
+  } = {};
+  let allIndicesMaxxed = false;
+  let newData = [];
+  let i = 0;
+
+  while (!allIndicesMaxxed) {
+    let minDelay = Number.MAX_SAFE_INTEGER;
+    let minName: string = "";
+
+    for (const name in jsonDictionary) {
+      const data = jsonDictionary[name][filename];
+
+      if (name in indices) {
+        if (indices[name] < data.length && data[indices[name]] === 0)
+          indices[name]++;
+      } else {
+        indices[name] = 0;
+        characterIdentifiers[name] = i++;
+      }
+
+      if (indices[name] >= data.length) continue;
+
+      if (
+        indices[name] == 0 ||
+        data[indices[name] - 1] != clientAppSettings.commands.delay
+      ) {
+        while (
+          indices[name] < data.length &&
+          (data[indices[name]] != clientAppSettings.commands.delay ||
+            indices[name] % 2 != 0)
+        ) {
+          if (indices[name] % 2 == 0)
+            data[indices[name]] += characterIdentifiers[name];
+          newData.push(data[indices[name]]);
+          indices[name]++;
+        }
+
+        if (indices[name] >= data.length) continue;
+        indices[name]++;
+      }
+
+      const delay = data[indices[name]];
+      if (delay < minDelay) {
+        [minDelay, minName] = [delay, name];
+      }
+    }
+
+    if (minDelay == 0) continue;
+    if (minName !== "") {
+      newData.push(clientAppSettings.commands.delay);
+      newData.push(jsonDictionary[minName][filename][indices[minName]]);
+      for (const name in jsonDictionary) {
+        const data = jsonDictionary[name][filename];
+        if (indices[name] < data.length)
+          jsonDictionary[name][filename][indices[name]] -=
+            newData[newData.length - 1];
+      }
+    } else allIndicesMaxxed = true;
+  }
+
+  for (const [i, entry] of newData.entries()) {
+    if (i % 2 == 0 && entry in appSettings.commandAliases)
+      newData[i] =
+        appSettings.commandAliases[
+          entry as keyof typeof appSettings.commandAliases
+        ];
+    else newData[i] = newData[i].toString();
+  }
+
+  console.log(newData);
+  return newData;
 };
 
 export const postUpload = (req: Request, res: Response) => {
   const filename = req.body.filename;
 
-  // get the local data
-  let data: number[] = [];
   fs.readFile(
     appSettings.localDataInputPath,
     appSettings.defaultEncoding,
@@ -69,11 +142,8 @@ export const postUpload = (req: Request, res: Response) => {
       }
       try {
         const jsonDictionary = JSON.parse(jsonString);
-        // for (const name in jsonDictionary) {
-        // data = jsonDictionary[name][filename];
-        data = jsonDictionary["squambo"][filename];
-        upload(res, data, filename);
-        // }
+        upload(res, mergeAllData(filename, jsonDictionary), filename);
+        // res.send("OK");
       } catch {
         console.log(appSettings.jsonParseErrorMessage, err);
         return res.status(400).send(appSettings.jsonParseErrorMessage);
@@ -81,3 +151,5 @@ export const postUpload = (req: Request, res: Response) => {
     }
   );
 };
+
+

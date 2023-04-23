@@ -230,7 +230,8 @@ export class SignalWidget extends Widget {
 
   roundData() {
     for (const [index, datum] of this.currentData.entries()) {
-      this.currentData[index] = Math.max(Math.round(datum), 0);
+      if (index % 2 == 0) continue; 
+      this.currentData[index] = Math.max(Math.round(datum), appSettings.minimumKeyframeLength);
     }
     this.checkRootNode(this.currentData);
   }
