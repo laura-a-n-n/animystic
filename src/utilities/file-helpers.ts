@@ -1,9 +1,9 @@
 import { appSettings } from "@/constants";
 
-export async function getFilesAsync(): Promise<{
+export async function getFilesAsync(origin: string = ""): Promise<{
   [assetType: string]: string[];
 }> {
-  const response = await fetch("/files");
+  const response = await fetch(`${origin}/files`);
   if (!response.ok) {
     throw new Error(`HTTP error! status: ${response.status}`);
   }

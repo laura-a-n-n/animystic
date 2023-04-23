@@ -40,9 +40,9 @@ div#list {
 /* Styling the checkboxes */
 #list input[type="checkbox"] {
     /* Set checkbox appearance to none */
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    appearance: none;
+    /* -webkit-appearance: none; */
+    /* -moz-appearance: none; */
+    /* appearance: none; */
     margin: 0 0.5em 0 0;
 
     /* Add custom checkbox background color and border */
@@ -71,7 +71,7 @@ div#list {
 /* Styling the outline of focused checkboxes */
 #list input[type="checkbox"]:focus {
     /* Add custom outline style */
-    outline: 2px solid #aaa; /* Change to desired outline color */
+    outline: none; /* Change to desired outline color */
 }
 
 div#help {

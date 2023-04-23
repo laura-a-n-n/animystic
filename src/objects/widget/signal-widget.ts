@@ -88,13 +88,17 @@ export class SignalWidget extends Widget {
     this.resetClipboard();
   }
 
-  bindData(data: number[]) {
+  checkRootNode(data: number[]) {
     if (data[0] != appSettings.commands.talk) {
       console.log(
         "An attempt was made to bind to data without a root node. Restoring a default root node."
       );
-      data.splice(0, 0, 2, this.closedAngle);
+      data.splice(0, 0, appSettings.commands.talk, this.closedAngle);
     }
+  }
+
+  bindData(data: number[]) {
+    this.checkRootNode(data);
     this.currentData = data;
     this.p.data[this.name][this.p.menu.lastSelectedFile] = data;
     this.buffer();
@@ -167,6 +171,7 @@ export class SignalWidget extends Widget {
   }
 
   saveCommand() {
+    console.log(this.currentData);
     this.initiateSave();
   }
 
@@ -227,6 +232,7 @@ export class SignalWidget extends Widget {
     for (const [index, datum] of this.currentData.entries()) {
       this.currentData[index] = Math.max(Math.round(datum), 0);
     }
+    this.checkRootNode(this.currentData);
   }
 
   drawToBuffer(consolidate: boolean = true) {
@@ -335,9 +341,9 @@ export class SignalWidget extends Widget {
     checkbox.attribute("checked", "true");
     checkbox.mouseClicked(() => {
       this.active = !this.active;
-      console.log(this.active)
-    })
-    
+      console.log(this.active);
+    });
+
     let label = this.p.createElement("label");
     label.attribute("for", this.name);
     label.html(this.name);

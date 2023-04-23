@@ -7,7 +7,8 @@
     "watch": "rollup --config -w",
     "serve": "ts-node server/server.ts --port 8080",
     "start": "concurrently \"npm:watch\" \"npm:serve\"",
-    "pretty": "prettier --write \"./{src,server,common}/**/*.{js,jsx,ts,tsx,json}\""
+    "pretty": "prettier --write \"./{src,server,common,tests}/**/*.{js,jsx,ts,tsx,json}\"",
+    "test": "mocha"
   },
   "author": "Laura Ann",
   "license": "ISC",
@@ -22,10 +23,23 @@
     "concurrently": "^7.6.0",
     "express": "^4.18.2",
     "p5": "^1.5.0",
-    "rollup-plugin-ts": "^3.2.0",
-    "ts-node": "^10.9.1"
+    "rollup-plugin-ts": "^3.2.0"
   },
   "devDependencies": {
-    "prettier": "^2.8.4"
+    "@types/chai": "^4.3.4",
+    "@types/mocha": "^10.0.1",
+    "chai": "^4.3.7",
+    "get-audio-duration": "^3.1.1",
+    "mocha": "^10.2.0",
+    "prettier": "^2.8.4",
+    "ts-node": "^10.9.1",
+    "tsconfig-paths": "^4.2.0"
+  },
+  "mocha": {
+    "require": [
+      "ts-node/register",
+      "tsconfig-paths/register"
+    ],
+    "spec": "tests/**/*.spec.ts"
   }
 }

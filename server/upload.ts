@@ -69,10 +69,11 @@ export const postUpload = (req: Request, res: Response) => {
       }
       try {
         const jsonDictionary = JSON.parse(jsonString);
-        for (const name in jsonDictionary) {
-          data = jsonDictionary[name][filename];
-          upload(res, data, filename);
-        }
+        // for (const name in jsonDictionary) {
+        // data = jsonDictionary[name][filename];
+        data = jsonDictionary["squambo"][filename];
+        upload(res, data, filename);
+        // }
       } catch {
         console.log(appSettings.jsonParseErrorMessage, err);
         return res.status(400).send(appSettings.jsonParseErrorMessage);

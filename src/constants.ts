@@ -78,10 +78,12 @@ export const appSettings = {
   characters: {
     zarbalatrax: {
       angularRange: 50,
+      rangeInverted: true,
       strokeColor: [255, 0, 255],
     },
     squambo: {
       angularRange: 180,
+      rangeInverted: true,
       strokeColor: [0, 255, 0],
     },
   },
@@ -117,5 +119,5 @@ export const appSettings = {
   downloadButtonPadding: 0.5,
 
   // list box settings
-  listBoxSelector: "#list"  
+  listBoxSelector: "#list",
 } as const;
