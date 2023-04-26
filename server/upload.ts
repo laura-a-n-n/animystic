@@ -17,8 +17,6 @@ export const upload = (res: Response, data: string[], filename: string) => {
   }
 
   console.log(data, filename);
-  if (!syncLocal(data, filename))
-    return res.status(400).send(appSettings.uploadErrorMessage);
 
   // // call script files
   const spawner = (currentScriptFileIndex: number = 0) => {
@@ -33,17 +31,22 @@ export const upload = (res: Response, data: string[], filename: string) => {
     });
 
     script.stderr.on("data", (data) => {
-      res.status(400).send(data.toString().trim());
       console.log(`stderr: ${data}`);
       failed = true;
     });
 
     script.on("close", (code) => {
       console.log(`child process exited with code ${code}`);
-      if (failed) return;
+      if (currentScriptFileIndex == 0) { // first script should be sync script.
+        if (!syncLocal(data, filename))
+          return res.status(400).send(appSettings.uploadErrorMessage);
+      }
+      if (failed) 
+        return res.status(400).send(data.toString().trim());
       currentScriptFileIndex++;
       if (currentScriptFileIndex < appSettings.uploadScriptFiles.length)
         setTimeout(() => {
+          if (failed) return;
           spawner(currentScriptFileIndex);
         }, appSettings.scriptDelayTime);
       else return res.send("OK");

@@ -1,4 +1,5 @@
 import { appSettings } from "@/constants";
+import { isLoadFinished } from "@/main/preload";
 import { P5Singleton } from "@/utilities/p5-singleton";
 
 export const handleMessage = () => {
@@ -10,7 +11,7 @@ export const handleMessage = () => {
     p.text(p.message, p.width / 2, p.height / 2);
 
     if (p.files !== undefined) {
-      if (p.imagesLoaded != p.maxImages) {
+      if (!isLoadFinished()) {
         p.percentLoaded =
           (appSettings.soundLoadingWeight * p.soundsLoaded +
             appSettings.imageLoadingWeight * p.imagesLoaded) /

@@ -185,3 +185,9 @@ td input {
     width: 1em;
     height: 1em;
 }
+
+#list-filename {
+    margin: 0 0 0.5em!important;
+    text-transform: lowercase;
+    color: white;
+}

@@ -78,12 +78,14 @@ export const appSettings = {
   characters: {
     zarbalatrax: {
       angularRange: 50,
+      angularSpeed: 2 / 7, // degrees per millisecond
       rangeInverted: true,
       strokeColor: [255, 0, 255],
       command: 2
     },
     squambo: {
       angularRange: 180,
+      angularSpeed: 18 / 125, // degrees per millisecond
       rangeInverted: true,
       strokeColor: [0, 255, 0],
       command: 3

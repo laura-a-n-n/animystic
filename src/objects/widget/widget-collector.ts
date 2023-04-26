@@ -53,7 +53,7 @@ export class WidgetCollector {
   }
 
   static [Symbol.iterator]() {
-    const collectionValues = Object.values(WidgetCollector.sortedCollection);
+    const collectionValues = Object.values(WidgetCollector.collection);
     let index = 0;
 
     return {

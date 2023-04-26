@@ -69,7 +69,12 @@ const preloadAssets = async () => {
   p.data = data;
 };
 
-export const preload = async () => {
+export const isLoadFinished = () => {
+  p = P5Singleton.getInstance();
+  return p.maxImages == p.imagesLoaded && p.soundsLoaded == p.maxSounds;
+}
+
+export const preloadAsync = async () => {
   p = P5Singleton.getInstance();
   preloadSetup();
   preloadAssets();

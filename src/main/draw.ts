@@ -4,6 +4,7 @@ import { P5Singleton } from "@/utilities/p5-singleton";
 import { postloadSetup } from "@/main/setup";
 import { drawVersionText } from "@/utilities/version-text";
 import { WidgetCollector } from "@/objects/widget/widget-collector";
+import { isLoadFinished } from "./preload";
 
 export const draw = () => {
   const p = P5Singleton.getInstance();
@@ -13,6 +14,7 @@ export const draw = () => {
   handleMessage();
   if (p.showMessage || !p.essentialImagesLoaded) return;
   if (!p.postloadSetupFinished) postloadSetup();
+  if (!isLoadFinished()) return;
 
   // pre-draw updates
   p.mouse.update(); // sets uiProcessed state to false
@@ -24,6 +26,7 @@ export const draw = () => {
   if (p.files !== undefined && p.menu !== undefined && p.menu.enabled)
     p.menu.draw();
   if (p.menu !== undefined && !p.menu.enabled) WidgetCollector.draw();
+  p.audioWidget.drawControls();
   p.viewport.reset();
   p.banner.draw();
 

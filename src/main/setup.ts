@@ -11,9 +11,11 @@ import { Viewport } from "@/objects/viewport";
 import { P5Singleton } from "@/utilities/p5-singleton";
 import p5 from "p5";
 import { WidgetCollector } from "@/objects/widget/widget-collector";
+import { preloadAsync } from "./preload";
 
 export const setup = () => {
   const p = P5Singleton.getInstance();
+  preloadAsync();
   p.viewport = new Viewport();
   WidgetCollector.setInstance();
 

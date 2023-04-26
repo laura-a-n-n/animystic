@@ -1,11 +1,10 @@
-import { appSettings } from "@/constants";
-import { AnimationEditor } from "@/types/animation-editor";
-import { P5Singleton } from "@/utilities/p5-singleton";
-import { isInRectangle, safelyStopAudio } from "@/utilities/p5-utils";
-import { Widget } from "@/objects/widget/widget";
 import p5 from "p5";
+import { appSettings } from "@/constants";
+import { safelyStopAudio } from "@/utilities/p5-utils";
+import { Widget } from "@/objects/widget/widget";
 import { WidgetCollector } from "./widget-collector";
 import { SignalWidget } from "./signal-widget";
+import { Button } from "../button";
 
 export class AudioWidget extends Widget {
   drawBuffer!: p5.Graphics;
@@ -22,34 +21,81 @@ export class AudioWidget extends Widget {
   controlsTopOffset!: number;
   audioButtonSize!: number;
 
-  // TODO: make this better...
-  playbackButtonBox!: [number, number, number, number];
-  playbackButtonHover!: boolean;
-  helpButtonBox!: [number, number, number, number];
-  helpButtonHover!: boolean;
-  uploadButtonBox!: [number, number, number, number];
-  uploadButtonHover!: boolean;
-  downloadButtonBox!: [number, number, number, number];
-  downloadButtonHover!: boolean;
+  playbackButton!: Button;
+  helpButton!: Button;
+  uploadButton!: Button;
+  downloadButton!: Button;
   uiProcessed: boolean = false;
 
   keyBindings: { [key: string]: () => any } = {
     " ": this.toggle.bind(this),
     r: this.resetTime.bind(this),
   };
-  currentPlaybackImage: p5.Image;
   playbackImages: [p5.Image, p5.Image];
 
   constructor(name: string = "audioWidget") {
     super(name);
-    this.currentPlaybackImage = this.p.images.pauseButton;
     this.playbackImages = [this.p.images.pauseButton, this.p.images.playButton];
+    this.createButtons();
   }
 
   buffer() {
     this.computeSize();
     this.createBuffer();
     this.drawToBuffer();
+  }
+
+  createButtons() {
+    this.playbackButton = new Button(
+      "playback",
+      this.width / 2,
+      this.controlsTopOffset + this.controlsHeight / 2,
+      this.audioButtonSize,
+      this.playbackImages[0]
+    );
+      this.helpButton = new Button(
+        "help",
+        this.width - this.audioButtonSize,
+        this.controlsTopOffset + this.controlsHeight / 2,
+        this.audioButtonSize,
+        this.p.images.helpButton
+      );
+      this.uploadButton = new Button(
+        "upload",
+        this.audioButtonSize,
+        this.controlsTopOffset + this.controlsHeight / 2,
+        this.audioButtonSize,
+        this.p.images.uploadButton
+      );
+      this.downloadButton = new Button(
+        "download",
+        (2 + appSettings.downloadButtonPadding) * this.audioButtonSize,
+        this.controlsTopOffset + this.controlsHeight / 2,
+        this.audioButtonSize,
+        this.p.images.downloadButton
+      );
+  }
+
+  computeButtonBoxes() {
+    this.playbackButton.resize(this.width / 2,
+      this.controlsTopOffset + this.controlsHeight / 2,
+      this.audioButtonSize
+    );
+      this.helpButton.resize(
+        this.width - this.audioButtonSize,
+        this.controlsTopOffset + this.controlsHeight / 2,
+        this.audioButtonSize
+      );
+      this.uploadButton.resize(
+        this.audioButtonSize,
+        this.controlsTopOffset + this.controlsHeight / 2,
+        this.audioButtonSize
+      );
+      this.downloadButton.resize(
+        (2 + appSettings.downloadButtonPadding) * this.audioButtonSize,
+        this.controlsTopOffset + this.controlsHeight / 2,
+        this.audioButtonSize,
+      );
   }
 
   computeSize() {
@@ -63,30 +109,8 @@ export class AudioWidget extends Widget {
     this.controlsTopOffset = this.height - this.controlsHeight;
     this.audioButtonSize =
       appSettings.audioButtonHeightProportion * this.controlsHeight;
-    this.playbackButtonBox = [
-      this.width / 2,
-      this.controlsTopOffset + this.controlsHeight / 2,
-      this.audioButtonSize,
-      this.audioButtonSize,
-    ];
-    this.helpButtonBox = [
-      this.width - this.audioButtonSize,
-      this.controlsTopOffset + this.controlsHeight / 2,
-      this.audioButtonSize,
-      this.audioButtonSize,
-    ];
-    this.uploadButtonBox = [
-      this.audioButtonSize,
-      this.controlsTopOffset + this.controlsHeight / 2,
-      this.audioButtonSize,
-      this.audioButtonSize,
-    ];
-    this.downloadButtonBox = [
-      (2 + appSettings.downloadButtonPadding) * this.audioButtonSize,
-      this.controlsTopOffset + this.controlsHeight / 2,
-      this.audioButtonSize,
-      this.audioButtonSize,
-    ];
+
+    this.computeButtonBoxes();
   }
 
   bindSound(sound: p5.SoundFile) {
@@ -138,18 +162,15 @@ export class AudioWidget extends Widget {
     this.p.imageMode(this.p.CENTER);
     this.p.fill(...appSettings.headerColor);
     this.p.rect(0, this.controlsTopOffset, this.width, this.controlsHeight);
-    this.p.image(this.currentPlaybackImage, ...this.playbackButtonBox);
-    this.p.image(this.p.images.helpButton, ...this.helpButtonBox);
-    this.p.image(this.p.images.uploadButton, ...this.uploadButtonBox);
-    this.p.image(this.p.images.downloadButton, ...this.downloadButtonBox);
+    Button.drawAllButtons();
     this.p.pop();
   }
 
   mouseClicked() {
-    if (this.playbackButtonHover) this.toggle();
-    else if (this.helpButtonHover) this.p.helpBox.toggle();
-    else if (this.uploadButtonHover) this.p.uploadBox.toggle();
-    else if (this.downloadButtonHover) {
+    if (this.playbackButton.getHoverState()) this.toggle();
+    else if (this.helpButton.getHoverState()) this.p.helpBox.toggle();
+    else if (this.uploadButton.getHoverState()) this.p.uploadBox.toggle();
+    else if (this.downloadButton.getHoverState()) {
       for (const widget of WidgetCollector.filter(SignalWidget))
         widget.initiateSave();
     }
@@ -183,7 +204,7 @@ export class AudioWidget extends Widget {
 
   update() {
     if (this.loading) return;
-    this.currentPlaybackImage = this.playbackImages[Number(this.paused)];
+    this.playbackButton.setImage(this.playbackImages[Number(this.paused)]);
     if (!this.paused) {
       if (
         !this.p.mouseIsPressed &&
@@ -211,54 +232,15 @@ export class AudioWidget extends Widget {
   }
 
   handleMouse() {
-    this.uiProcessed = this.playbackButtonHover = this.helpButtonHover = false;
+    this.uiProcessed = false;
+    Button.resetAllButtons();
 
     if (this.p.uiProcessed) return;
     for (const widget of WidgetCollector.filter(SignalWidget)) {
       if (widget.mouseEngaged || widget.userDraggingKeyframe) return;
     }
-    const mouseCoords: [number, number] = [
-      this.p.mouseX + this.audioButtonSize / 2,
-      this.p.viewport.mouseY + this.audioButtonSize / 2,
-    ];
 
-    // playback button
-    this.playbackButtonHover = isInRectangle(
-      ...mouseCoords,
-      ...this.playbackButtonBox
-    );
-
-    // help button
-    if (!this.playbackButtonHover)
-      this.helpButtonHover = isInRectangle(
-        ...mouseCoords,
-        ...this.helpButtonBox
-      );
-
-    // upload button
-    if (!this.helpButtonHover && !this.playbackButtonHover)
-      this.uploadButtonHover = isInRectangle(
-        ...mouseCoords,
-        ...this.uploadButtonBox
-      );
-
-    // upload button
-    if (
-      !this.helpButtonHover &&
-      !this.playbackButtonHover &&
-      !this.uploadButtonHover
-    )
-      this.downloadButtonHover = isInRectangle(
-        ...mouseCoords,
-        ...this.downloadButtonBox
-      );
-
-    this.p.uiProcessed =
-      this.p.uiProcessed ||
-      this.playbackButtonHover ||
-      this.helpButtonHover ||
-      this.uploadButtonHover ||
-      this.downloadButtonHover;
+    Button.updateMouse();
     this.uiProcessed = this.p.uiProcessed;
 
     if (this.p.uiProcessed) this.p.mouse.cursor("pointer");
@@ -272,7 +254,6 @@ export class AudioWidget extends Widget {
     this.p.push();
     this.p.image(this.drawBuffer, 0, 0);
     this.drawScrubber();
-    this.drawControls();
     this.p.pop();
   }
 }

@@ -12396,6 +12396,1620 @@
 	    return to.concat(ar || Array.prototype.slice.call(from));
 	}
 
+	var appSettings = {
+	    versionString: "animystic version: 0.0.1 alpha",
+	    versionStringColor: [255, 128],
+	    versionStringTextSize: 8,
+	    defaultFill: [255],
+	    defaultFont: "Georgia",
+	    // client settings
+	    clientUsername: "user",
+	    userColor: [255, 0, 255, 50],
+	    // file settings
+	    dataEndpoint: "data/dist.h",
+	    imagesPath: "assets/image",
+	    mainImagesPath: "assets/image/zarbalatrax/content",
+	    specialImagesPath: "assets/image/zarbalatrax/special",
+	    soundsPath: "assets/sound",
+	    logo: "sound-transparent.png",
+	    missingImage: "thonk.png",
+	    playButton: "play-circle.png",
+	    pauseButton: "pause-circle.png",
+	    helpButton: "question-circle.png",
+	    uploadButton: "cloud-upload.png",
+	    downloadButton: "download.png",
+	    filetypeIdLookup: [1, 14, 31, 44, 60, 71, 84, 97, 100, 101],
+	    filetypes: [
+	        "★ Fortune",
+	        "★★ Fortune",
+	        "★ Story",
+	        "★★ Story",
+	        "★★★ Sound Design",
+	        "Idle",
+	        "Introduction",
+	        '"In a past life..."',
+	        "★★★GOD MODE★★★",
+	        "Music",
+	    ],
+	    // menu and gui settings
+	    bannerHeight: 0.15,
+	    logoHeightToBannerHeightRatio: 0.75,
+	    logoAspect: 512 / 107,
+	    textSizeRatio: 64 / 1024,
+	    filenameTextScale: 1.5,
+	    menuTextSizeRatio: 0.2,
+	    maxTextSize: 64,
+	    minCanvasSize: 128,
+	    horizontalMargin: 0.05,
+	    verticalMargin: 0.015,
+	    cellSize: 0.08,
+	    cellPadding: 0.05,
+	    // menu colors
+	    backgroundColor: [31.4, 32.2, 34.9],
+	    headerColor: [24, 25, 28],
+	    contentColor: [55, 57, 62],
+	    menuHoverColor: [255, 255, 255, 50],
+	    menuTileColor: [0, 40],
+	    menuBorderRadius: 0,
+	    // loading settings
+	    defaultLoadingMessage: "Loading...",
+	    soundLoadingWeight: 0.9,
+	    imageLoadingWeight: 0.1,
+	    // audio widget settings
+	    samplingResolution: 64,
+	    maxWaveHeightProportion: 1 / 3,
+	    innerPadding: 0.05,
+	    controlsHeightProportion: 1 / 16,
+	    audioButtonHeightProportion: 2 / 3,
+	    // audio widget appearance
+	    scrubberColor: [255, 0, 0],
+	    // signal widget settings
+	    characters: {
+	        zarbalatrax: {
+	            angularRange: 50,
+	            angularSpeed: 2 / 7,
+	            rangeInverted: true,
+	            strokeColor: [255, 0, 255],
+	            command: 2
+	        },
+	        squambo: {
+	            angularRange: 180,
+	            angularSpeed: 18 / 125,
+	            rangeInverted: true,
+	            strokeColor: [0, 255, 0],
+	            command: 3
+	        },
+	    },
+	    signalWaveHeightScale: 0.4,
+	    mouseTolerance: 0.008,
+	    clipboardHistoryLength: 64,
+	    minimumKeyframeLength: 10,
+	    // signal widget appearance
+	    strokeWeight: 3,
+	    indicatorMargin: 0.9,
+	    defaultSignalStrokeColor: [255, 0, 255],
+	    badKeyframeColor: [0, 0, 255],
+	    freeIndicatorColor: [255, 0, 0],
+	    selectionIndicatorColor: [0, 0, 255],
+	    signalNameTextScaleRatio: 0.25,
+	    signalNameTextHeightScale: 1.25,
+	    // command settings for servo widget
+	    commands: {
+	        delay: 1,
+	        talk: 2,
+	    },
+	    // help box settings
+	    helpBoxSelector: "#help",
+	    // upload box settings
+	    uploadBoxSelector: "#upload",
+	    boxCloseTimeout: 1000,
+	    // save box settings
+	    saveBoxSelector: "#save",
+	    downloadButtonPadding: 0.5,
+	    // list box settings
+	    listBoxSelector: "#list",
+	};
+
+	function triangle(p, centerX, centerY, color, size) {
+	    if (size === void 0) { size = 12; }
+	    p.push();
+	    p.fill(color);
+	    p.stroke(0, 0, 0, 0);
+	    p.translate(centerX, centerY);
+	    p.triangle(-size / 2, (size / 4) * Math.sqrt(3), 0, (-size / 4) * Math.sqrt(3), size / 2, (size / 4) * Math.sqrt(3));
+	    p.pop();
+	}
+	function safelyStopAudio(audio) {
+	    try {
+	        audio.stop();
+	    }
+	    catch (error) {
+	        // it's ok
+	    }
+	}
+	function isInRectangle(p0, p1, x, y, w, h) {
+	    return isInBoundingBox(p0, p1, x, y, x + w, y + h);
+	}
+	function isInBoundingBox(p0, p1, x0, y0, x1, y1) {
+	    var _a, _b;
+	    _a = __read(x0 <= x1 ? [x0, x1] : [x1, x0], 2), x0 = _a[0], x1 = _a[1];
+	    _b = __read(y0 <= y1 ? [y0, y1] : [y1, y0], 2), y0 = _b[0], y1 = _b[1];
+	    return p0 >= x0 && p0 <= x1 && p1 >= y0 && p1 <= y1;
+	}
+
+	var WidgetCollector = /** @class */ (function () {
+	    function WidgetCollector() {
+	    }
+	    WidgetCollector.setInstance = function () {
+	        WidgetCollector.clearAllInstances();
+	    };
+	    WidgetCollector.getAllInstances = function () {
+	        return this.sortedCollection;
+	    };
+	    WidgetCollector.addInstance = function (name, widget) {
+	        if (name in widget)
+	            return widget;
+	        WidgetCollector.collection[name] = widget;
+	        WidgetCollector.updateRenderPriority();
+	        return widget;
+	    };
+	    WidgetCollector.clearAllInstances = function () {
+	        WidgetCollector.collection = {};
+	    };
+	    WidgetCollector.updateRenderPriority = function () {
+	        var widgets = Object.values(WidgetCollector.collection).flat();
+	        WidgetCollector.sortedCollection = widgets.sort(function (a, b) { return a.renderPriority - b.renderPriority; });
+	    };
+	    WidgetCollector.draw = function () {
+	        var e_1, _a, e_2, _b;
+	        try {
+	            // update widgets
+	            for (var _c = __values(WidgetCollector.sortedCollection.reverse()), _d = _c.next(); !_d.done; _d = _c.next()) {
+	                var widget = _d.value;
+	                widget.update();
+	            } // render priority is opposite of update priority.
+	        }
+	        catch (e_1_1) { e_1 = { error: e_1_1 }; }
+	        finally {
+	            try {
+	                if (_d && !_d.done && (_a = _c.return)) _a.call(_c);
+	            }
+	            finally { if (e_1) throw e_1.error; }
+	        }
+	        // default to last selected if focus cannot be resolved this frame
+	        if (!WidgetCollector.isWidgetFocused() &&
+	            WidgetCollector.lastWidgetFocused !== undefined &&
+	            WidgetCollector.lastWidgetFocused.active) {
+	            WidgetCollector.lastWidgetFocused.renderPriority = 2;
+	            WidgetCollector.updateRenderPriority();
+	        }
+	        try {
+	            // draw widgets
+	            for (var WidgetCollector_1 = __values(WidgetCollector), WidgetCollector_1_1 = WidgetCollector_1.next(); !WidgetCollector_1_1.done; WidgetCollector_1_1 = WidgetCollector_1.next()) {
+	                var widget = WidgetCollector_1_1.value;
+	                widget.draw();
+	            }
+	        }
+	        catch (e_2_1) { e_2 = { error: e_2_1 }; }
+	        finally {
+	            try {
+	                if (WidgetCollector_1_1 && !WidgetCollector_1_1.done && (_b = WidgetCollector_1.return)) _b.call(WidgetCollector_1);
+	            }
+	            finally { if (e_2) throw e_2.error; }
+	        }
+	        this.widgetFocused = false;
+	    };
+	    WidgetCollector[Symbol.iterator] = function () {
+	        var collectionValues = Object.values(WidgetCollector.collection);
+	        var index = 0;
+	        return {
+	            next: function () {
+	                if (index < collectionValues.length) {
+	                    return {
+	                        value: collectionValues[index++],
+	                        done: false,
+	                    };
+	                }
+	                else {
+	                    return {
+	                        value: undefined,
+	                        done: true,
+	                    };
+	                }
+	            },
+	        };
+	    };
+	    WidgetCollector.filter = function (widgetType) {
+	        var WidgetCollector_2, WidgetCollector_2_1, widget, e_3_1;
+	        var e_3, _a;
+	        return __generator(this, function (_b) {
+	            switch (_b.label) {
+	                case 0:
+	                    _b.trys.push([0, 5, 6, 7]);
+	                    WidgetCollector_2 = __values(WidgetCollector), WidgetCollector_2_1 = WidgetCollector_2.next();
+	                    _b.label = 1;
+	                case 1:
+	                    if (!!WidgetCollector_2_1.done) return [3 /*break*/, 4];
+	                    widget = WidgetCollector_2_1.value;
+	                    if (!(widget instanceof widgetType)) return [3 /*break*/, 3];
+	                    return [4 /*yield*/, widget];
+	                case 2:
+	                    _b.sent();
+	                    _b.label = 3;
+	                case 3:
+	                    WidgetCollector_2_1 = WidgetCollector_2.next();
+	                    return [3 /*break*/, 1];
+	                case 4: return [3 /*break*/, 7];
+	                case 5:
+	                    e_3_1 = _b.sent();
+	                    e_3 = { error: e_3_1 };
+	                    return [3 /*break*/, 7];
+	                case 6:
+	                    try {
+	                        if (WidgetCollector_2_1 && !WidgetCollector_2_1.done && (_a = WidgetCollector_2.return)) _a.call(WidgetCollector_2);
+	                    }
+	                    finally { if (e_3) throw e_3.error; }
+	                    return [7 /*endfinally*/];
+	                case 7: return [2 /*return*/];
+	            }
+	        });
+	    };
+	    WidgetCollector.windowResized = function () {
+	        var e_4, _a;
+	        try {
+	            for (var WidgetCollector_3 = __values(WidgetCollector), WidgetCollector_3_1 = WidgetCollector_3.next(); !WidgetCollector_3_1.done; WidgetCollector_3_1 = WidgetCollector_3.next()) {
+	                var widget = WidgetCollector_3_1.value;
+	                widget.buffer();
+	            }
+	        }
+	        catch (e_4_1) { e_4 = { error: e_4_1 }; }
+	        finally {
+	            try {
+	                if (WidgetCollector_3_1 && !WidgetCollector_3_1.done && (_a = WidgetCollector_3.return)) _a.call(WidgetCollector_3);
+	            }
+	            finally { if (e_4) throw e_4.error; }
+	        }
+	    };
+	    WidgetCollector.keyPressed = function () {
+	        var e_5, _a;
+	        try {
+	            for (var WidgetCollector_4 = __values(WidgetCollector), WidgetCollector_4_1 = WidgetCollector_4.next(); !WidgetCollector_4_1.done; WidgetCollector_4_1 = WidgetCollector_4.next()) {
+	                var widget = WidgetCollector_4_1.value;
+	                widget.keyPressed();
+	            }
+	        }
+	        catch (e_5_1) { e_5 = { error: e_5_1 }; }
+	        finally {
+	            try {
+	                if (WidgetCollector_4_1 && !WidgetCollector_4_1.done && (_a = WidgetCollector_4.return)) _a.call(WidgetCollector_4);
+	            }
+	            finally { if (e_5) throw e_5.error; }
+	        }
+	    };
+	    WidgetCollector.isWidgetFocused = function () {
+	        return WidgetCollector.widgetFocused !== false;
+	    };
+	    WidgetCollector.getLastFocusedWidget = function () {
+	        return WidgetCollector.lastWidgetFocused;
+	    };
+	    WidgetCollector.focusWidget = function (widget) {
+	        WidgetCollector.widgetFocused = widget;
+	        WidgetCollector.lastWidgetFocused = widget;
+	    };
+	    WidgetCollector.widgetFocused = false;
+	    return WidgetCollector;
+	}());
+
+	var Widget = /** @class */ (function () {
+	    function Widget(name) {
+	        this.active = true;
+	        this.renderPriority = 0;
+	        this.p = P5Singleton.getInstance();
+	        WidgetCollector.addInstance(name, this);
+	        this.creationOrder = WidgetCollector.getAllInstances().length;
+	    }
+	    Widget.prototype.setRenderPriority = function (priority) {
+	        this.renderPriority = priority;
+	        WidgetCollector.updateRenderPriority();
+	    };
+	    Widget.prototype.buffer = function () {
+	        this.computeSize();
+	        this.createBuffer();
+	        this.drawToBuffer();
+	    };
+	    Widget.prototype.createBuffer = function () {
+	        this.drawBuffer = this.p.createGraphics(this.width, this.height);
+	    };
+	    Widget.prototype.keyPressed = function () {
+	        var _a, _b;
+	        if (!this.active)
+	            return;
+	        var key = this.p.key;
+	        var modifiers = [];
+	        if (this.p.keyIsDown(this.p.CONTROL)) {
+	            modifiers.push("ctrl");
+	        }
+	        if (this.p.keyIsDown(this.p.SHIFT)) {
+	            modifiers.push("shift");
+	        }
+	        if (this.p.keyIsDown(this.p.ALT)) {
+	            modifiers.push("alt");
+	        }
+	        var keyCombination = __spreadArray(__spreadArray([], __read(modifiers), false), [key], false).join("+");
+	        (_b = (_a = this.keyBindings)[keyCombination.toLowerCase()]) === null || _b === void 0 ? void 0 : _b.call(_a);
+	    };
+	    Widget.prototype.update = function () {
+	        if (!this.active)
+	            return;
+	    };
+	    Widget.prototype.draw = function () {
+	        if (!this.active)
+	            return;
+	    };
+	    return Widget;
+	}());
+
+	var getIndexOrDefault = function (haystack, index, otherwise) {
+	    return index in haystack ? haystack[index] : otherwise;
+	};
+	var arraysAreEqual = function (arr1, arr2) {
+	    if (arr1.length !== arr2.length) {
+	        return false;
+	    }
+	    for (var i = 0; i < arr1.length; i++) {
+	        if (arr1[i] !== arr2[i]) {
+	            return false;
+	        }
+	    }
+	    return true;
+	};
+
+	var SignalWidget = /** @class */ (function (_super) {
+	    __extends(SignalWidget, _super);
+	    function SignalWidget(name, angularRange, rangeInverted, strokeColor) {
+	        var _a;
+	        if (rangeInverted === void 0) { rangeInverted = false; }
+	        if (strokeColor === void 0) { strokeColor = appSettings.defaultSignalStrokeColor; }
+	        var _this = _super.call(this, name) || this;
+	        _this._clipboardSize = appSettings.clipboardHistoryLength;
+	        _this._data = [];
+	        _this._clipboardIndex = 0;
+	        _this.verticalKeyframePositions = [];
+	        _this.horizontalKeyframePositions = [];
+	        _this.angularArgumentDataIndices = [];
+	        _this.timeArgumentDataIndices = [];
+	        _this.createVerticalKeyframeThisFrame = false;
+	        _this.selectedVerticalKeyframe = -1;
+	        _this.selectedHorizontalKeyframe = -1;
+	        _this.verticalKeyframeToTheRightOfMouse = -1;
+	        _this.userDraggingKeyframe = false;
+	        _this.mouseEngaged = false;
+	        _this.keyBindings = {
+	            a: _this.insertVerticalKeyframe.bind(_this),
+	            d: _this.deleteVerticalKeyframe.bind(_this),
+	            "ctrl+c": _this.copyCommand.bind(_this),
+	            "ctrl+v": _this.pasteCommand.bind(_this),
+	            "ctrl+s": _this.saveCommand.bind(_this),
+	            "ctrl+u": _this.uploadCommand.bind(_this),
+	            "ctrl+y": _this.redoCommand.bind(_this),
+	            "ctrl+shift+z": _this.redoCommand.bind(_this),
+	            "ctrl+z": _this.undoCommand.bind(_this),
+	            "ctrl+r": _this.resetCommand.bind(_this),
+	        };
+	        _this.angularRange = angularRange;
+	        _this.rangeInverted = rangeInverted;
+	        _a = __read(_this.rangeInverted
+	            ? [_this.angularRange, 0]
+	            : [0, _this.angularRange], 2), _this.closedAngle = _a[0], _this.openAngle = _a[1];
+	        _this.strokeColor = __spreadArray([], __read(strokeColor), false);
+	        _this.name = name;
+	        // draw list
+	        _this.drawName();
+	        return _this;
+	    }
+	    SignalWidget.prototype.newData = function (data) {
+	        this.bindFilename();
+	        this.checkpointData = data.slice();
+	        this.bindData(data);
+	        this.resetClipboard();
+	    };
+	    SignalWidget.prototype.bindFilename = function () {
+	        var name = this.p.select("#list-filename");
+	        name === null || name === void 0 ? void 0 : name.html(this.p.menu.lastSelectedFile);
+	    };
+	    SignalWidget.prototype.checkRootNode = function (data) {
+	        if (data[0] != appSettings.commands.talk) {
+	            console.log("An attempt was made to bind to data without a root node. Restoring a default root node.");
+	            data.splice(0, 0, appSettings.commands.talk, this.closedAngle);
+	        }
+	    };
+	    SignalWidget.prototype.resetCommand = function () {
+	        if (typeof this.closedAngle !== "number")
+	            return;
+	        var duration = 1000 * this.p.audioWidget.currentSound.duration();
+	        var sleep = Math.round(duration / 2);
+	        this.bindData([
+	            appSettings.commands.talk,
+	            this.closedAngle,
+	            appSettings.commands.delay,
+	            sleep,
+	            appSettings.commands.talk,
+	            this.openAngle,
+	            appSettings.commands.delay,
+	            sleep,
+	        ]);
+	    };
+	    SignalWidget.prototype.bindData = function (data) {
+	        this.checkRootNode(data);
+	        this.currentData = data;
+	        this.p.data[this.name][this.p.menu.lastSelectedFile] = data;
+	        this.buffer();
+	    };
+	    SignalWidget.prototype.resetClipboard = function () {
+	        this._clipboardIndex = 0;
+	        this._data = [];
+	        this._data.push(this.checkpointData);
+	    };
+	    SignalWidget.prototype.clipboardAction = function () {
+	        if (arraysAreEqual(this.currentData, this._clipboardIndex < this._data.length
+	            ? this._data[this._clipboardIndex]
+	            : []))
+	            return;
+	        // Update clipboard index to point to the latest data
+	        if (this._clipboardIndex !== this._data.length - 1)
+	            this._data.splice(this._clipboardIndex + 1); // Remove all entries after clipboardIndex
+	        this._data.push(__spreadArray([], __read(this.currentData), false)); // Push new data as the last element
+	        this._clipboardIndex = this._data.length - 1; // Update clipboard index to latest data index
+	        // Keep _data length within the clipboard size limit
+	        if (this._data.length > this._clipboardSize) {
+	            this._data.shift(); // Remove oldest entry from the clipboard
+	            this._clipboardIndex--;
+	        }
+	    };
+	    SignalWidget.prototype.undoCommand = function () {
+	        if (this._clipboardIndex > 0 && this._clipboardIndex < this._data.length) {
+	            // If there is data in the clipboard
+	            this._clipboardIndex--; // Decrement clipboard index
+	            this.currentData = __spreadArray([], __read(this._data[this._clipboardIndex]), false); // Restore data from clipboard
+	            this.buffer(); // Update the buffer
+	        }
+	    };
+	    SignalWidget.prototype.redoCommand = function () {
+	        if (this._clipboardIndex < this._data.length - 1 && this._data.length > 0) {
+	            // If there is data after the current clipboard index
+	            this._clipboardIndex++; // Increment clipboard index
+	            this.currentData = __spreadArray([], __read(this._data[this._clipboardIndex]), false); // Restore data from clipboard
+	            this.buffer(); // Update the buffer
+	        }
+	    };
+	    SignalWidget.prototype.uploadCommand = function () {
+	        this.p.uploadBox.toggle();
+	    };
+	    SignalWidget.prototype.copyCommand = function () {
+	        this.p.saveBox.text("<p>Data copied to clipboard!</p>");
+	        navigator.clipboard.writeText(this.currentData.toString());
+	    };
+	    SignalWidget.prototype.pasteCommand = function () {
+	        return __awaiter(this, void 0, void 0, function () {
+	            var clipboard, data;
+	            return __generator(this, function (_a) {
+	                switch (_a.label) {
+	                    case 0:
+	                        this.p.saveBox.text("<p>Data pasted from clipboard. Be sure to save if you want to keep these changes, otherwise they will be discarded.</p>");
+	                        return [4 /*yield*/, navigator.clipboard.readText()];
+	                    case 1:
+	                        clipboard = _a.sent();
+	                        data = clipboard.split(",").map(function (string) { return Number(string); });
+	                        this.bindData(data);
+	                        return [2 /*return*/];
+	                }
+	            });
+	        });
+	    };
+	    SignalWidget.prototype.saveCommand = function () {
+	        console.log(this.currentData);
+	        this.initiateSave();
+	    };
+	    SignalWidget.prototype.initiateSave = function () {
+	        this.p.saveBox.text();
+	        this.saveToFile();
+	    };
+	    SignalWidget.prototype.saveToFile = function () {
+	        // Convert the currentData array to JSON format
+	        var jsonData = JSON.stringify({
+	            name: this.name,
+	            filename: this.p.menu.lastSelectedFile,
+	            data: this.currentData,
+	        });
+	        // Send a POST request to the server with the array data in the request body
+	        fetch("/data", {
+	            method: "POST",
+	            headers: {
+	                "Content-Type": "application/json",
+	            },
+	            body: jsonData,
+	        })
+	            .then(function (response) {
+	            if (!response.ok) {
+	                throw new Error("Network response was not OK");
+	            }
+	        })
+	            .catch(function (error) {
+	            console.error("There was a problem saving the data:", error);
+	        });
+	    };
+	    SignalWidget.prototype.computeSize = function () {
+	        var _a;
+	        this.width = this.p.width;
+	        this.height = this.p.viewport.scaleToHeight(2 * appSettings.maxWaveHeightProportion);
+	        this.topOffset = (((_a = this.p.audioWidget) === null || _a === void 0 ? void 0 : _a.height) - this.height) / 2;
+	        this.signalHeight = appSettings.signalWaveHeightScale * this.height;
+	        this.signalVerticalMargin = (this.height - this.signalHeight) / 2;
+	        this.resolution = this.p.audioWidget.resolution / 1000.0;
+	        this.mouseTolerance = this.width * appSettings.mouseTolerance;
+	        this.indicatorHeight =
+	            this.height - appSettings.indicatorMargin * this.signalVerticalMargin;
+	    };
+	    SignalWidget.prototype.createBuffer = function () {
+	        var _a, _b;
+	        _super.prototype.createBuffer.call(this);
+	        (_a = this.drawBuffer).fill.apply(_a, __spreadArray(__spreadArray([], __read(this.strokeColor), false), [10], false));
+	        (_b = this.drawBuffer).stroke.apply(_b, __spreadArray([], __read(this.strokeColor), false));
+	        this.drawBuffer.strokeWeight(appSettings.strokeWeight);
+	    };
+	    SignalWidget.prototype.roundData = function () {
+	        var e_1, _a;
+	        try {
+	            for (var _b = __values(this.currentData.entries()), _c = _b.next(); !_c.done; _c = _b.next()) {
+	                var _d = __read(_c.value, 2), index = _d[0], datum = _d[1];
+	                if (index % 2 == 0)
+	                    continue;
+	                this.currentData[index] = Math.max(Math.round(datum), appSettings.minimumKeyframeLength);
+	            }
+	        }
+	        catch (e_1_1) { e_1 = { error: e_1_1 }; }
+	        finally {
+	            try {
+	                if (_c && !_c.done && (_a = _b.return)) _a.call(_b);
+	            }
+	            finally { if (e_1) throw e_1.error; }
+	        }
+	        this.checkRootNode(this.currentData);
+	    };
+	    SignalWidget.prototype.drawToBuffer = function (consolidate) {
+	        var _a, _b, e_2, _c, _d;
+	        if (consolidate === void 0) { consolidate = true; }
+	        this.roundData(); // ensure data is integer
+	        if (!this.userDraggingKeyframe)
+	            this.clipboardAction(); // handle clipboard
+	        var badKeyframes = this.consolidateData(this.userDraggingKeyframe || !consolidate); // always avoid duplicates?
+	        var badKeyframeIndicatorCoordinates = [];
+	        this.drawBuffer.clear(0, 0, 0, 0);
+	        this.drawBuffer.rect(0, 0, this.width, this.height);
+	        var raisedHeight = this.signalVerticalMargin;
+	        var loweredHeight = raisedHeight + this.signalHeight;
+	        this.raisedHeight = raisedHeight;
+	        this.loweredHeight = loweredHeight;
+	        this.verticalKeyframePositions = [];
+	        this.horizontalKeyframePositions = [];
+	        this.timeArgumentDataIndices = [];
+	        this.angularArgumentDataIndices = [];
+	        var _e = __read([
+	            0,
+	            0,
+	            loweredHeight,
+	            loweredHeight,
+	        ], 4), lastX = _e[0], currentX = _e[1], lastHeight = _e[2], currentHeight = _e[3];
+	        for (var i = 0; i < this.currentData.length; i += 2) {
+	            var _f = __read([
+	                this.currentData[i],
+	                this.currentData[i + 1],
+	            ], 2), command = _f[0], argument = _f[1];
+	            switch (command) {
+	                case appSettings.commands.delay:
+	                    currentX = lastX + this.resolution * argument; // move in time
+	                    // draw horizontal line
+	                    this.drawBuffer.line(lastX, currentHeight, currentX, currentHeight);
+	                    lastX = currentX; // keep track of how far along we are
+	                    this.horizontalKeyframePositions.push(currentHeight);
+	                    this.timeArgumentDataIndices.push(i + 1);
+	                    break;
+	                case appSettings.commands.talk:
+	                    // compute how "open" the servo is
+	                    var percentOpen = argument / this.angularRange;
+	                    if (this.rangeInverted)
+	                        percentOpen = 1 - percentOpen;
+	                    // calculate wave height
+	                    lastHeight = currentHeight;
+	                    currentHeight = loweredHeight - percentOpen * this.signalHeight;
+	                    // calculate slope and horizontal leg length
+	                    var slope = appSettings.characters[this.name].angularSpeed * Math.sign(currentHeight - lastHeight) * -1; // -1 because y is down
+	                    Math.abs(slope) * this.p.audioWidget.resolution;
+	                    // this.drawBuffer.push();
+	                    // this.drawBuffer.fill([...this.strokeColor, 50]);
+	                    // this.drawBuffer.stroke([...this.strokeColor, 50]);
+	                    // this.drawBuffer.triangle(...trianglePoints as [number, number, number, number, number, number]);
+	                    // this.drawBuffer.pop();
+	                    this.drawBuffer.line(currentX, currentHeight, currentX, lastHeight);
+	                    // draw bulb to show existence of keyframe
+	                    if (this.userDraggingKeyframe && i in badKeyframes) {
+	                        badKeyframeIndicatorCoordinates.push([
+	                            currentX,
+	                            currentHeight,
+	                            appSettings.strokeWeight,
+	                        ]);
+	                    }
+	                    else {
+	                        this.drawBuffer.push();
+	                        this.drawBuffer.rectMode(this.p.CENTER);
+	                        this.drawBuffer.square(currentX, currentHeight, appSettings.strokeWeight);
+	                        this.drawBuffer.pop();
+	                    }
+	                    if (currentX > 0)
+	                        this.verticalKeyframePositions.push(currentX);
+	                    this.angularArgumentDataIndices.push(i + 1);
+	                    break;
+	            }
+	        }
+	        // draw last line
+	        this.drawBuffer.line(currentX, currentHeight, currentX, loweredHeight);
+	        this.verticalKeyframePositions.push(currentX);
+	        // draw bad keyframe indicators
+	        if (!this.userDraggingKeyframe)
+	            return;
+	        this.drawBuffer.push();
+	        this.drawBuffer.rectMode(this.p.CENTER);
+	        (_a = this.drawBuffer).fill.apply(_a, __spreadArray([], __read(appSettings.badKeyframeColor), false));
+	        (_b = this.drawBuffer).stroke.apply(_b, __spreadArray([], __read(appSettings.badKeyframeColor), false));
+	        try {
+	            for (var badKeyframeIndicatorCoordinates_1 = __values(badKeyframeIndicatorCoordinates), badKeyframeIndicatorCoordinates_1_1 = badKeyframeIndicatorCoordinates_1.next(); !badKeyframeIndicatorCoordinates_1_1.done; badKeyframeIndicatorCoordinates_1_1 = badKeyframeIndicatorCoordinates_1.next()) {
+	                var coords = badKeyframeIndicatorCoordinates_1_1.value;
+	                (_d = this.drawBuffer).square.apply(_d, __spreadArray([], __read(coords), false));
+	            }
+	        }
+	        catch (e_2_1) { e_2 = { error: e_2_1 }; }
+	        finally {
+	            try {
+	                if (badKeyframeIndicatorCoordinates_1_1 && !badKeyframeIndicatorCoordinates_1_1.done && (_c = badKeyframeIndicatorCoordinates_1.return)) _c.call(badKeyframeIndicatorCoordinates_1);
+	            }
+	            finally { if (e_2) throw e_2.error; }
+	        }
+	        this.drawBuffer.pop();
+	    };
+	    SignalWidget.prototype.drawName = function () {
+	        var _a;
+	        var _this = this;
+	        var checkbox = this.p.createElement("input");
+	        checkbox.attribute("type", "checkbox");
+	        checkbox.id(this.name);
+	        checkbox.attribute("checked", "true");
+	        checkbox.mouseClicked(function () {
+	            _this.active = !_this.active;
+	            console.log(_this.active);
+	        });
+	        var label = this.p.createElement("label");
+	        label.attribute("for", this.name);
+	        label.html(this.name);
+	        label.style("color", (_a = this.p).color.apply(_a, __spreadArray([], __read(this.strokeColor), false)));
+	        this.p.listBox.div.child(checkbox);
+	        this.p.listBox.div.child(label);
+	        this.p.listBox.div.child(this.p.createElement("br"));
+	    };
+	    SignalWidget.prototype.getSelectedKeyframe = function () {
+	        var e_3, _a;
+	        var _b = __read([this.p.viewport.mouseX, this.p.viewport.mouseY], 2), mouseX = _b[0], mouseY = _b[1];
+	        var toleranceRadius = this.mouseTolerance / 2;
+	        var mouseEngaged = false;
+	        var verticalKeyframeToTheRightOfMouse = 0;
+	        try {
+	            for (var _c = __values(this.horizontalKeyframePositions.entries()), _d = _c.next(); !_d.done; _d = _c.next()) {
+	                var _e = __read(_d.value, 2), index = _e[0], horizontalKeyframe = _e[1];
+	                var lastX = getIndexOrDefault(this.verticalKeyframePositions, index - 1, 0);
+	                var currentX = this.verticalKeyframePositions[index];
+	                var nextHeight = getIndexOrDefault(this.horizontalKeyframePositions, index + 1, this.loweredHeight);
+	                var currentHeight = horizontalKeyframe;
+	                if (currentX <= mouseX)
+	                    verticalKeyframeToTheRightOfMouse += 1;
+	                if (this.userDraggingKeyframe)
+	                    return;
+	                // is user selecting a horizontal keyframe?
+	                if (isInBoundingBox(mouseX, mouseY, lastX + toleranceRadius, currentHeight - toleranceRadius, currentX - toleranceRadius, currentHeight + toleranceRadius)) {
+	                    this.p.mouse.cursor("ns-resize");
+	                    this.selectedHorizontalKeyframe = index;
+	                    if (!this.userDraggingKeyframe)
+	                        this.selectedVerticalKeyframe = -1;
+	                    mouseEngaged = true;
+	                }
+	                // is user selecting a vertical keyframe?
+	                else if (isInBoundingBox(mouseX, mouseY, currentX - toleranceRadius, nextHeight, currentX + toleranceRadius, currentHeight)) {
+	                    this.p.mouse.cursor("ew-resize");
+	                    this.selectedVerticalKeyframe = index;
+	                    this.selectedHorizontalKeyframe = -1;
+	                    mouseEngaged = true;
+	                }
+	            }
+	        }
+	        catch (e_3_1) { e_3 = { error: e_3_1 }; }
+	        finally {
+	            try {
+	                if (_d && !_d.done && (_a = _c.return)) _a.call(_c);
+	            }
+	            finally { if (e_3) throw e_3.error; }
+	        }
+	        this.mouseEngaged = mouseEngaged;
+	        this.verticalKeyframeToTheRightOfMouse = verticalKeyframeToTheRightOfMouse;
+	    };
+	    SignalWidget.prototype.getMillisecondsFromX = function (x, leftIndex, rightIndex) {
+	        var previousVerticalKeyframe = getIndexOrDefault(this.verticalKeyframePositions, leftIndex, 0);
+	        var nextVerticalKeyframe = getIndexOrDefault(this.verticalKeyframePositions, rightIndex, this.p.audioWidget.width);
+	        var distanceBetweenKeyframes = nextVerticalKeyframe - previousVerticalKeyframe;
+	        var percentRight = this.p.constrain((x - previousVerticalKeyframe) / distanceBetweenKeyframes, 0, 1);
+	        return (this.p.lerp(0, distanceBetweenKeyframes, percentRight) / this.resolution);
+	    };
+	    SignalWidget.prototype.getAngleFromY = function () {
+	        var mouseY = this.p.viewport.mouseY;
+	        var percentOpen = this.p.constrain((this.loweredHeight + this.mouseTolerance - mouseY) /
+	            (this.signalHeight + this.mouseTolerance), 0, 1);
+	        var angle = this.p.lerp(this.closedAngle, this.openAngle, percentOpen);
+	        return angle;
+	    };
+	    SignalWidget.prototype.handleMouse = function () {
+	        if (this.createVerticalKeyframeThisFrame) {
+	            this.createVerticalKeyframeThisFrame = false;
+	            this.createVerticalKeyframe();
+	        }
+	        if (WidgetCollector.isWidgetFocused())
+	            return;
+	        this.getSelectedKeyframe();
+	        if (!this.p.uiProcessed &&
+	            this.p.mouseIsPressed &&
+	            this.p.mouseButton == this.p.LEFT &&
+	            this.mouseEngaged) {
+	            this.userDraggingKeyframe = true;
+	            var isVerticalKeyframe = this.selectedVerticalKeyframe >= 0;
+	            var argumentIndices = isVerticalKeyframe
+	                ? this.timeArgumentDataIndices
+	                : this.angularArgumentDataIndices;
+	            var selectedIndex = isVerticalKeyframe
+	                ? this.selectedVerticalKeyframe
+	                : this.selectedHorizontalKeyframe;
+	            var argumentIndex = argumentIndices[selectedIndex];
+	            var newArgument = void 0;
+	            if (isVerticalKeyframe) {
+	                var mouseX = this.p.viewport.mouseX;
+	                newArgument = this.getMillisecondsFromX(mouseX, selectedIndex - 1, selectedIndex + 1);
+	                var nextArgumentIndex = getIndexOrDefault(argumentIndices, selectedIndex + 1, -1);
+	                if (nextArgumentIndex >= 1) {
+	                    var oldArgument = this.currentData[argumentIndex];
+	                    this.currentData[nextArgumentIndex] -= newArgument - oldArgument;
+	                }
+	            }
+	            else
+	                newArgument = this.getAngleFromY();
+	            this.currentData[argumentIndex] = newArgument;
+	            this.drawToBuffer();
+	        }
+	        else if (!this.p.mouseIsPressed && this.userDraggingKeyframe) {
+	            this.userDraggingKeyframe = false;
+	            this.drawToBuffer();
+	        }
+	        this.drawIndicators();
+	    };
+	    SignalWidget.prototype.handleRenderPriority = function () {
+	        if (this.mouseEngaged && !WidgetCollector.isWidgetFocused()) {
+	            this.renderPriority = 2;
+	            WidgetCollector.focusWidget(this);
+	        }
+	        else
+	            this.renderPriority = 1;
+	        WidgetCollector.updateRenderPriority();
+	    };
+	    SignalWidget.prototype.insertVerticalKeyframe = function () {
+	        this.createVerticalKeyframeThisFrame = true;
+	    };
+	    SignalWidget.prototype.createVerticalKeyframe = function () {
+	        var mouseX = this.p.viewport.mouseX;
+	        var newTimeArgument = this.getMillisecondsFromX(mouseX, this.verticalKeyframeToTheRightOfMouse - 1, this.verticalKeyframeToTheRightOfMouse);
+	        if (
+	        // this.verticalKeyframeToTheRightOfMouse >
+	        // this.angularArgumentDataIndices.length - 1 ||
+	        this.verticalKeyframeToTheRightOfMouse === undefined)
+	            return;
+	        this.angularArgumentDataIndices[this.verticalKeyframeToTheRightOfMouse];
+	        var associatedHorizontalKeyframeDataIndex = this.timeArgumentDataIndices[this.verticalKeyframeToTheRightOfMouse];
+	        var oldTimeArgument = this.currentData[associatedHorizontalKeyframeDataIndex];
+	        this.currentData[associatedHorizontalKeyframeDataIndex] = newTimeArgument;
+	        this.currentData.splice(associatedHorizontalKeyframeDataIndex + 1, 0, appSettings.commands.talk, this.getAngleFromY(), appSettings.commands.delay, oldTimeArgument - newTimeArgument);
+	        this.drawToBuffer(false);
+	    };
+	    SignalWidget.prototype.deleteVerticalKeyframe = function () {
+	        if (this.selectedVerticalKeyframe >= 0 &&
+	            this.verticalKeyframePositions.length >= 3 &&
+	            this.selectedVerticalKeyframe < this.angularArgumentDataIndices.length) {
+	            var argumentIndex = this.angularArgumentDataIndices[this.selectedVerticalKeyframe];
+	            var commandIndex = argumentIndex - 1;
+	            this.currentData.splice(commandIndex, 2);
+	            this.drawToBuffer();
+	        }
+	    };
+	    /**
+	     * consolidateData
+	     *
+	     * This function merges all consecutive time commands in currentData.
+	     * Also, if there are repeated talk commands separated by a single delay, we merge.
+	     *
+	     * Arguments:
+	     *  test: boolean -- if true, then does not actually consolidate; just returns a map with potential deletes.
+	     */
+	    SignalWidget.prototype.consolidateData = function (test) {
+	        if (test === void 0) { test = false; }
+	        var badKeyframes = {};
+	        for (var i = 0; i < this.currentData.length - 2; i += 2) {
+	            // consecutiveness condition
+	            if (this.currentData[i] == appSettings.commands.delay &&
+	                this.currentData[i + 2] == appSettings.commands.delay) {
+	                badKeyframes[i + 3] = true;
+	                if (test)
+	                    continue;
+	                this.currentData[i + 1] += this.currentData[i + 3]; // merge into one
+	                this.currentData.splice(i + 2, 2); // delete the latter 2 items
+	            }
+	            else if (i < this.currentData.length - 5 &&
+	                this.currentData[i] == appSettings.commands.talk &&
+	                this.currentData[i + 2] == appSettings.commands.delay &&
+	                this.currentData[i + 4] == appSettings.commands.talk &&
+	                this.currentData[i + 1] == this.currentData[i + 5]) {
+	                badKeyframes[i + 4] = true;
+	                if (test)
+	                    continue;
+	                var deleteCount = 2;
+	                if (i < this.currentData.length - 7 &&
+	                    this.currentData[i + 6] == appSettings.commands.delay) {
+	                    this.currentData[i + 3] += this.currentData[i + 7];
+	                    deleteCount = 4;
+	                }
+	                this.currentData.splice(i + 4, deleteCount); // delete the extraneous items
+	            }
+	        }
+	        return badKeyframes;
+	    };
+	    SignalWidget.prototype.drawIndicators = function () {
+	        var _a, _b;
+	        // "free" indicator
+	        triangle(this.p, this.p.mouseX, this.indicatorHeight, (_a = this.p).color.apply(_a, __spreadArray([], __read(appSettings.freeIndicatorColor), false)));
+	        // selection indicator
+	        if (this.selectedVerticalKeyframe >= 0 &&
+	            this.selectedVerticalKeyframe < this.verticalKeyframePositions.length) {
+	            triangle(this.p, this.verticalKeyframePositions[this.selectedVerticalKeyframe], this.indicatorHeight, (_b = this.p).color.apply(_b, __spreadArray([], __read(appSettings.selectionIndicatorColor), false)));
+	        }
+	    };
+	    SignalWidget.prototype.keyPressed = function () {
+	        if (!this.active)
+	            return;
+	        if (WidgetCollector.getLastFocusedWidget() !== this)
+	            return;
+	        _super.prototype.keyPressed.call(this);
+	    };
+	    SignalWidget.prototype.update = function () {
+	        if (!this.active)
+	            return;
+	        _super.prototype.update.call(this);
+	        this.p.viewport.translate(0, this.topOffset);
+	        this.handleMouse();
+	        this.handleRenderPriority();
+	        this.p.viewport.reset();
+	    };
+	    SignalWidget.prototype.draw = function () {
+	        if (!this.active)
+	            return;
+	        _super.prototype.draw.call(this);
+	        this.p.viewport.translate(0, this.topOffset);
+	        this.p.image(this.drawBuffer, 0, 0);
+	        this.p.viewport.reset();
+	    };
+	    return SignalWidget;
+	}(Widget));
+
+	var Button = /** @class */ (function () {
+	    function Button(name, x, y, size, image) {
+	        Button.p = P5Singleton.getInstance();
+	        this.box = [x, y, size, size];
+	        this.size = size;
+	        this.hover = false;
+	        this.image = image;
+	        this.name = name;
+	        Button.instances[name] = this;
+	    }
+	    Button.prototype.resize = function (x, y, size) {
+	        this.size = size;
+	        this.box = [x, y, size, size];
+	    };
+	    Button.prototype.draw = function () {
+	        var _a;
+	        (_a = Button.p).image.apply(_a, __spreadArray([this.image], __read(this.box), false));
+	    };
+	    Button.prototype.isMouseOver = function () {
+	        var mouseCoords = [
+	            Button.p.mouseX + this.size / 2,
+	            Button.p.viewport.mouseY + this.size / 2,
+	        ];
+	        var isHovering = isInRectangle.apply(void 0, __spreadArray(__spreadArray([], __read(mouseCoords), false), __read(this.box), false));
+	        if (isHovering !== this.hover) {
+	            this.hover = isHovering;
+	            return true; // state has changed
+	        }
+	        return false; // state has not changed
+	    };
+	    Button.updateMouse = function () {
+	        var hoverState = Button.getAllButtons().forEach(function (button) {
+	            return button.isMouseOver();
+	        });
+	        Button.p.uiProcessed =
+	            Button.p.uiProcessed ||
+	                Object.values(Button.instances).some(function (button) { return button.hover; });
+	        return hoverState;
+	    };
+	    Button.prototype.getName = function () {
+	        return this.name;
+	    };
+	    Button.prototype.getHoverState = function () {
+	        return this.hover;
+	    };
+	    Button.prototype.getSize = function () {
+	        return this.size;
+	    };
+	    Button.prototype.getImage = function () {
+	        return this.image;
+	    };
+	    Button.prototype.setImage = function (image) {
+	        this.image = image;
+	    };
+	    Button.getAllButtons = function () {
+	        return Object.values(Button.instances);
+	    };
+	    Button.getButtonByName = function (name) {
+	        return Button.instances[name];
+	    };
+	    Button.resetAllButtons = function () {
+	        Button.getAllButtons().forEach(function (button) { return (button.hover = false); });
+	    };
+	    Button.destroyAllButtons = function () {
+	        Button.instances = {};
+	    };
+	    Button.drawAllButtons = function () {
+	        Button.getAllButtons().forEach(function (button) { return button.draw(); });
+	    };
+	    Button.instances = {};
+	    return Button;
+	}());
+
+	var AudioWidget = /** @class */ (function (_super) {
+	    __extends(AudioWidget, _super);
+	    function AudioWidget(name) {
+	        if (name === void 0) { name = "audioWidget"; }
+	        var _this = _super.call(this, name) || this;
+	        _this.currentTime = 0;
+	        _this.currentPosition = 0;
+	        _this.loading = true;
+	        _this.paused = false;
+	        _this.uiProcessed = false;
+	        _this.keyBindings = {
+	            " ": _this.toggle.bind(_this),
+	            r: _this.resetTime.bind(_this),
+	        };
+	        _this.playbackImages = [_this.p.images.pauseButton, _this.p.images.playButton];
+	        _this.createButtons();
+	        return _this;
+	    }
+	    AudioWidget.prototype.buffer = function () {
+	        this.computeSize();
+	        this.createBuffer();
+	        this.drawToBuffer();
+	    };
+	    AudioWidget.prototype.createButtons = function () {
+	        this.playbackButton = new Button("playback", this.width / 2, this.controlsTopOffset + this.controlsHeight / 2, this.audioButtonSize, this.playbackImages[0]);
+	        this.helpButton = new Button("help", this.width - this.audioButtonSize, this.controlsTopOffset + this.controlsHeight / 2, this.audioButtonSize, this.p.images.helpButton);
+	        this.uploadButton = new Button("upload", this.audioButtonSize, this.controlsTopOffset + this.controlsHeight / 2, this.audioButtonSize, this.p.images.uploadButton);
+	        this.downloadButton = new Button("download", (2 + appSettings.downloadButtonPadding) * this.audioButtonSize, this.controlsTopOffset + this.controlsHeight / 2, this.audioButtonSize, this.p.images.downloadButton);
+	    };
+	    AudioWidget.prototype.computeButtonBoxes = function () {
+	        this.playbackButton.resize(this.width / 2, this.controlsTopOffset + this.controlsHeight / 2, this.audioButtonSize);
+	        this.helpButton.resize(this.width - this.audioButtonSize, this.controlsTopOffset + this.controlsHeight / 2, this.audioButtonSize);
+	        this.uploadButton.resize(this.audioButtonSize, this.controlsTopOffset + this.controlsHeight / 2, this.audioButtonSize);
+	        this.downloadButton.resize((2 + appSettings.downloadButtonPadding) * this.audioButtonSize, this.controlsTopOffset + this.controlsHeight / 2, this.audioButtonSize);
+	    };
+	    AudioWidget.prototype.computeSize = function () {
+	        this.width = this.p.width;
+	        this.height = this.p.height - this.p.banner.height;
+	        this.resolution = this.width / this.currentSound.duration();
+	        this.topOffset = this.height / 2;
+	        this.controlsHeight = this.p.viewport.scaleToHeight(appSettings.controlsHeightProportion);
+	        this.controlsTopOffset = this.height - this.controlsHeight;
+	        this.audioButtonSize =
+	            appSettings.audioButtonHeightProportion * this.controlsHeight;
+	        this.computeButtonBoxes();
+	    };
+	    AudioWidget.prototype.bindSound = function (sound) {
+	        this.currentSound = sound;
+	        this.buffer();
+	        this.resetTime(false);
+	        this.paused = false;
+	    };
+	    AudioWidget.prototype.createBuffer = function () {
+	        var _a, _b;
+	        _super.prototype.createBuffer.call(this);
+	        (_a = this.drawBuffer).fill.apply(_a, __spreadArray([], __read(appSettings.defaultFill), false));
+	        (_b = this.drawBuffer).stroke.apply(_b, __spreadArray([], __read(appSettings.defaultFill), false));
+	    };
+	    AudioWidget.prototype.drawScrubber = function () {
+	        var _a, _b;
+	        this.p.push();
+	        (_a = this.p).stroke.apply(_a, __spreadArray([], __read(appSettings.scrubberColor), false));
+	        (_b = this.p).fill.apply(_b, __spreadArray([], __read(appSettings.scrubberColor), false));
+	        this.p.line(this.currentPosition, 0, this.currentPosition, this.p.height);
+	        this.p.pop();
+	    };
+	    AudioWidget.prototype.drawToBuffer = function (reset) {
+	        var e_1, _a;
+	        if (reset === void 0) { reset = false; }
+	        // compute data
+	        var numSamples = this.p.viewport.scaleToWidth(appSettings.samplingResolution);
+	        var peaks = this.currentSound.getPeaks(numSamples);
+	        if (reset)
+	            this.resetTime();
+	        this.loading = false;
+	        // draw
+	        var currentX;
+	        this.drawBuffer.clear(0, 0, 0, 0);
+	        try {
+	            for (var _b = __values(peaks.entries()), _c = _b.next(); !_c.done; _c = _b.next()) {
+	                var _d = __read(_c.value, 2), index = _d[0], element = _d[1];
+	                currentX = index / appSettings.samplingResolution;
+	                this.drawBuffer.line(currentX, this.height * 0.5, // center
+	                currentX, this.height * (0.5 - appSettings.maxWaveHeightProportion * element) // deviation from center
+	                );
+	            }
+	        }
+	        catch (e_1_1) { e_1 = { error: e_1_1 }; }
+	        finally {
+	            try {
+	                if (_c && !_c.done && (_a = _b.return)) _a.call(_b);
+	            }
+	            finally { if (e_1) throw e_1.error; }
+	        }
+	    };
+	    AudioWidget.prototype.drawControls = function () {
+	        var _a;
+	        this.p.push();
+	        this.p.imageMode(this.p.CENTER);
+	        (_a = this.p).fill.apply(_a, __spreadArray([], __read(appSettings.headerColor), false));
+	        this.p.rect(0, this.controlsTopOffset, this.width, this.controlsHeight);
+	        Button.drawAllButtons();
+	        this.p.pop();
+	    };
+	    AudioWidget.prototype.mouseClicked = function () {
+	        var e_2, _a;
+	        if (this.playbackButton.getHoverState())
+	            this.toggle();
+	        else if (this.helpButton.getHoverState())
+	            this.p.helpBox.toggle();
+	        else if (this.uploadButton.getHoverState())
+	            this.p.uploadBox.toggle();
+	        else if (this.downloadButton.getHoverState()) {
+	            try {
+	                for (var _b = __values(WidgetCollector.filter(SignalWidget)), _c = _b.next(); !_c.done; _c = _b.next()) {
+	                    var widget = _c.value;
+	                    widget.initiateSave();
+	                }
+	            }
+	            catch (e_2_1) { e_2 = { error: e_2_1 }; }
+	            finally {
+	                try {
+	                    if (_c && !_c.done && (_a = _b.return)) _a.call(_b);
+	                }
+	                finally { if (e_2) throw e_2.error; }
+	            }
+	        }
+	    };
+	    AudioWidget.prototype.toggle = function () {
+	        if (this.currentSound.isPlaying() && !this.paused) {
+	            safelyStopAudio(this.currentSound);
+	        }
+	        else
+	            this.currentSound.play(undefined, undefined, undefined, this.currentTime);
+	        this.paused = !this.paused;
+	    };
+	    AudioWidget.prototype.pause = function () {
+	        if (!this.paused) {
+	            safelyStopAudio(this.currentSound);
+	            this.paused = true;
+	        }
+	    };
+	    AudioWidget.prototype.resetTime = function (stop) {
+	        if (stop === void 0) { stop = true; }
+	        this.currentPosition = this.currentTime = 0;
+	        if (stop)
+	            safelyStopAudio(this.currentSound);
+	    };
+	    AudioWidget.prototype.scrubToPosition = function (x) {
+	        if (this.currentSound.isPlaying())
+	            safelyStopAudio(this.currentSound);
+	        this.currentTime = x / this.resolution;
+	    };
+	    AudioWidget.prototype.update = function () {
+	        if (this.loading)
+	            return;
+	        this.playbackButton.setImage(this.playbackImages[Number(this.paused)]);
+	        if (!this.paused) {
+	            if (!this.p.mouseIsPressed &&
+	                !this.currentSound.isPlaying() &&
+	                this.currentTime < this.currentSound.duration()) {
+	                this.currentSound.play(undefined, undefined, undefined, this.currentTime);
+	            }
+	            else
+	                this.currentTime = this.currentSound.isPlaying()
+	                    ? this.currentSound.currentTime()
+	                    : 0;
+	        }
+	        if (this.currentSound.duration() - this.currentTime < 0.1) {
+	            this.pause();
+	            this.resetTime(false);
+	            return;
+	        }
+	        this.handleMouse();
+	        this.currentPosition = this.currentTime * this.resolution;
+	    };
+	    AudioWidget.prototype.handleMouse = function () {
+	        var e_3, _a;
+	        this.uiProcessed = false;
+	        Button.resetAllButtons();
+	        if (this.p.uiProcessed)
+	            return;
+	        try {
+	            for (var _b = __values(WidgetCollector.filter(SignalWidget)), _c = _b.next(); !_c.done; _c = _b.next()) {
+	                var widget = _c.value;
+	                if (widget.mouseEngaged || widget.userDraggingKeyframe)
+	                    return;
+	            }
+	        }
+	        catch (e_3_1) { e_3 = { error: e_3_1 }; }
+	        finally {
+	            try {
+	                if (_c && !_c.done && (_a = _b.return)) _a.call(_b);
+	            }
+	            finally { if (e_3) throw e_3.error; }
+	        }
+	        Button.updateMouse();
+	        this.uiProcessed = this.p.uiProcessed;
+	        if (this.p.uiProcessed)
+	            this.p.mouse.cursor("pointer");
+	        else if (this.p.mouseIsPressed && this.p.mouseButton == this.p.LEFT)
+	            this.scrubToPosition(this.p.mouseX);
+	    };
+	    AudioWidget.prototype.draw = function () {
+	        _super.prototype.draw.call(this);
+	        this.p.push();
+	        this.p.image(this.drawBuffer, 0, 0);
+	        this.drawScrubber();
+	        this.p.pop();
+	    };
+	    return AudioWidget;
+	}(Widget));
+
+	var Banner = /** @class */ (function () {
+	    function Banner() {
+	        this.mouseHoverHome = false;
+	        this.p = P5Singleton.getInstance();
+	        this.computeSize();
+	    }
+	    Banner.prototype.computeSize = function () {
+	        if (this.p.images === undefined)
+	            return;
+	        this.width = this.p.viewport.width;
+	        this.height = this.p.max(this.p.viewport.scaleToHeight(appSettings.bannerHeight), this.p.images.logo.height);
+	        this.logoHeight = appSettings.logoHeightToBannerHeightRatio * this.height;
+	        this.logoWidth = appSettings.logoAspect * this.logoHeight;
+	    };
+	    Banner.prototype.update = function () {
+	        var mouseYGood = this.p.mouseY <= this.height;
+	        this.mouseHoverHome =
+	            !this.p.uiProcessed &&
+	                mouseYGood &&
+	                this.p.abs(this.p.mouseX - this.width / 2) <=
+	                    this.p.images.logo.width / 2; // is mouse hovering logo image?
+	        this.p.uiProcessed = this.p.uiProcessed || this.mouseHoverHome; // is mouse hovering toolbar?
+	        if (this.mouseHoverHome)
+	            this.p.mouse.cursor("pointer");
+	    };
+	    Banner.prototype.draw = function () {
+	        var _a;
+	        // banner
+	        this.p.push();
+	        (_a = this.p).fill.apply(_a, __spreadArray([], __read(appSettings.headerColor), false));
+	        this.p.rect(0, 0, this.width, this.height);
+	        // logo image
+	        this.p.imageMode(this.p.CENTER);
+	        if (this.p.images !== undefined)
+	            this.p.image(this.p.images.logo, this.width / 2, this.height / 2, this.logoWidth, this.logoHeight);
+	        this.p.pop();
+	    };
+	    return Banner;
+	}());
+
+	var Box = /** @class */ (function () {
+	    function Box(selector, closable) {
+	        if (closable === void 0) { closable = true; }
+	        var _this = this;
+	        var _a;
+	        this.mouseOver = false;
+	        this.p = P5Singleton.getInstance();
+	        this.div = this.p.select(selector);
+	        this.div.mouseOver(function () {
+	            _this.mouseOver = true;
+	        });
+	        this.div.mouseOut(function () {
+	            _this.mouseOver = false;
+	        });
+	        if (closable)
+	            (_a = this.p
+	                .select("".concat(selector, " input, ").concat(selector, " .close-button"))) === null || _a === void 0 ? void 0 : _a.mouseClicked(this.div.hide.bind(this.div));
+	    }
+	    Object.defineProperty(Box.prototype, "hidden", {
+	        get: function () {
+	            return this.div.style("display") == "none";
+	        },
+	        enumerable: false,
+	        configurable: true
+	    });
+	    Object.defineProperty(Box.prototype, "isMouseOver", {
+	        get: function () {
+	            return this.mouseOver;
+	        },
+	        enumerable: false,
+	        configurable: true
+	    });
+	    Box.prototype.hide = function () {
+	        this.div.hide();
+	    };
+	    Box.prototype.show = function () {
+	        this.div.show();
+	    };
+	    Box.prototype.toggle = function () {
+	        if (this.hidden)
+	            this.show();
+	        else
+	            this.hide();
+	    };
+	    Box.prototype.update = function () {
+	        this.p.uiProcessed = this.p.uiProcessed || (!this.hidden && this.mouseOver);
+	    };
+	    return Box;
+	}());
+
+	var FadingBox = /** @class */ (function (_super) {
+	    __extends(FadingBox, _super);
+	    function FadingBox(selector) {
+	        var _this = _super.call(this, selector) || this;
+	        _this.isToggling = false;
+	        _this.defaultText = _this.div.html();
+	        return _this;
+	    }
+	    FadingBox.prototype.text = function (text) {
+	        if (text === undefined)
+	            this._text = this.defaultText;
+	        else
+	            this._text = text;
+	        this.div.html(this._text);
+	        this.toggle();
+	    };
+	    FadingBox.prototype.toggle = function () {
+	        var _this = this;
+	        if (this.isToggling)
+	            return; // debounce - ignore this call if already toggling
+	        this.isToggling = true;
+	        setTimeout(function () {
+	            _super.prototype.toggle.call(_this);
+	            _this.isToggling = false;
+	        }, appSettings.boxCloseTimeout);
+	        _super.prototype.toggle.call(this);
+	    };
+	    return FadingBox;
+	}(Box));
+
+	var UploadBox = /** @class */ (function (_super) {
+	    __extends(UploadBox, _super);
+	    function UploadBox(selector) {
+	        var _this = _super.call(this, selector) || this;
+	        _this.yesButton = _this.p.select("#upload-yes");
+	        _this.noButton = _this.p.select("#upload-no");
+	        _this.uploadText = _this.p.select("#upload-text");
+	        _this.loadingSpinner = _this.p.select("#loading-spinner");
+	        _this.yesButton.mouseClicked(_this.upload.bind(_this));
+	        return _this;
+	    }
+	    UploadBox.prototype.hide = function () {
+	        _super.prototype.hide.call(this);
+	        this.uploadText.html("Are you sure you want to upload? Be sure to save (CTRL+S) before proceeding.");
+	        this.loadingSpinner.hide();
+	        this.yesButton.show();
+	        this.noButton.show();
+	    };
+	    UploadBox.prototype.upload = function () {
+	        var _this = this;
+	        this.uploadText.html("Hacking Zarb's brain...");
+	        this.loadingSpinner.style("display", "inline");
+	        this.yesButton.hide();
+	        this.noButton.hide();
+	        // Convert the currentData array to JSON format
+	        var jsonData = JSON.stringify({
+	            filename: this.p.menu.lastSelectedFile,
+	        });
+	        // Send a POST request to the server with the array data in the request body
+	        fetch("/upload", {
+	            method: "POST",
+	            headers: {
+	                "Content-Type": "application/json",
+	            },
+	            body: jsonData,
+	        })
+	            .then(function (response) {
+	            if (!response.ok) {
+	                throw new Error("Network response was not OK");
+	            }
+	            _this.loadingSpinner.hide();
+	            _this.uploadText.html("Done! Reboot script called. Check server logs if needed.");
+	        })
+	            .catch(function (error) {
+	            _this.uploadText.html("There was a problem sending the data:\n ".concat(error));
+	        }).finally(function () {
+	            setTimeout(function () {
+	                _this.hide();
+	            }, appSettings.boxCloseTimeout);
+	        });
+	    };
+	    return UploadBox;
+	}(Box));
+
+	function getFilesAsync(origin) {
+	    if (origin === void 0) { origin = ""; }
+	    return __awaiter(this, void 0, void 0, function () {
+	        var response;
+	        return __generator(this, function (_a) {
+	            switch (_a.label) {
+	                case 0: return [4 /*yield*/, fetch("".concat(origin, "/files"))];
+	                case 1:
+	                    response = _a.sent();
+	                    if (!response.ok) {
+	                        throw new Error("HTTP error! status: ".concat(response.status));
+	                    }
+	                    return [4 /*yield*/, response.json()];
+	                case 2: return [2 /*return*/, _a.sent()];
+	            }
+	        });
+	    });
+	}
+	function lookupFiletype(id) {
+	    var i = 0;
+	    while (id >= appSettings.filetypeIdLookup[i + 1] &&
+	        i < appSettings.filetypeIdLookup.length - 1)
+	        i += 1;
+	    return appSettings.filetypes[i];
+	}
+
+	var Menu = /** @class */ (function () {
+	    function Menu() {
+	        this._enabled = true;
+	        this.lastSelectedFile = "";
+	        this.status = {};
+	        this.rows = 0;
+	        this.cols = 0;
+	        this.scrollOffset = 0;
+	        this.trueTopOffset = 0;
+	        this.p = P5Singleton.getInstance();
+	        this.computeSize();
+	        this.enabled = true;
+	    }
+	    Object.defineProperty(Menu.prototype, "enabled", {
+	        get: function () {
+	            return this._enabled;
+	        },
+	        set: function (value) {
+	            var _this = this;
+	            this._enabled = value;
+	            var jsonData = JSON.stringify({
+	                name: appSettings.clientUsername,
+	                filename: this.lastSelectedFile,
+	            });
+	            // Send a POST request to the server with the array data in the request body
+	            fetch("/status", {
+	                method: "POST",
+	                headers: {
+	                    "Content-Type": "application/json",
+	                },
+	                body: jsonData,
+	            })
+	                .then(function (response) {
+	                if (!response.ok) {
+	                    throw new Error("Network response was not OK");
+	                }
+	                return response.json();
+	            })
+	                .then(function (data) {
+	                _this.status = data;
+	            })
+	                .catch(function (error) { });
+	        },
+	        enumerable: false,
+	        configurable: true
+	    });
+	    Menu.prototype.computeSize = function () {
+	        this.width = this.p.viewport.scaleToWidth(1 - 2 * appSettings.horizontalMargin);
+	        this.height = this.p.viewport.height;
+	        this.cellSize = this.p.viewport.scaleToWidth(appSettings.cellSize);
+	        this.cellPadding = this.p.viewport.scaleToWidth(appSettings.cellPadding);
+	        this.trueCellSize = this.cellSize + this.cellPadding;
+	        this.textSize = appSettings.menuTextSizeRatio * this.cellSize;
+	        this.horizontalMargin = this.p.viewport.scaleToWidth(appSettings.horizontalMargin);
+	        this.rows = this.p.ceil(this.height / this.trueCellSize);
+	        this.cols = this.p.floor(this.width / this.trueCellSize);
+	        this.padding = (this.width - this.cols * this.trueCellSize) / 2;
+	        this.trueLeftOffset = this.padding + this.horizontalMargin;
+	    };
+	    Menu.prototype.scroll = function (value) {
+	        this.scrollOffset += value;
+	        this.scrollOffset = this.p.constrain(this.scrollOffset, 0, (this.p.floor(this.p.maxSounds / this.cols) - 1) * this.trueCellSize);
+	    };
+	    Menu.prototype.text = function (imageName, x, y, editingText) {
+	        if (editingText === void 0) { editingText = ""; }
+	        this.p.push();
+	        this.p.fill(255);
+	        this.p.noStroke();
+	        this.p.textAlign(this.p.CENTER);
+	        this.p.translate(x + this.trueCellSize / 2, y + this.trueCellSize - this.p.textAscent());
+	        this.p.textSize(this.textSize);
+	        this.p.text(imageName, 0, 0);
+	        this.p.textSize(this.textSize / 2);
+	        this.p.text(lookupFiletype(Number(imageName.substring(0, imageName.indexOf(".")))) +
+	            editingText, 0, appSettings.filenameTextScale * this.p.textAscent());
+	        this.p.pop();
+	    };
+	    Menu.prototype.getGridIndex = function (i, j) {
+	        return ((i + this.p.floor(this.scrollOffset / this.trueCellSize)) * this.cols + j);
+	    };
+	    Menu.prototype.image = function (index, i, j) {
+	        // calculate the x position of the item
+	        var x = this.trueLeftOffset + j * this.trueCellSize;
+	        var y = -this.trueTopOffset + i * this.trueCellSize; // calculate the y position of the item
+	        // every sound is linked to the images via filename
+	        var soundName = this.p.files.sound[index];
+	        var associatedImageName = soundName.replace(".wav", ".png");
+	        this.p.push();
+	        // try to get image and display if existing, otherwise display "missing" image
+	        var image = this.p.images[associatedImageName] || this.p.images.missingImage;
+	        this.p.image(image, x + this.cellPadding / 2, y + this.cellPadding / 4, this.cellSize, this.cellSize);
+	        this.p.pop();
+	        return [soundName, associatedImageName, x, y];
+	    };
+	    Menu.prototype.drawItems = function () {
+	        var _a, _b;
+	        this.trueTopOffset = this.scrollOffset % this.trueCellSize; // this accounts for the scroll
+	        for (var i = 0; i < this.rows; i++) {
+	            for (var j = 0; j < this.cols; j++) {
+	                // calculate index of current item
+	                var index = this.getGridIndex(i, j);
+	                if (index >= this.p.maxSounds)
+	                    return;
+	                var _c = __read(this.image(index, i, j), 4), soundName = _c[0], associatedImageName = _c[1], x = _c[2], y = _c[3];
+	                var editingText = "";
+	                // background
+	                this.p.push();
+	                (_a = this.p).fill.apply(_a, __spreadArray([], __read(appSettings.menuTileColor), false));
+	                // is the current tile being edited?
+	                // for (const user in this.status) {
+	                //   if (this.status[user] == soundName) {
+	                //     this.p.fill(...appSettings.userColor);
+	                //     editingText = ` [${user} editing]`
+	                //   }
+	                // }
+	                // is the current tile highlighted by the user? draw ui feedback
+	                if (isInRectangle(this.p.viewport.mouseX, this.p.viewport.mouseY, x, y, this.trueCellSize, this.trueCellSize)) {
+	                    (_b = this.p).fill.apply(_b, __spreadArray([], __read(appSettings.menuHoverColor), false));
+	                    // expose the last hovered filename
+	                    this.lastSelectedFile = soundName;
+	                }
+	                // draw background
+	                this.p.stroke(0, 0);
+	                this.p.rect(x, y, this.trueCellSize, this.trueCellSize, appSettings.menuBorderRadius);
+	                this.p.pop();
+	                this.text(associatedImageName, x, y, editingText);
+	            }
+	        }
+	    };
+	    Menu.prototype.draw = function () {
+	        var _a, _b;
+	        this.p.push();
+	        this.p.textSize(this.textSize);
+	        this.p.push();
+	        (_a = this.p).stroke.apply(_a, __spreadArray([], __read(appSettings.contentColor), false));
+	        (_b = this.p).fill.apply(_b, __spreadArray([], __read(appSettings.contentColor), false));
+	        this.p.rect(this.horizontalMargin, 0, this.width, this.height);
+	        this.p.pop();
+	        this.drawItems();
+	        this.p.pop();
+	    };
+	    return Menu;
+	}());
+
+	var Mouse = /** @class */ (function () {
+	    function Mouse() {
+	        this.engaged = false;
+	        this.p = P5Singleton.getInstance();
+	    }
+	    Mouse.prototype.cursor = function (cursorType) {
+	        this.engaged = true;
+	        this.p.cursor(cursorType);
+	        return true;
+	    };
+	    Mouse.prototype.update = function () {
+	        this.p.uiProcessed = false;
+	    };
+	    Mouse.prototype.draw = function () {
+	        if (!this.engaged)
+	            this.p.cursor("default");
+	        this.engaged = false;
+	    };
+	    return Mouse;
+	}());
+
+	var Viewport = /** @class */ (function () {
+	    function Viewport() {
+	        this.translationX = 0;
+	        this.translationY = 0;
+	        this.frameStack = [];
+	        this.p = P5Singleton.getInstance();
+	        this.computeSize();
+	        this.computeTextSize();
+	    }
+	    Viewport.prototype.updateMouse = function () {
+	        this.mouseX = this.p.mouseX - this.translationX;
+	        this.mouseY = this.p.mouseY - this.translationY;
+	    };
+	    Viewport.prototype.translate = function (x, y) {
+	        if (y === void 0) { y = 0; }
+	        this.p.push();
+	        this.p.translate(x, y);
+	        this.translationX += x;
+	        this.translationY += y;
+	        this.frameStack.push([x, y]);
+	        this.updateMouse();
+	    };
+	    Viewport.prototype.reset = function () {
+	        if (this.frameStack.length == 0)
+	            return;
+	        var _a = __read(this.frameStack.pop(), 2), x = _a[0], y = _a[1];
+	        this.translationX -= x;
+	        this.translationY -= y;
+	        this.p.pop();
+	        this.updateMouse();
+	    };
+	    Viewport.prototype.computeSize = function () {
+	        return [
+	            (this.width = this.p.max(appSettings.minCanvasSize, this.p.windowWidth)),
+	            (this.height = this.p.max(appSettings.minCanvasSize, this.p.windowHeight)),
+	        ];
+	    };
+	    Viewport.prototype.computeTextSize = function () {
+	        return (this.textSize = this.p.constrain(appSettings.textSizeRatio * this.width, 0, appSettings.maxTextSize));
+	    };
+	    Viewport.prototype.scaleToHeight = function (decimal) {
+	        return this.height * decimal;
+	    };
+	    Viewport.prototype.scaleToWidth = function (decimal) {
+	        return this.width * decimal;
+	    };
+	    return Viewport;
+	}());
+
 	var zarbalatrax = {
 		"001.wav": [
 			2,
@@ -16617,11 +18231,7 @@
 			2,
 			50,
 			1,
-			2322,
-			2,
-			50,
-			1,
-			848
+			3170
 		],
 		"072.wav": [
 			2,
@@ -16647,19 +18257,35 @@
 			2,
 			50,
 			1,
-			720,
+			734,
 			2,
-			0,
+			20,
 			1,
-			512,
+			225,
 			2,
-			50,
+			49,
 			1,
-			251,
+			147,
 			2,
-			0,
+			18,
 			1,
-			1157,
+			323,
+			2,
+			43,
+			1,
+			61,
+			2,
+			12,
+			1,
+			361,
+			2,
+			44,
+			1,
+			171,
+			2,
+			19,
+			1,
+			625,
 			2,
 			50,
 			1,
@@ -16671,55 +18297,155 @@
 			1,
 			733,
 			2,
-			0,
+			27,
 			1,
-			1719,
+			116,
+			2,
+			35,
+			1,
+			112,
+			2,
+			20,
+			1,
+			319,
+			2,
+			48,
+			1,
+			347,
+			2,
+			27,
+			1,
+			197,
+			2,
+			34,
+			1,
+			83,
+			2,
+			12,
+			1,
+			520,
+			2,
+			49,
+			1,
+			642,
+			2,
+			26,
+			1,
+			300,
 			2,
 			50,
 			1,
-			617,
+			101,
 			2,
-			0,
+			18,
 			1,
-			1313,
+			161,
 			2,
 			50,
 			1,
-			1124
+			115,
+			2,
+			18,
+			1,
+			566,
+			2,
+			50,
+			1,
+			1194
 		],
 		"076.wav": [
 			2,
 			50,
 			1,
-			743,
+			725,
 			2,
-			0,
+			29,
 			1,
-			882,
+			208,
 			2,
-			50,
+			20,
 			1,
-			472,
+			120,
 			2,
-			0,
+			12,
 			1,
-			1363,
+			95,
 			2,
-			50,
+			43,
 			1,
-			332,
+			87,
 			2,
-			0,
+			12,
 			1,
-			1817,
-			2,
-			50,
-			1,
-			1022,
+			198,
 			2,
 			50,
 			1,
-			1
+			664,
+			2,
+			26,
+			1,
+			200,
+			2,
+			34,
+			1,
+			69,
+			2,
+			21,
+			1,
+			268,
+			2,
+			36,
+			1,
+			77,
+			2,
+			26,
+			1,
+			143,
+			2,
+			30,
+			1,
+			138,
+			2,
+			49,
+			1,
+			86,
+			2,
+			26,
+			1,
+			272,
+			2,
+			50,
+			1,
+			436,
+			2,
+			24,
+			1,
+			242,
+			2,
+			11,
+			1,
+			311,
+			2,
+			50,
+			1,
+			194,
+			2,
+			23,
+			1,
+			393,
+			2,
+			50,
+			1,
+			87,
+			2,
+			25,
+			1,
+			596,
+			2,
+			50,
+			1,
+			1032
 		],
 		"077.wav": [
 			2,
@@ -16727,105 +18453,189 @@
 			1,
 			948,
 			2,
-			0,
+			26,
 			1,
-			1888,
+			323,
 			2,
 			50,
 			1,
-			214,
+			89,
 			2,
-			0,
+			22,
 			1,
-			2184,
+			505,
 			2,
 			50,
 			1,
-			1022
+			115,
+			2,
+			20,
+			1,
+			374,
+			2,
+			50,
+			1,
+			127,
+			2,
+			21,
+			1,
+			276,
+			2,
+			47,
+			1,
+			212,
+			2,
+			10,
+			1,
+			542,
+			2,
+			44,
+			1,
+			228,
+			2,
+			29,
+			1,
+			134,
+			2,
+			21,
+			1,
+			237,
+			2,
+			49,
+			1,
+			191,
+			2,
+			24,
+			1,
+			212,
+			2,
+			50,
+			1,
+			147,
+			2,
+			21,
+			1,
+			228,
+			2,
+			41,
+			1,
+			69,
+			2,
+			16,
+			1,
+			403,
+			2,
+			50,
+			1,
+			896
 		],
 		"078.wav": [
 			2,
 			50,
 			1,
-			683,
+			653,
 			2,
-			0,
+			12,
 			1,
-			3041,
+			1449,
 			2,
-			50,
+			46,
 			1,
-			551,
+			206,
 			2,
-			0,
+			15,
 			1,
-			4099,
+			1187,
 			2,
-			50,
+			43,
 			1,
-			903,
+			904,
 			2,
-			0,
+			11,
 			1,
-			2358,
-			2,
-			50,
-			1,
-			683,
-			2,
-			0,
-			1,
-			1212,
+			3604,
 			2,
 			50,
 			1,
-			3195
+			1241,
+			2,
+			12,
+			1,
+			2156,
+			2,
+			50,
+			1,
+			915,
+			2,
+			10,
+			1,
+			958,
+			2,
+			50,
+			1,
+			3542
 		],
 		"079.wav": [
 			2,
 			50,
 			1,
-			810,
+			857,
 			2,
-			0,
+			10,
 			1,
-			641,
-			2,
-			50,
-			1,
-			509,
-			2,
-			0,
-			1,
-			735,
+			549,
 			2,
 			50,
 			1,
-			773,
+			569,
 			2,
-			0,
+			10,
 			1,
-			1696,
-			2,
-			50,
-			1,
-			660,
-			2,
-			0,
-			1,
-			2130,
+			493,
 			2,
 			50,
 			1,
-			848,
+			997,
 			2,
-			0,
+			10,
 			1,
-			1150,
+			1639,
 			2,
 			50,
 			1,
-			4354
+			745,
+			2,
+			10,
+			1,
+			1909,
+			2,
+			50,
+			1,
+			1034,
+			2,
+			12,
+			1,
+			932,
+			2,
+			48,
+			1,
+			707,
+			2,
+			16,
+			1,
+			1174,
+			2,
+			50,
+			1,
+			289,
+			2,
+			13,
+			1,
+			1387,
+			2,
+			50,
+			1,
+			1195
 		],
 		"080.wav": [
 			2,
@@ -16869,23 +18679,123 @@
 			2,
 			50,
 			1,
-			1262,
+			1229,
 			2,
-			0,
+			18,
 			1,
-			2206,
-			2,
-			50,
-			1,
-			674,
-			2,
-			0,
-			1,
-			2439,
+			188,
 			2,
 			50,
 			1,
-			2720
+			73,
+			2,
+			23,
+			1,
+			230,
+			2,
+			10,
+			1,
+			254,
+			2,
+			50,
+			1,
+			97,
+			2,
+			15,
+			1,
+			85,
+			2,
+			50,
+			1,
+			78,
+			2,
+			15,
+			1,
+			194,
+			2,
+			50,
+			1,
+			121,
+			2,
+			27,
+			1,
+			230,
+			2,
+			10,
+			1,
+			249,
+			2,
+			48,
+			1,
+			121,
+			2,
+			27,
+			1,
+			181,
+			2,
+			49,
+			1,
+			812,
+			2,
+			28,
+			1,
+			175,
+			2,
+			16,
+			1,
+			321,
+			2,
+			50,
+			1,
+			73,
+			2,
+			26,
+			1,
+			230,
+			2,
+			49,
+			1,
+			73,
+			2,
+			28,
+			1,
+			145,
+			2,
+			50,
+			1,
+			115,
+			2,
+			24,
+			1,
+			224,
+			2,
+			48,
+			1,
+			91,
+			2,
+			23,
+			1,
+			127,
+			2,
+			50,
+			1,
+			61,
+			2,
+			11,
+			1,
+			127,
+			2,
+			49,
+			1,
+			115,
+			2,
+			21,
+			1,
+			394,
+			2,
+			50,
+			1,
+			2888
 		],
 		"082.wav": [
 			2,
@@ -17357,23 +19267,35 @@
 			2,
 			50,
 			1,
-			1213,
+			1237,
 			2,
-			0,
+			25,
 			1,
-			566,
+			101,
+			2,
+			14,
+			1,
+			108,
+			2,
+			42,
+			1,
+			102,
+			2,
+			10,
+			1,
+			308,
+			2,
+			37,
+			1,
+			186,
+			2,
+			14,
+			1,
+			307,
 			2,
 			50,
 			1,
-			193,
-			2,
-			0,
-			1,
-			696,
-			2,
-			50,
-			1,
-			1
+			353
 		],
 		"098.wav": [
 		],
@@ -17549,11 +19471,7 @@
 			2,
 			180,
 			1,
-			19136,
-			2,
-			180,
-			1,
-			2052
+			21188
 		],
 		"005.wav": [
 			2,
@@ -18557,89 +20475,105 @@
 		],
 		"065.wav": [
 			2,
+			0,
+			1,
 			0
 		],
 		"066.wav": [
 			2,
+			0,
+			1,
 			0
 		],
 		"067.wav": [
 			2,
+			0,
+			1,
 			0
 		],
 		"068.wav": [
 			2,
+			0,
+			1,
 			0
 		],
 		"069.wav": [
 			2,
+			0,
+			1,
 			0
 		],
 		"070.wav": [
 			2,
+			0,
+			1,
 			0
 		],
 		"071.wav": [
 			2,
-			0,
+			180,
 			1,
-			464,
+			572,
+			2,
+			96,
+			1,
+			1168,
 			2,
 			180,
 			1,
-			555,
-			2,
-			130,
-			1,
-			489,
-			2,
-			180,
-			1,
-			814,
-			2,
-			180,
-			1,
-			848
-		],
-		"072.wav": [
+			86,
 			2,
 			170,
 			1,
-			1115,
+			473,
+			2,
+			124,
+			1,
+			545,
 			2,
 			180,
 			1,
-			2144,
+			718
+		],
+		"072.wav": [
 			2,
 			180,
 			1,
-			743,
+			728,
+			2,
+			115,
+			1,
+			1189,
+			2,
+			155,
+			1,
+			287,
 			2,
 			180,
 			1,
-			689,
+			875,
+			2,
+			117,
+			1,
+			652,
 			2,
 			180,
 			1,
-			439
+			1399
 		],
 		"073.wav": [
 			2,
 			180,
 			1,
-			1593,
+			739,
+			2,
+			94,
+			1,
+			1136,
 			2,
 			180,
 			1,
-			716,
-			2,
-			180,
-			1,
-			971,
-			2,
-			180,
-			1,
-			182
+			1587
 		],
 		"074.wav": [
 			2,
@@ -18673,11 +20607,23 @@
 			2,
 			180,
 			1,
-			2115,
+			12466,
+			2,
+			103,
+			1,
+			751,
 			2,
 			180,
 			1,
-			13530
+			816,
+			2,
+			97,
+			1,
+			1198,
+			2,
+			180,
+			1,
+			414
 		],
 		"079.wav": [
 			2,
@@ -18929,18 +20875,34 @@
 			2,
 			180,
 			1,
-			1447,
+			4277,
+			2,
+			47,
+			1,
+			350,
+			2,
+			135,
+			1,
+			492,
+			2,
+			49,
+			1,
+			662,
 			2,
 			180,
 			1,
-			5250
+			916
 		],
 		"095.wav": [
 			2,
+			0,
+			1,
 			0
 		],
 		"096.wav": [
 			2,
+			0,
+			1,
 			0
 		],
 		"097.wav": [
@@ -18951,10 +20913,14 @@
 		],
 		"098.wav": [
 			2,
+			0,
+			1,
 			0
 		],
 		"099.wav": [
 			2,
+			0,
+			1,
 			0
 		],
 		"100.wav": [
@@ -19057,144 +21023,6 @@
 		squambo: squambo
 	};
 
-	var appSettings = {
-	    versionString: "animystic version: 0.0.1 alpha",
-	    versionStringColor: [255, 128],
-	    versionStringTextSize: 8,
-	    defaultFill: [255],
-	    defaultFont: "Georgia",
-	    // client settings
-	    clientUsername: "user",
-	    userColor: [255, 0, 255, 50],
-	    // file settings
-	    dataEndpoint: "data/dist.h",
-	    imagesPath: "assets/image",
-	    mainImagesPath: "assets/image/zarbalatrax/content",
-	    specialImagesPath: "assets/image/zarbalatrax/special",
-	    soundsPath: "assets/sound",
-	    logo: "sound-transparent.png",
-	    missingImage: "thonk.png",
-	    playButton: "play-circle.png",
-	    pauseButton: "pause-circle.png",
-	    helpButton: "question-circle.png",
-	    uploadButton: "cloud-upload.png",
-	    downloadButton: "download.png",
-	    filetypeIdLookup: [1, 14, 31, 44, 60, 71, 84, 97, 100, 101],
-	    filetypes: [
-	        "★ Fortune",
-	        "★★ Fortune",
-	        "★ Story",
-	        "★★ Story",
-	        "★★★ Sound Design",
-	        "Idle",
-	        "Introduction",
-	        '"In a past life..."',
-	        "★★★GOD MODE★★★",
-	        "Music",
-	    ],
-	    // menu and gui settings
-	    bannerHeight: 0.15,
-	    logoHeightToBannerHeightRatio: 0.75,
-	    logoAspect: 512 / 107,
-	    textSizeRatio: 64 / 1024,
-	    filenameTextScale: 1.5,
-	    menuTextSizeRatio: 0.2,
-	    maxTextSize: 64,
-	    minCanvasSize: 128,
-	    horizontalMargin: 0.05,
-	    verticalMargin: 0.015,
-	    cellSize: 0.08,
-	    cellPadding: 0.05,
-	    // menu colors
-	    backgroundColor: [31.4, 32.2, 34.9],
-	    headerColor: [24, 25, 28],
-	    contentColor: [55, 57, 62],
-	    menuHoverColor: [255, 255, 255, 50],
-	    menuTileColor: [0, 40],
-	    menuBorderRadius: 0,
-	    // loading settings
-	    defaultLoadingMessage: "Loading...",
-	    soundLoadingWeight: 0.9,
-	    imageLoadingWeight: 0.1,
-	    // audio widget settings
-	    samplingResolution: 64,
-	    maxWaveHeightProportion: 1 / 3,
-	    innerPadding: 0.05,
-	    controlsHeightProportion: 1 / 16,
-	    audioButtonHeightProportion: 2 / 3,
-	    // audio widget appearance
-	    scrubberColor: [255, 0, 0],
-	    // signal widget settings
-	    characters: {
-	        zarbalatrax: {
-	            angularRange: 50,
-	            rangeInverted: true,
-	            strokeColor: [255, 0, 255],
-	            command: 2
-	        },
-	        squambo: {
-	            angularRange: 180,
-	            rangeInverted: true,
-	            strokeColor: [0, 255, 0],
-	            command: 3
-	        },
-	    },
-	    signalWaveHeightScale: 0.4,
-	    mouseTolerance: 0.008,
-	    clipboardHistoryLength: 64,
-	    minimumKeyframeLength: 10,
-	    // signal widget appearance
-	    strokeWeight: 3,
-	    indicatorMargin: 0.9,
-	    defaultSignalStrokeColor: [255, 0, 255],
-	    badKeyframeColor: [0, 0, 255],
-	    freeIndicatorColor: [255, 0, 0],
-	    selectionIndicatorColor: [0, 0, 255],
-	    signalNameTextScaleRatio: 0.25,
-	    signalNameTextHeightScale: 1.25,
-	    // command settings for servo widget
-	    commands: {
-	        delay: 1,
-	        talk: 2,
-	    },
-	    // help box settings
-	    helpBoxSelector: "#help",
-	    // upload box settings
-	    uploadBoxSelector: "#upload",
-	    boxCloseTimeout: 1000,
-	    // save box settings
-	    saveBoxSelector: "#save",
-	    downloadButtonPadding: 0.5,
-	    // list box settings
-	    listBoxSelector: "#list",
-	};
-
-	function getFilesAsync(origin) {
-	    if (origin === void 0) { origin = ""; }
-	    return __awaiter(this, void 0, void 0, function () {
-	        var response;
-	        return __generator(this, function (_a) {
-	            switch (_a.label) {
-	                case 0: return [4 /*yield*/, fetch("".concat(origin, "/files"))];
-	                case 1:
-	                    response = _a.sent();
-	                    if (!response.ok) {
-	                        throw new Error("HTTP error! status: ".concat(response.status));
-	                    }
-	                    return [4 /*yield*/, response.json()];
-	                case 2: return [2 /*return*/, _a.sent()];
-	            }
-	        });
-	    });
-	}
-	function lookupFiletype(id) {
-	    var i = 0;
-	    while (id >= appSettings.filetypeIdLookup[i + 1] &&
-	        i < appSettings.filetypeIdLookup.length - 1)
-	        i += 1;
-	    return appSettings.filetypes[i];
-	}
-
 	var p;
 	var preloadSetup = function () {
 	    p.images = {};
@@ -19265,7 +21093,11 @@
 	        }
 	    });
 	}); };
-	var preload = function () { return __awaiter(void 0, void 0, void 0, function () {
+	var isLoadFinished = function () {
+	    p = P5Singleton.getInstance();
+	    return p.maxImages == p.imagesLoaded && p.soundsLoaded == p.maxSounds;
+	};
+	var preloadAsync = function () { return __awaiter(void 0, void 0, void 0, function () {
 	    return __generator(this, function (_a) {
 	        p = P5Singleton.getInstance();
 	        preloadSetup();
@@ -19274,1416 +21106,9 @@
 	    });
 	}); };
 
-	function triangle(p, centerX, centerY, color, size) {
-	    if (size === void 0) { size = 12; }
-	    p.push();
-	    p.fill(color);
-	    p.stroke(0, 0, 0, 0);
-	    p.translate(centerX, centerY);
-	    p.triangle(-size / 2, (size / 4) * Math.sqrt(3), 0, (-size / 4) * Math.sqrt(3), size / 2, (size / 4) * Math.sqrt(3));
-	    p.pop();
-	}
-	function safelyStopAudio(audio) {
-	    try {
-	        audio.stop();
-	    }
-	    catch (error) {
-	        // it's ok
-	    }
-	}
-	function isInRectangle(p0, p1, x, y, w, h) {
-	    return isInBoundingBox(p0, p1, x, y, x + w, y + h);
-	}
-	function isInBoundingBox(p0, p1, x0, y0, x1, y1) {
-	    var _a, _b;
-	    _a = __read(x0 <= x1 ? [x0, x1] : [x1, x0], 2), x0 = _a[0], x1 = _a[1];
-	    _b = __read(y0 <= y1 ? [y0, y1] : [y1, y0], 2), y0 = _b[0], y1 = _b[1];
-	    return p0 >= x0 && p0 <= x1 && p1 >= y0 && p1 <= y1;
-	}
-
-	var WidgetCollector = /** @class */ (function () {
-	    function WidgetCollector() {
-	    }
-	    WidgetCollector.setInstance = function () {
-	        WidgetCollector.clearAllInstances();
-	    };
-	    WidgetCollector.getAllInstances = function () {
-	        return this.sortedCollection;
-	    };
-	    WidgetCollector.addInstance = function (name, widget) {
-	        if (name in widget)
-	            return widget;
-	        WidgetCollector.collection[name] = widget;
-	        WidgetCollector.updateRenderPriority();
-	        return widget;
-	    };
-	    WidgetCollector.clearAllInstances = function () {
-	        WidgetCollector.collection = {};
-	    };
-	    WidgetCollector.updateRenderPriority = function () {
-	        var widgets = Object.values(WidgetCollector.collection).flat();
-	        WidgetCollector.sortedCollection = widgets.sort(function (a, b) { return a.renderPriority - b.renderPriority; });
-	    };
-	    WidgetCollector.draw = function () {
-	        var e_1, _a, e_2, _b;
-	        try {
-	            // update widgets
-	            for (var _c = __values(WidgetCollector.sortedCollection.reverse()), _d = _c.next(); !_d.done; _d = _c.next()) {
-	                var widget = _d.value;
-	                widget.update();
-	            } // render priority is opposite of update priority.
-	        }
-	        catch (e_1_1) { e_1 = { error: e_1_1 }; }
-	        finally {
-	            try {
-	                if (_d && !_d.done && (_a = _c.return)) _a.call(_c);
-	            }
-	            finally { if (e_1) throw e_1.error; }
-	        }
-	        // default to last selected if focus cannot be resolved this frame
-	        if (!WidgetCollector.isWidgetFocused() &&
-	            WidgetCollector.lastWidgetFocused !== undefined &&
-	            WidgetCollector.lastWidgetFocused.active) {
-	            WidgetCollector.lastWidgetFocused.renderPriority = 2;
-	            WidgetCollector.updateRenderPriority();
-	        }
-	        try {
-	            // draw widgets
-	            for (var WidgetCollector_1 = __values(WidgetCollector), WidgetCollector_1_1 = WidgetCollector_1.next(); !WidgetCollector_1_1.done; WidgetCollector_1_1 = WidgetCollector_1.next()) {
-	                var widget = WidgetCollector_1_1.value;
-	                widget.draw();
-	            }
-	        }
-	        catch (e_2_1) { e_2 = { error: e_2_1 }; }
-	        finally {
-	            try {
-	                if (WidgetCollector_1_1 && !WidgetCollector_1_1.done && (_b = WidgetCollector_1.return)) _b.call(WidgetCollector_1);
-	            }
-	            finally { if (e_2) throw e_2.error; }
-	        }
-	        this.widgetFocused = false;
-	    };
-	    WidgetCollector[Symbol.iterator] = function () {
-	        var collectionValues = Object.values(WidgetCollector.sortedCollection);
-	        var index = 0;
-	        return {
-	            next: function () {
-	                if (index < collectionValues.length) {
-	                    return {
-	                        value: collectionValues[index++],
-	                        done: false,
-	                    };
-	                }
-	                else {
-	                    return {
-	                        value: undefined,
-	                        done: true,
-	                    };
-	                }
-	            },
-	        };
-	    };
-	    WidgetCollector.filter = function (widgetType) {
-	        var WidgetCollector_2, WidgetCollector_2_1, widget, e_3_1;
-	        var e_3, _a;
-	        return __generator(this, function (_b) {
-	            switch (_b.label) {
-	                case 0:
-	                    _b.trys.push([0, 5, 6, 7]);
-	                    WidgetCollector_2 = __values(WidgetCollector), WidgetCollector_2_1 = WidgetCollector_2.next();
-	                    _b.label = 1;
-	                case 1:
-	                    if (!!WidgetCollector_2_1.done) return [3 /*break*/, 4];
-	                    widget = WidgetCollector_2_1.value;
-	                    if (!(widget instanceof widgetType)) return [3 /*break*/, 3];
-	                    return [4 /*yield*/, widget];
-	                case 2:
-	                    _b.sent();
-	                    _b.label = 3;
-	                case 3:
-	                    WidgetCollector_2_1 = WidgetCollector_2.next();
-	                    return [3 /*break*/, 1];
-	                case 4: return [3 /*break*/, 7];
-	                case 5:
-	                    e_3_1 = _b.sent();
-	                    e_3 = { error: e_3_1 };
-	                    return [3 /*break*/, 7];
-	                case 6:
-	                    try {
-	                        if (WidgetCollector_2_1 && !WidgetCollector_2_1.done && (_a = WidgetCollector_2.return)) _a.call(WidgetCollector_2);
-	                    }
-	                    finally { if (e_3) throw e_3.error; }
-	                    return [7 /*endfinally*/];
-	                case 7: return [2 /*return*/];
-	            }
-	        });
-	    };
-	    WidgetCollector.windowResized = function () {
-	        var e_4, _a;
-	        try {
-	            for (var WidgetCollector_3 = __values(WidgetCollector), WidgetCollector_3_1 = WidgetCollector_3.next(); !WidgetCollector_3_1.done; WidgetCollector_3_1 = WidgetCollector_3.next()) {
-	                var widget = WidgetCollector_3_1.value;
-	                widget.buffer();
-	            }
-	        }
-	        catch (e_4_1) { e_4 = { error: e_4_1 }; }
-	        finally {
-	            try {
-	                if (WidgetCollector_3_1 && !WidgetCollector_3_1.done && (_a = WidgetCollector_3.return)) _a.call(WidgetCollector_3);
-	            }
-	            finally { if (e_4) throw e_4.error; }
-	        }
-	    };
-	    WidgetCollector.keyPressed = function () {
-	        var e_5, _a;
-	        try {
-	            for (var WidgetCollector_4 = __values(WidgetCollector), WidgetCollector_4_1 = WidgetCollector_4.next(); !WidgetCollector_4_1.done; WidgetCollector_4_1 = WidgetCollector_4.next()) {
-	                var widget = WidgetCollector_4_1.value;
-	                widget.keyPressed();
-	            }
-	        }
-	        catch (e_5_1) { e_5 = { error: e_5_1 }; }
-	        finally {
-	            try {
-	                if (WidgetCollector_4_1 && !WidgetCollector_4_1.done && (_a = WidgetCollector_4.return)) _a.call(WidgetCollector_4);
-	            }
-	            finally { if (e_5) throw e_5.error; }
-	        }
-	    };
-	    WidgetCollector.isWidgetFocused = function () {
-	        return WidgetCollector.widgetFocused !== false;
-	    };
-	    WidgetCollector.getLastFocusedWidget = function () {
-	        return WidgetCollector.lastWidgetFocused;
-	    };
-	    WidgetCollector.focusWidget = function (widget) {
-	        WidgetCollector.widgetFocused = widget;
-	        WidgetCollector.lastWidgetFocused = widget;
-	    };
-	    WidgetCollector.widgetFocused = false;
-	    return WidgetCollector;
-	}());
-
-	var Widget = /** @class */ (function () {
-	    function Widget(name) {
-	        this.active = true;
-	        this.renderPriority = 0;
-	        this.p = P5Singleton.getInstance();
-	        WidgetCollector.addInstance(name, this);
-	        this.creationOrder = WidgetCollector.getAllInstances().length;
-	    }
-	    Widget.prototype.setRenderPriority = function (priority) {
-	        this.renderPriority = priority;
-	        WidgetCollector.updateRenderPriority();
-	    };
-	    Widget.prototype.buffer = function () {
-	        this.computeSize();
-	        this.createBuffer();
-	        this.drawToBuffer();
-	    };
-	    Widget.prototype.createBuffer = function () {
-	        this.drawBuffer = this.p.createGraphics(this.width, this.height);
-	    };
-	    Widget.prototype.keyPressed = function () {
-	        var _a, _b;
-	        if (!this.active)
-	            return;
-	        var key = this.p.key;
-	        var modifiers = [];
-	        if (this.p.keyIsDown(this.p.CONTROL)) {
-	            modifiers.push("ctrl");
-	        }
-	        if (this.p.keyIsDown(this.p.SHIFT)) {
-	            modifiers.push("shift");
-	        }
-	        if (this.p.keyIsDown(this.p.ALT)) {
-	            modifiers.push("alt");
-	        }
-	        var keyCombination = __spreadArray(__spreadArray([], __read(modifiers), false), [key], false).join("+");
-	        (_b = (_a = this.keyBindings)[keyCombination.toLowerCase()]) === null || _b === void 0 ? void 0 : _b.call(_a);
-	    };
-	    Widget.prototype.update = function () {
-	        if (!this.active)
-	            return;
-	    };
-	    Widget.prototype.draw = function () {
-	        if (!this.active)
-	            return;
-	    };
-	    return Widget;
-	}());
-
-	var getIndexOrDefault = function (haystack, index, otherwise) {
-	    return index in haystack ? haystack[index] : otherwise;
-	};
-	var arraysAreEqual = function (arr1, arr2) {
-	    if (arr1.length !== arr2.length) {
-	        return false;
-	    }
-	    for (var i = 0; i < arr1.length; i++) {
-	        if (arr1[i] !== arr2[i]) {
-	            return false;
-	        }
-	    }
-	    return true;
-	};
-
-	var SignalWidget = /** @class */ (function (_super) {
-	    __extends(SignalWidget, _super);
-	    function SignalWidget(name, angularRange, rangeInverted, strokeColor) {
-	        var _a;
-	        if (rangeInverted === void 0) { rangeInverted = false; }
-	        if (strokeColor === void 0) { strokeColor = appSettings.defaultSignalStrokeColor; }
-	        var _this = _super.call(this, name) || this;
-	        _this._clipboardSize = appSettings.clipboardHistoryLength;
-	        _this._data = [];
-	        _this._clipboardIndex = 0;
-	        _this.verticalKeyframePositions = [];
-	        _this.horizontalKeyframePositions = [];
-	        _this.angularArgumentDataIndices = [];
-	        _this.timeArgumentDataIndices = [];
-	        _this.createVerticalKeyframeThisFrame = false;
-	        _this.selectedVerticalKeyframe = -1;
-	        _this.selectedHorizontalKeyframe = -1;
-	        _this.verticalKeyframeToTheRightOfMouse = -1;
-	        _this.userDraggingKeyframe = false;
-	        _this.mouseEngaged = false;
-	        _this.keyBindings = {
-	            a: _this.insertVerticalKeyframe.bind(_this),
-	            d: _this.deleteVerticalKeyframe.bind(_this),
-	            "ctrl+c": _this.copyCommand.bind(_this),
-	            "ctrl+v": _this.pasteCommand.bind(_this),
-	            "ctrl+s": _this.saveCommand.bind(_this),
-	            "ctrl+u": _this.uploadCommand.bind(_this),
-	            "ctrl+y": _this.redoCommand.bind(_this),
-	            "ctrl+shift+z": _this.redoCommand.bind(_this),
-	            "ctrl+z": _this.undoCommand.bind(_this),
-	        };
-	        _this.angularRange = angularRange;
-	        _this.rangeInverted = rangeInverted;
-	        _a = __read(_this.rangeInverted
-	            ? [_this.angularRange, 0]
-	            : [0, _this.angularRange], 2), _this.closedAngle = _a[0], _this.openAngle = _a[1];
-	        _this.strokeColor = __spreadArray([], __read(strokeColor), false);
-	        _this.name = name;
-	        // draw list
-	        _this.drawName();
-	        return _this;
-	    }
-	    SignalWidget.prototype.newData = function (data) {
-	        this.checkpointData = data.slice();
-	        this.bindData(data);
-	        this.resetClipboard();
-	    };
-	    SignalWidget.prototype.checkRootNode = function (data) {
-	        if (data[0] != appSettings.commands.talk) {
-	            console.log("An attempt was made to bind to data without a root node. Restoring a default root node.");
-	            data.splice(0, 0, appSettings.commands.talk, this.closedAngle);
-	        }
-	    };
-	    SignalWidget.prototype.bindData = function (data) {
-	        this.checkRootNode(data);
-	        this.currentData = data;
-	        this.p.data[this.name][this.p.menu.lastSelectedFile] = data;
-	        this.buffer();
-	    };
-	    SignalWidget.prototype.resetClipboard = function () {
-	        this._clipboardIndex = 0;
-	        this._data = [];
-	        this._data.push(this.checkpointData);
-	    };
-	    SignalWidget.prototype.clipboardAction = function () {
-	        if (arraysAreEqual(this.currentData, this._clipboardIndex < this._data.length
-	            ? this._data[this._clipboardIndex]
-	            : []))
-	            return;
-	        // Update clipboard index to point to the latest data
-	        if (this._clipboardIndex !== this._data.length - 1)
-	            this._data.splice(this._clipboardIndex + 1); // Remove all entries after clipboardIndex
-	        this._data.push(__spreadArray([], __read(this.currentData), false)); // Push new data as the last element
-	        this._clipboardIndex = this._data.length - 1; // Update clipboard index to latest data index
-	        // Keep _data length within the clipboard size limit
-	        if (this._data.length > this._clipboardSize) {
-	            this._data.shift(); // Remove oldest entry from the clipboard
-	            this._clipboardIndex--;
-	        }
-	    };
-	    SignalWidget.prototype.undoCommand = function () {
-	        if (this._clipboardIndex > 0 && this._clipboardIndex < this._data.length) {
-	            // If there is data in the clipboard
-	            this._clipboardIndex--; // Decrement clipboard index
-	            this.currentData = __spreadArray([], __read(this._data[this._clipboardIndex]), false); // Restore data from clipboard
-	            this.buffer(); // Update the buffer
-	        }
-	    };
-	    SignalWidget.prototype.redoCommand = function () {
-	        if (this._clipboardIndex < this._data.length - 1 && this._data.length > 0) {
-	            // If there is data after the current clipboard index
-	            this._clipboardIndex++; // Increment clipboard index
-	            this.currentData = __spreadArray([], __read(this._data[this._clipboardIndex]), false); // Restore data from clipboard
-	            this.buffer(); // Update the buffer
-	        }
-	    };
-	    SignalWidget.prototype.uploadCommand = function () {
-	        this.p.uploadBox.toggle();
-	    };
-	    SignalWidget.prototype.copyCommand = function () {
-	        this.p.saveBox.text("<p>Data copied to clipboard!</p>");
-	        navigator.clipboard.writeText(this.currentData.toString());
-	    };
-	    SignalWidget.prototype.pasteCommand = function () {
-	        return __awaiter(this, void 0, void 0, function () {
-	            var clipboard, data;
-	            return __generator(this, function (_a) {
-	                switch (_a.label) {
-	                    case 0:
-	                        this.p.saveBox.text("<p>Data pasted from clipboard. Be sure to save if you want to keep these changes, otherwise they will be discarded.</p>");
-	                        return [4 /*yield*/, navigator.clipboard.readText()];
-	                    case 1:
-	                        clipboard = _a.sent();
-	                        data = clipboard.split(",").map(function (string) { return Number(string); });
-	                        this.bindData(data);
-	                        return [2 /*return*/];
-	                }
-	            });
-	        });
-	    };
-	    SignalWidget.prototype.saveCommand = function () {
-	        console.log(this.currentData);
-	        this.initiateSave();
-	    };
-	    SignalWidget.prototype.initiateSave = function () {
-	        this.p.saveBox.text();
-	        this.saveToFile();
-	    };
-	    SignalWidget.prototype.saveToFile = function () {
-	        // Convert the currentData array to JSON format
-	        var jsonData = JSON.stringify({
-	            name: this.name,
-	            filename: this.p.menu.lastSelectedFile,
-	            data: this.currentData,
-	        });
-	        // Send a POST request to the server with the array data in the request body
-	        fetch("/data", {
-	            method: "POST",
-	            headers: {
-	                "Content-Type": "application/json",
-	            },
-	            body: jsonData,
-	        })
-	            .then(function (response) {
-	            if (!response.ok) {
-	                throw new Error("Network response was not OK");
-	            }
-	        })
-	            .catch(function (error) {
-	            console.error("There was a problem saving the data:", error);
-	        });
-	    };
-	    SignalWidget.prototype.computeSize = function () {
-	        var _a;
-	        this.width = this.p.width;
-	        this.height = this.p.viewport.scaleToHeight(2 * appSettings.maxWaveHeightProportion);
-	        this.topOffset = (((_a = this.p.audioWidget) === null || _a === void 0 ? void 0 : _a.height) - this.height) / 2;
-	        this.signalHeight = appSettings.signalWaveHeightScale * this.height;
-	        this.signalVerticalMargin = (this.height - this.signalHeight) / 2;
-	        this.resolution = this.p.audioWidget.resolution / 1000.0;
-	        this.mouseTolerance = this.width * appSettings.mouseTolerance;
-	        this.indicatorHeight =
-	            this.height - appSettings.indicatorMargin * this.signalVerticalMargin;
-	    };
-	    SignalWidget.prototype.createBuffer = function () {
-	        var _a, _b;
-	        _super.prototype.createBuffer.call(this);
-	        (_a = this.drawBuffer).fill.apply(_a, __spreadArray(__spreadArray([], __read(this.strokeColor), false), [10], false));
-	        (_b = this.drawBuffer).stroke.apply(_b, __spreadArray([], __read(this.strokeColor), false));
-	        this.drawBuffer.strokeWeight(appSettings.strokeWeight);
-	    };
-	    SignalWidget.prototype.roundData = function () {
-	        var e_1, _a;
-	        try {
-	            for (var _b = __values(this.currentData.entries()), _c = _b.next(); !_c.done; _c = _b.next()) {
-	                var _d = __read(_c.value, 2), index = _d[0], datum = _d[1];
-	                if (index % 2 == 0)
-	                    continue;
-	                this.currentData[index] = Math.max(Math.round(datum), appSettings.minimumKeyframeLength);
-	            }
-	        }
-	        catch (e_1_1) { e_1 = { error: e_1_1 }; }
-	        finally {
-	            try {
-	                if (_c && !_c.done && (_a = _b.return)) _a.call(_b);
-	            }
-	            finally { if (e_1) throw e_1.error; }
-	        }
-	        this.checkRootNode(this.currentData);
-	    };
-	    SignalWidget.prototype.drawToBuffer = function (consolidate) {
-	        var _a, _b, e_2, _c, _d;
-	        if (consolidate === void 0) { consolidate = true; }
-	        this.roundData(); // ensure data is integer
-	        if (!this.userDraggingKeyframe)
-	            this.clipboardAction(); // handle clipboard
-	        var badKeyframes = this.consolidateData(this.userDraggingKeyframe || !consolidate); // always avoid duplicates?
-	        var badKeyframeIndicatorCoordinates = [];
-	        this.drawBuffer.clear(0, 0, 0, 0);
-	        this.drawBuffer.rect(0, 0, this.width, this.height);
-	        var raisedHeight = this.signalVerticalMargin;
-	        var loweredHeight = raisedHeight + this.signalHeight;
-	        this.raisedHeight = raisedHeight;
-	        this.loweredHeight = loweredHeight;
-	        this.verticalKeyframePositions = [];
-	        this.horizontalKeyframePositions = [];
-	        this.timeArgumentDataIndices = [];
-	        this.angularArgumentDataIndices = [];
-	        var _e = __read([
-	            0,
-	            0,
-	            loweredHeight,
-	            loweredHeight,
-	        ], 4), lastX = _e[0], currentX = _e[1], lastHeight = _e[2], currentHeight = _e[3];
-	        for (var i = 0; i < this.currentData.length; i += 2) {
-	            var _f = __read([
-	                this.currentData[i],
-	                this.currentData[i + 1],
-	            ], 2), command = _f[0], argument = _f[1];
-	            switch (command) {
-	                case appSettings.commands.delay:
-	                    currentX = lastX + this.resolution * argument; // move in time
-	                    // draw horizontal line
-	                    this.drawBuffer.line(lastX, currentHeight, currentX, currentHeight);
-	                    lastX = currentX; // keep track of how far along we are
-	                    this.horizontalKeyframePositions.push(currentHeight);
-	                    this.timeArgumentDataIndices.push(i + 1);
-	                    break;
-	                case appSettings.commands.talk:
-	                    // compute how "open" the servo is
-	                    var percentOpen = argument / this.angularRange;
-	                    if (this.rangeInverted)
-	                        percentOpen = 1 - percentOpen;
-	                    // calculate wave height
-	                    lastHeight = currentHeight;
-	                    currentHeight = loweredHeight - percentOpen * this.signalHeight;
-	                    // draw vertical line
-	                    this.drawBuffer.line(currentX, lastHeight, currentX, currentHeight);
-	                    // draw bulb to show existence of keyframe
-	                    if (this.userDraggingKeyframe && i in badKeyframes) {
-	                        badKeyframeIndicatorCoordinates.push([
-	                            currentX,
-	                            currentHeight,
-	                            appSettings.strokeWeight,
-	                        ]);
-	                    }
-	                    else {
-	                        this.drawBuffer.push();
-	                        this.drawBuffer.rectMode(this.p.CENTER);
-	                        this.drawBuffer.square(currentX, currentHeight, appSettings.strokeWeight);
-	                        this.drawBuffer.pop();
-	                    }
-	                    if (currentX > 0)
-	                        this.verticalKeyframePositions.push(currentX);
-	                    this.angularArgumentDataIndices.push(i + 1);
-	                    break;
-	            }
-	        }
-	        // draw last line
-	        this.drawBuffer.line(currentX, currentHeight, currentX, loweredHeight);
-	        this.verticalKeyframePositions.push(currentX);
-	        // draw bad keyframe indicators
-	        if (!this.userDraggingKeyframe)
-	            return;
-	        this.drawBuffer.push();
-	        this.drawBuffer.rectMode(this.p.CENTER);
-	        (_a = this.drawBuffer).fill.apply(_a, __spreadArray([], __read(appSettings.badKeyframeColor), false));
-	        (_b = this.drawBuffer).stroke.apply(_b, __spreadArray([], __read(appSettings.badKeyframeColor), false));
-	        try {
-	            for (var badKeyframeIndicatorCoordinates_1 = __values(badKeyframeIndicatorCoordinates), badKeyframeIndicatorCoordinates_1_1 = badKeyframeIndicatorCoordinates_1.next(); !badKeyframeIndicatorCoordinates_1_1.done; badKeyframeIndicatorCoordinates_1_1 = badKeyframeIndicatorCoordinates_1.next()) {
-	                var coords = badKeyframeIndicatorCoordinates_1_1.value;
-	                (_d = this.drawBuffer).square.apply(_d, __spreadArray([], __read(coords), false));
-	            }
-	        }
-	        catch (e_2_1) { e_2 = { error: e_2_1 }; }
-	        finally {
-	            try {
-	                if (badKeyframeIndicatorCoordinates_1_1 && !badKeyframeIndicatorCoordinates_1_1.done && (_c = badKeyframeIndicatorCoordinates_1.return)) _c.call(badKeyframeIndicatorCoordinates_1);
-	            }
-	            finally { if (e_2) throw e_2.error; }
-	        }
-	        this.drawBuffer.pop();
-	    };
-	    SignalWidget.prototype.drawName = function () {
-	        var _a;
-	        var _this = this;
-	        var checkbox = this.p.createElement("input");
-	        checkbox.attribute("type", "checkbox");
-	        checkbox.id(this.name);
-	        checkbox.attribute("checked", "true");
-	        checkbox.mouseClicked(function () {
-	            _this.active = !_this.active;
-	            console.log(_this.active);
-	        });
-	        var label = this.p.createElement("label");
-	        label.attribute("for", this.name);
-	        label.html(this.name);
-	        label.style("color", (_a = this.p).color.apply(_a, __spreadArray([], __read(this.strokeColor), false)));
-	        this.p.listBox.div.child(checkbox);
-	        this.p.listBox.div.child(label);
-	        this.p.listBox.div.child(this.p.createElement("br"));
-	    };
-	    SignalWidget.prototype.getSelectedKeyframe = function () {
-	        var e_3, _a;
-	        var _b = __read([this.p.viewport.mouseX, this.p.viewport.mouseY], 2), mouseX = _b[0], mouseY = _b[1];
-	        var toleranceRadius = this.mouseTolerance / 2;
-	        var mouseEngaged = false;
-	        var verticalKeyframeToTheRightOfMouse = 0;
-	        try {
-	            for (var _c = __values(this.horizontalKeyframePositions.entries()), _d = _c.next(); !_d.done; _d = _c.next()) {
-	                var _e = __read(_d.value, 2), index = _e[0], horizontalKeyframe = _e[1];
-	                var lastX = getIndexOrDefault(this.verticalKeyframePositions, index - 1, 0);
-	                var currentX = this.verticalKeyframePositions[index];
-	                var nextHeight = getIndexOrDefault(this.horizontalKeyframePositions, index + 1, this.loweredHeight);
-	                var currentHeight = horizontalKeyframe;
-	                if (currentX <= mouseX)
-	                    verticalKeyframeToTheRightOfMouse += 1;
-	                if (this.userDraggingKeyframe)
-	                    return;
-	                // is user selecting a horizontal keyframe?
-	                if (isInBoundingBox(mouseX, mouseY, lastX + toleranceRadius, currentHeight - toleranceRadius, currentX - toleranceRadius, currentHeight + toleranceRadius)) {
-	                    this.p.mouse.cursor("ns-resize");
-	                    this.selectedHorizontalKeyframe = index;
-	                    if (!this.userDraggingKeyframe)
-	                        this.selectedVerticalKeyframe = -1;
-	                    mouseEngaged = true;
-	                }
-	                // is user selecting a vertical keyframe?
-	                else if (isInBoundingBox(mouseX, mouseY, currentX - toleranceRadius, nextHeight, currentX + toleranceRadius, currentHeight)) {
-	                    this.p.mouse.cursor("ew-resize");
-	                    this.selectedVerticalKeyframe = index;
-	                    this.selectedHorizontalKeyframe = -1;
-	                    mouseEngaged = true;
-	                }
-	            }
-	        }
-	        catch (e_3_1) { e_3 = { error: e_3_1 }; }
-	        finally {
-	            try {
-	                if (_d && !_d.done && (_a = _c.return)) _a.call(_c);
-	            }
-	            finally { if (e_3) throw e_3.error; }
-	        }
-	        this.mouseEngaged = mouseEngaged;
-	        this.verticalKeyframeToTheRightOfMouse = verticalKeyframeToTheRightOfMouse;
-	    };
-	    SignalWidget.prototype.getMillisecondsFromX = function (x, leftIndex, rightIndex) {
-	        var previousVerticalKeyframe = getIndexOrDefault(this.verticalKeyframePositions, leftIndex, 0);
-	        var nextVerticalKeyframe = getIndexOrDefault(this.verticalKeyframePositions, rightIndex, this.p.audioWidget.width);
-	        var distanceBetweenKeyframes = nextVerticalKeyframe - previousVerticalKeyframe;
-	        var percentRight = this.p.constrain((x - previousVerticalKeyframe) / distanceBetweenKeyframes, 0, 1);
-	        return (this.p.lerp(0, distanceBetweenKeyframes, percentRight) / this.resolution);
-	    };
-	    SignalWidget.prototype.getAngleFromY = function () {
-	        var mouseY = this.p.viewport.mouseY;
-	        var percentOpen = this.p.constrain((this.loweredHeight + this.mouseTolerance - mouseY) /
-	            (this.signalHeight + this.mouseTolerance), 0, 1);
-	        var angle = this.p.lerp(this.closedAngle, this.openAngle, percentOpen);
-	        return angle;
-	    };
-	    SignalWidget.prototype.handleMouse = function () {
-	        if (this.createVerticalKeyframeThisFrame) {
-	            this.createVerticalKeyframeThisFrame = false;
-	            this.createVerticalKeyframe();
-	        }
-	        if (WidgetCollector.isWidgetFocused())
-	            return;
-	        this.getSelectedKeyframe();
-	        if (!this.p.uiProcessed &&
-	            this.p.mouseIsPressed &&
-	            this.p.mouseButton == this.p.LEFT &&
-	            this.mouseEngaged) {
-	            this.userDraggingKeyframe = true;
-	            var isVerticalKeyframe = this.selectedVerticalKeyframe >= 0;
-	            var argumentIndices = isVerticalKeyframe
-	                ? this.timeArgumentDataIndices
-	                : this.angularArgumentDataIndices;
-	            var selectedIndex = isVerticalKeyframe
-	                ? this.selectedVerticalKeyframe
-	                : this.selectedHorizontalKeyframe;
-	            var argumentIndex = argumentIndices[selectedIndex];
-	            var newArgument = void 0;
-	            if (isVerticalKeyframe) {
-	                var mouseX = this.p.viewport.mouseX;
-	                newArgument = this.getMillisecondsFromX(mouseX, selectedIndex - 1, selectedIndex + 1);
-	                var nextArgumentIndex = getIndexOrDefault(argumentIndices, selectedIndex + 1, -1);
-	                if (nextArgumentIndex >= 1) {
-	                    var oldArgument = this.currentData[argumentIndex];
-	                    this.currentData[nextArgumentIndex] -= newArgument - oldArgument;
-	                }
-	            }
-	            else
-	                newArgument = this.getAngleFromY();
-	            this.currentData[argumentIndex] = newArgument;
-	            this.drawToBuffer();
-	        }
-	        else if (!this.p.mouseIsPressed && this.userDraggingKeyframe) {
-	            this.userDraggingKeyframe = false;
-	            this.drawToBuffer();
-	        }
-	        this.drawIndicators();
-	    };
-	    SignalWidget.prototype.handleRenderPriority = function () {
-	        if (this.mouseEngaged && !WidgetCollector.isWidgetFocused()) {
-	            this.renderPriority = 2;
-	            WidgetCollector.focusWidget(this);
-	        }
-	        else
-	            this.renderPriority = 1;
-	        WidgetCollector.updateRenderPriority();
-	    };
-	    SignalWidget.prototype.insertVerticalKeyframe = function () {
-	        this.createVerticalKeyframeThisFrame = true;
-	    };
-	    SignalWidget.prototype.createVerticalKeyframe = function () {
-	        var mouseX = this.p.viewport.mouseX;
-	        var newTimeArgument = this.getMillisecondsFromX(mouseX, this.verticalKeyframeToTheRightOfMouse - 1, this.verticalKeyframeToTheRightOfMouse);
-	        if (
-	        // this.verticalKeyframeToTheRightOfMouse >
-	        // this.angularArgumentDataIndices.length - 1 ||
-	        this.verticalKeyframeToTheRightOfMouse === undefined)
-	            return;
-	        this.angularArgumentDataIndices[this.verticalKeyframeToTheRightOfMouse];
-	        var associatedHorizontalKeyframeDataIndex = this.timeArgumentDataIndices[this.verticalKeyframeToTheRightOfMouse];
-	        var oldTimeArgument = this.currentData[associatedHorizontalKeyframeDataIndex];
-	        this.currentData[associatedHorizontalKeyframeDataIndex] = newTimeArgument;
-	        this.currentData.splice(associatedHorizontalKeyframeDataIndex + 1, 0, appSettings.commands.talk, this.getAngleFromY(), appSettings.commands.delay, oldTimeArgument - newTimeArgument);
-	        this.drawToBuffer(false);
-	    };
-	    SignalWidget.prototype.deleteVerticalKeyframe = function () {
-	        if (this.selectedVerticalKeyframe >= 0 &&
-	            this.verticalKeyframePositions.length >= 3 &&
-	            this.selectedVerticalKeyframe < this.angularArgumentDataIndices.length) {
-	            var argumentIndex = this.angularArgumentDataIndices[this.selectedVerticalKeyframe];
-	            var commandIndex = argumentIndex - 1;
-	            this.currentData.splice(commandIndex, 2);
-	            this.drawToBuffer();
-	        }
-	    };
-	    /**
-	     * consolidateData
-	     *
-	     * This function merges all consecutive time commands in currentData.
-	     * Also, if there are repeated talk commands separated by a single delay, we merge.
-	     *
-	     * Arguments:
-	     *  test: boolean -- if true, then does not actually consolidate; just returns a map with potential deletes.
-	     */
-	    SignalWidget.prototype.consolidateData = function (test) {
-	        if (test === void 0) { test = false; }
-	        var badKeyframes = {};
-	        for (var i = 0; i < this.currentData.length - 2; i += 2) {
-	            // consecutiveness condition
-	            if (this.currentData[i] == appSettings.commands.delay &&
-	                this.currentData[i + 2] == appSettings.commands.delay) {
-	                badKeyframes[i + 3] = true;
-	                if (test)
-	                    continue;
-	                this.currentData[i + 1] += this.currentData[i + 3]; // merge into one
-	                this.currentData.splice(i + 2, 2); // delete the latter 2 items
-	            }
-	            else if (i < this.currentData.length - 5 &&
-	                this.currentData[i] == appSettings.commands.talk &&
-	                this.currentData[i + 2] == appSettings.commands.delay &&
-	                this.currentData[i + 4] == appSettings.commands.talk &&
-	                this.currentData[i + 1] == this.currentData[i + 5]) {
-	                badKeyframes[i + 4] = true;
-	                if (test)
-	                    continue;
-	                var deleteCount = 2;
-	                if (i < this.currentData.length - 7 &&
-	                    this.currentData[i + 6] == appSettings.commands.delay) {
-	                    this.currentData[i + 3] += this.currentData[i + 7];
-	                    deleteCount = 4;
-	                }
-	                this.currentData.splice(i + 4, deleteCount); // delete the extraneous items
-	            }
-	        }
-	        return badKeyframes;
-	    };
-	    SignalWidget.prototype.drawIndicators = function () {
-	        var _a, _b;
-	        // "free" indicator
-	        triangle(this.p, this.p.mouseX, this.indicatorHeight, (_a = this.p).color.apply(_a, __spreadArray([], __read(appSettings.freeIndicatorColor), false)));
-	        // selection indicator
-	        if (this.selectedVerticalKeyframe >= 0 &&
-	            this.selectedVerticalKeyframe < this.verticalKeyframePositions.length) {
-	            triangle(this.p, this.verticalKeyframePositions[this.selectedVerticalKeyframe], this.indicatorHeight, (_b = this.p).color.apply(_b, __spreadArray([], __read(appSettings.selectionIndicatorColor), false)));
-	        }
-	    };
-	    SignalWidget.prototype.keyPressed = function () {
-	        if (!this.active)
-	            return;
-	        if (WidgetCollector.getLastFocusedWidget() !== this)
-	            return;
-	        _super.prototype.keyPressed.call(this);
-	    };
-	    SignalWidget.prototype.update = function () {
-	        if (!this.active)
-	            return;
-	        _super.prototype.update.call(this);
-	        this.p.viewport.translate(0, this.topOffset);
-	        this.handleMouse();
-	        this.handleRenderPriority();
-	        this.p.viewport.reset();
-	    };
-	    SignalWidget.prototype.draw = function () {
-	        if (!this.active)
-	            return;
-	        _super.prototype.draw.call(this);
-	        this.p.viewport.translate(0, this.topOffset);
-	        this.p.image(this.drawBuffer, 0, 0);
-	        this.p.viewport.reset();
-	    };
-	    return SignalWidget;
-	}(Widget));
-
-	var AudioWidget = /** @class */ (function (_super) {
-	    __extends(AudioWidget, _super);
-	    function AudioWidget(name) {
-	        if (name === void 0) { name = "audioWidget"; }
-	        var _this = _super.call(this, name) || this;
-	        _this.currentTime = 0;
-	        _this.currentPosition = 0;
-	        _this.loading = true;
-	        _this.paused = false;
-	        _this.uiProcessed = false;
-	        _this.keyBindings = {
-	            " ": _this.toggle.bind(_this),
-	            r: _this.resetTime.bind(_this),
-	        };
-	        _this.currentPlaybackImage = _this.p.images.pauseButton;
-	        _this.playbackImages = [_this.p.images.pauseButton, _this.p.images.playButton];
-	        return _this;
-	    }
-	    AudioWidget.prototype.buffer = function () {
-	        this.computeSize();
-	        this.createBuffer();
-	        this.drawToBuffer();
-	    };
-	    AudioWidget.prototype.computeSize = function () {
-	        this.width = this.p.width;
-	        this.height = this.p.height - this.p.banner.height;
-	        this.resolution = this.width / this.currentSound.duration();
-	        this.topOffset = this.height / 2;
-	        this.controlsHeight = this.p.viewport.scaleToHeight(appSettings.controlsHeightProportion);
-	        this.controlsTopOffset = this.height - this.controlsHeight;
-	        this.audioButtonSize =
-	            appSettings.audioButtonHeightProportion * this.controlsHeight;
-	        this.playbackButtonBox = [
-	            this.width / 2,
-	            this.controlsTopOffset + this.controlsHeight / 2,
-	            this.audioButtonSize,
-	            this.audioButtonSize,
-	        ];
-	        this.helpButtonBox = [
-	            this.width - this.audioButtonSize,
-	            this.controlsTopOffset + this.controlsHeight / 2,
-	            this.audioButtonSize,
-	            this.audioButtonSize,
-	        ];
-	        this.uploadButtonBox = [
-	            this.audioButtonSize,
-	            this.controlsTopOffset + this.controlsHeight / 2,
-	            this.audioButtonSize,
-	            this.audioButtonSize,
-	        ];
-	        this.downloadButtonBox = [
-	            (2 + appSettings.downloadButtonPadding) * this.audioButtonSize,
-	            this.controlsTopOffset + this.controlsHeight / 2,
-	            this.audioButtonSize,
-	            this.audioButtonSize,
-	        ];
-	    };
-	    AudioWidget.prototype.bindSound = function (sound) {
-	        this.currentSound = sound;
-	        this.buffer();
-	        this.resetTime(false);
-	        this.paused = false;
-	    };
-	    AudioWidget.prototype.createBuffer = function () {
-	        var _a, _b;
-	        _super.prototype.createBuffer.call(this);
-	        (_a = this.drawBuffer).fill.apply(_a, __spreadArray([], __read(appSettings.defaultFill), false));
-	        (_b = this.drawBuffer).stroke.apply(_b, __spreadArray([], __read(appSettings.defaultFill), false));
-	    };
-	    AudioWidget.prototype.drawScrubber = function () {
-	        var _a, _b;
-	        this.p.push();
-	        (_a = this.p).stroke.apply(_a, __spreadArray([], __read(appSettings.scrubberColor), false));
-	        (_b = this.p).fill.apply(_b, __spreadArray([], __read(appSettings.scrubberColor), false));
-	        this.p.line(this.currentPosition, 0, this.currentPosition, this.p.height);
-	        this.p.pop();
-	    };
-	    AudioWidget.prototype.drawToBuffer = function (reset) {
-	        var e_1, _a;
-	        if (reset === void 0) { reset = false; }
-	        // compute data
-	        var numSamples = this.p.viewport.scaleToWidth(appSettings.samplingResolution);
-	        var peaks = this.currentSound.getPeaks(numSamples);
-	        if (reset)
-	            this.resetTime();
-	        this.loading = false;
-	        // draw
-	        var currentX;
-	        this.drawBuffer.clear(0, 0, 0, 0);
-	        try {
-	            for (var _b = __values(peaks.entries()), _c = _b.next(); !_c.done; _c = _b.next()) {
-	                var _d = __read(_c.value, 2), index = _d[0], element = _d[1];
-	                currentX = index / appSettings.samplingResolution;
-	                this.drawBuffer.line(currentX, this.height * 0.5, // center
-	                currentX, this.height * (0.5 - appSettings.maxWaveHeightProportion * element) // deviation from center
-	                );
-	            }
-	        }
-	        catch (e_1_1) { e_1 = { error: e_1_1 }; }
-	        finally {
-	            try {
-	                if (_c && !_c.done && (_a = _b.return)) _a.call(_b);
-	            }
-	            finally { if (e_1) throw e_1.error; }
-	        }
-	    };
-	    AudioWidget.prototype.drawControls = function () {
-	        var _a, _b, _c, _d, _e;
-	        this.p.push();
-	        this.p.imageMode(this.p.CENTER);
-	        (_a = this.p).fill.apply(_a, __spreadArray([], __read(appSettings.headerColor), false));
-	        this.p.rect(0, this.controlsTopOffset, this.width, this.controlsHeight);
-	        (_b = this.p).image.apply(_b, __spreadArray([this.currentPlaybackImage], __read(this.playbackButtonBox), false));
-	        (_c = this.p).image.apply(_c, __spreadArray([this.p.images.helpButton], __read(this.helpButtonBox), false));
-	        (_d = this.p).image.apply(_d, __spreadArray([this.p.images.uploadButton], __read(this.uploadButtonBox), false));
-	        (_e = this.p).image.apply(_e, __spreadArray([this.p.images.downloadButton], __read(this.downloadButtonBox), false));
-	        this.p.pop();
-	    };
-	    AudioWidget.prototype.mouseClicked = function () {
-	        var e_2, _a;
-	        if (this.playbackButtonHover)
-	            this.toggle();
-	        else if (this.helpButtonHover)
-	            this.p.helpBox.toggle();
-	        else if (this.uploadButtonHover)
-	            this.p.uploadBox.toggle();
-	        else if (this.downloadButtonHover) {
-	            try {
-	                for (var _b = __values(WidgetCollector.filter(SignalWidget)), _c = _b.next(); !_c.done; _c = _b.next()) {
-	                    var widget = _c.value;
-	                    widget.initiateSave();
-	                }
-	            }
-	            catch (e_2_1) { e_2 = { error: e_2_1 }; }
-	            finally {
-	                try {
-	                    if (_c && !_c.done && (_a = _b.return)) _a.call(_b);
-	                }
-	                finally { if (e_2) throw e_2.error; }
-	            }
-	        }
-	    };
-	    AudioWidget.prototype.toggle = function () {
-	        if (this.currentSound.isPlaying() && !this.paused) {
-	            safelyStopAudio(this.currentSound);
-	        }
-	        else
-	            this.currentSound.play(undefined, undefined, undefined, this.currentTime);
-	        this.paused = !this.paused;
-	    };
-	    AudioWidget.prototype.pause = function () {
-	        if (!this.paused) {
-	            safelyStopAudio(this.currentSound);
-	            this.paused = true;
-	        }
-	    };
-	    AudioWidget.prototype.resetTime = function (stop) {
-	        if (stop === void 0) { stop = true; }
-	        this.currentPosition = this.currentTime = 0;
-	        if (stop)
-	            safelyStopAudio(this.currentSound);
-	    };
-	    AudioWidget.prototype.scrubToPosition = function (x) {
-	        if (this.currentSound.isPlaying())
-	            safelyStopAudio(this.currentSound);
-	        this.currentTime = x / this.resolution;
-	    };
-	    AudioWidget.prototype.update = function () {
-	        if (this.loading)
-	            return;
-	        this.currentPlaybackImage = this.playbackImages[Number(this.paused)];
-	        if (!this.paused) {
-	            if (!this.p.mouseIsPressed &&
-	                !this.currentSound.isPlaying() &&
-	                this.currentTime < this.currentSound.duration()) {
-	                this.currentSound.play(undefined, undefined, undefined, this.currentTime);
-	            }
-	            else
-	                this.currentTime = this.currentSound.isPlaying()
-	                    ? this.currentSound.currentTime()
-	                    : 0;
-	        }
-	        if (this.currentSound.duration() - this.currentTime < 0.1) {
-	            this.pause();
-	            this.resetTime(false);
-	            return;
-	        }
-	        this.handleMouse();
-	        this.currentPosition = this.currentTime * this.resolution;
-	    };
-	    AudioWidget.prototype.handleMouse = function () {
-	        var e_3, _a;
-	        this.uiProcessed = this.playbackButtonHover = this.helpButtonHover = false;
-	        if (this.p.uiProcessed)
-	            return;
-	        try {
-	            for (var _b = __values(WidgetCollector.filter(SignalWidget)), _c = _b.next(); !_c.done; _c = _b.next()) {
-	                var widget = _c.value;
-	                if (widget.mouseEngaged || widget.userDraggingKeyframe)
-	                    return;
-	            }
-	        }
-	        catch (e_3_1) { e_3 = { error: e_3_1 }; }
-	        finally {
-	            try {
-	                if (_c && !_c.done && (_a = _b.return)) _a.call(_b);
-	            }
-	            finally { if (e_3) throw e_3.error; }
-	        }
-	        var mouseCoords = [
-	            this.p.mouseX + this.audioButtonSize / 2,
-	            this.p.viewport.mouseY + this.audioButtonSize / 2,
-	        ];
-	        // playback button
-	        this.playbackButtonHover = isInRectangle.apply(void 0, __spreadArray(__spreadArray([], __read(mouseCoords), false), __read(this.playbackButtonBox), false));
-	        // help button
-	        if (!this.playbackButtonHover)
-	            this.helpButtonHover = isInRectangle.apply(void 0, __spreadArray(__spreadArray([], __read(mouseCoords), false), __read(this.helpButtonBox), false));
-	        // upload button
-	        if (!this.helpButtonHover && !this.playbackButtonHover)
-	            this.uploadButtonHover = isInRectangle.apply(void 0, __spreadArray(__spreadArray([], __read(mouseCoords), false), __read(this.uploadButtonBox), false));
-	        // upload button
-	        if (!this.helpButtonHover &&
-	            !this.playbackButtonHover &&
-	            !this.uploadButtonHover)
-	            this.downloadButtonHover = isInRectangle.apply(void 0, __spreadArray(__spreadArray([], __read(mouseCoords), false), __read(this.downloadButtonBox), false));
-	        this.p.uiProcessed =
-	            this.p.uiProcessed ||
-	                this.playbackButtonHover ||
-	                this.helpButtonHover ||
-	                this.uploadButtonHover ||
-	                this.downloadButtonHover;
-	        this.uiProcessed = this.p.uiProcessed;
-	        if (this.p.uiProcessed)
-	            this.p.mouse.cursor("pointer");
-	        else if (this.p.mouseIsPressed && this.p.mouseButton == this.p.LEFT)
-	            this.scrubToPosition(this.p.mouseX);
-	    };
-	    AudioWidget.prototype.draw = function () {
-	        _super.prototype.draw.call(this);
-	        this.p.push();
-	        this.p.image(this.drawBuffer, 0, 0);
-	        this.drawScrubber();
-	        this.drawControls();
-	        this.p.pop();
-	    };
-	    return AudioWidget;
-	}(Widget));
-
-	var Banner = /** @class */ (function () {
-	    function Banner() {
-	        this.mouseHoverHome = false;
-	        this.p = P5Singleton.getInstance();
-	        this.computeSize();
-	    }
-	    Banner.prototype.computeSize = function () {
-	        if (this.p.images === undefined)
-	            return;
-	        this.width = this.p.viewport.width;
-	        this.height = this.p.max(this.p.viewport.scaleToHeight(appSettings.bannerHeight), this.p.images.logo.height);
-	        this.logoHeight = appSettings.logoHeightToBannerHeightRatio * this.height;
-	        this.logoWidth = appSettings.logoAspect * this.logoHeight;
-	    };
-	    Banner.prototype.update = function () {
-	        var mouseYGood = this.p.mouseY <= this.height;
-	        this.mouseHoverHome =
-	            !this.p.uiProcessed &&
-	                mouseYGood &&
-	                this.p.abs(this.p.mouseX - this.width / 2) <=
-	                    this.p.images.logo.width / 2; // is mouse hovering logo image?
-	        this.p.uiProcessed = this.p.uiProcessed || this.mouseHoverHome; // is mouse hovering toolbar?
-	        if (this.mouseHoverHome)
-	            this.p.mouse.cursor("pointer");
-	    };
-	    Banner.prototype.draw = function () {
-	        var _a;
-	        // banner
-	        this.p.push();
-	        (_a = this.p).fill.apply(_a, __spreadArray([], __read(appSettings.headerColor), false));
-	        this.p.rect(0, 0, this.width, this.height);
-	        // logo image
-	        this.p.imageMode(this.p.CENTER);
-	        if (this.p.images !== undefined)
-	            this.p.image(this.p.images.logo, this.width / 2, this.height / 2, this.logoWidth, this.logoHeight);
-	        this.p.pop();
-	    };
-	    return Banner;
-	}());
-
-	var Box = /** @class */ (function () {
-	    function Box(selector, closable) {
-	        if (closable === void 0) { closable = true; }
-	        var _this = this;
-	        var _a;
-	        this.mouseOver = false;
-	        this.p = P5Singleton.getInstance();
-	        this.div = this.p.select(selector);
-	        this.div.mouseOver(function () {
-	            _this.mouseOver = true;
-	        });
-	        this.div.mouseOut(function () {
-	            _this.mouseOver = false;
-	        });
-	        if (closable)
-	            (_a = this.p
-	                .select("".concat(selector, " input, ").concat(selector, " .close-button"))) === null || _a === void 0 ? void 0 : _a.mouseClicked(this.div.hide.bind(this.div));
-	    }
-	    Object.defineProperty(Box.prototype, "hidden", {
-	        get: function () {
-	            return this.div.style("display") == "none";
-	        },
-	        enumerable: false,
-	        configurable: true
-	    });
-	    Object.defineProperty(Box.prototype, "isMouseOver", {
-	        get: function () {
-	            return this.mouseOver;
-	        },
-	        enumerable: false,
-	        configurable: true
-	    });
-	    Box.prototype.hide = function () {
-	        this.div.hide();
-	    };
-	    Box.prototype.show = function () {
-	        this.div.show();
-	    };
-	    Box.prototype.toggle = function () {
-	        if (this.hidden)
-	            this.show();
-	        else
-	            this.hide();
-	    };
-	    Box.prototype.update = function () {
-	        this.p.uiProcessed = this.p.uiProcessed || (!this.hidden && this.mouseOver);
-	    };
-	    return Box;
-	}());
-
-	var FadingBox = /** @class */ (function (_super) {
-	    __extends(FadingBox, _super);
-	    function FadingBox(selector) {
-	        var _this = _super.call(this, selector) || this;
-	        _this.isToggling = false;
-	        _this.defaultText = _this.div.html();
-	        return _this;
-	    }
-	    FadingBox.prototype.text = function (text) {
-	        if (text === undefined)
-	            this._text = this.defaultText;
-	        else
-	            this._text = text;
-	        this.div.html(this._text);
-	        this.toggle();
-	    };
-	    FadingBox.prototype.toggle = function () {
-	        var _this = this;
-	        if (this.isToggling)
-	            return; // debounce - ignore this call if already toggling
-	        this.isToggling = true;
-	        setTimeout(function () {
-	            _super.prototype.toggle.call(_this);
-	            _this.isToggling = false;
-	        }, appSettings.boxCloseTimeout);
-	        _super.prototype.toggle.call(this);
-	    };
-	    return FadingBox;
-	}(Box));
-
-	var UploadBox = /** @class */ (function (_super) {
-	    __extends(UploadBox, _super);
-	    function UploadBox(selector) {
-	        var _this = _super.call(this, selector) || this;
-	        _this.yesButton = _this.p.select("#upload-yes");
-	        _this.noButton = _this.p.select("#upload-no");
-	        _this.uploadText = _this.p.select("#upload-text");
-	        _this.loadingSpinner = _this.p.select("#loading-spinner");
-	        _this.yesButton.mouseClicked(_this.upload.bind(_this));
-	        return _this;
-	    }
-	    UploadBox.prototype.hide = function () {
-	        _super.prototype.hide.call(this);
-	        this.uploadText.html("Are you sure you want to upload? Be sure to save (CTRL+S) before proceeding.");
-	        this.loadingSpinner.hide();
-	        this.yesButton.show();
-	        this.noButton.show();
-	    };
-	    UploadBox.prototype.upload = function () {
-	        var _this = this;
-	        this.uploadText.html("Hacking Zarb's brain...");
-	        this.loadingSpinner.style("display", "inline");
-	        this.yesButton.hide();
-	        this.noButton.hide();
-	        // Convert the currentData array to JSON format
-	        var jsonData = JSON.stringify({
-	            filename: this.p.menu.lastSelectedFile,
-	        });
-	        // Send a POST request to the server with the array data in the request body
-	        fetch("/upload", {
-	            method: "POST",
-	            headers: {
-	                "Content-Type": "application/json",
-	            },
-	            body: jsonData,
-	        })
-	            .then(function (response) {
-	            if (!response.ok) {
-	                throw new Error("Network response was not OK");
-	            }
-	            _this.loadingSpinner.hide();
-	            _this.uploadText.html("Done! Reboot script called. Check server logs if needed.");
-	        })
-	            .catch(function (error) {
-	            _this.uploadText.html("There was a problem sending the data:\n ".concat(error));
-	        }).finally(function () {
-	            setTimeout(function () {
-	                _this.hide();
-	            }, appSettings.boxCloseTimeout);
-	        });
-	    };
-	    return UploadBox;
-	}(Box));
-
-	var Menu = /** @class */ (function () {
-	    function Menu() {
-	        this._enabled = true;
-	        this.lastSelectedFile = "";
-	        this.status = {};
-	        this.rows = 0;
-	        this.cols = 0;
-	        this.scrollOffset = 0;
-	        this.trueTopOffset = 0;
-	        this.p = P5Singleton.getInstance();
-	        this.computeSize();
-	        this.enabled = true;
-	    }
-	    Object.defineProperty(Menu.prototype, "enabled", {
-	        get: function () {
-	            return this._enabled;
-	        },
-	        set: function (value) {
-	            var _this = this;
-	            this._enabled = value;
-	            var jsonData = JSON.stringify({
-	                name: appSettings.clientUsername,
-	                filename: this.lastSelectedFile,
-	            });
-	            // Send a POST request to the server with the array data in the request body
-	            fetch("/status", {
-	                method: "POST",
-	                headers: {
-	                    "Content-Type": "application/json",
-	                },
-	                body: jsonData,
-	            })
-	                .then(function (response) {
-	                if (!response.ok) {
-	                    throw new Error("Network response was not OK");
-	                }
-	                return response.json();
-	            })
-	                .then(function (data) {
-	                _this.status = data;
-	            })
-	                .catch(function (error) { });
-	        },
-	        enumerable: false,
-	        configurable: true
-	    });
-	    Menu.prototype.computeSize = function () {
-	        this.width = this.p.viewport.scaleToWidth(1 - 2 * appSettings.horizontalMargin);
-	        this.height = this.p.viewport.height;
-	        this.cellSize = this.p.viewport.scaleToWidth(appSettings.cellSize);
-	        this.cellPadding = this.p.viewport.scaleToWidth(appSettings.cellPadding);
-	        this.trueCellSize = this.cellSize + this.cellPadding;
-	        this.textSize = appSettings.menuTextSizeRatio * this.cellSize;
-	        this.horizontalMargin = this.p.viewport.scaleToWidth(appSettings.horizontalMargin);
-	        this.rows = this.p.ceil(this.height / this.trueCellSize);
-	        this.cols = this.p.floor(this.width / this.trueCellSize);
-	        this.padding = (this.width - this.cols * this.trueCellSize) / 2;
-	        this.trueLeftOffset = this.padding + this.horizontalMargin;
-	    };
-	    Menu.prototype.scroll = function (value) {
-	        this.scrollOffset += value;
-	        this.scrollOffset = this.p.constrain(this.scrollOffset, 0, (this.p.floor(this.p.maxSounds / this.cols) - 1) * this.trueCellSize);
-	    };
-	    Menu.prototype.text = function (imageName, x, y, editingText) {
-	        if (editingText === void 0) { editingText = ""; }
-	        this.p.push();
-	        this.p.fill(255);
-	        this.p.noStroke();
-	        this.p.textAlign(this.p.CENTER);
-	        this.p.translate(x + this.trueCellSize / 2, y + this.trueCellSize - this.p.textAscent());
-	        this.p.textSize(this.textSize);
-	        this.p.text(imageName, 0, 0);
-	        this.p.textSize(this.textSize / 2);
-	        this.p.text(lookupFiletype(Number(imageName.substring(0, imageName.indexOf(".")))) +
-	            editingText, 0, appSettings.filenameTextScale * this.p.textAscent());
-	        this.p.pop();
-	    };
-	    Menu.prototype.getGridIndex = function (i, j) {
-	        return ((i + this.p.floor(this.scrollOffset / this.trueCellSize)) * this.cols + j);
-	    };
-	    Menu.prototype.image = function (index, i, j) {
-	        // calculate the x position of the item
-	        var x = this.trueLeftOffset + j * this.trueCellSize;
-	        var y = -this.trueTopOffset + i * this.trueCellSize; // calculate the y position of the item
-	        // every sound is linked to the images via filename
-	        var soundName = this.p.files.sound[index];
-	        var associatedImageName = soundName.replace(".wav", ".png");
-	        this.p.push();
-	        // try to get image and display if existing, otherwise display "missing" image
-	        var image = this.p.images[associatedImageName] || this.p.images.missingImage;
-	        this.p.image(image, x + this.cellPadding / 2, y + this.cellPadding / 4, this.cellSize, this.cellSize);
-	        this.p.pop();
-	        return [soundName, associatedImageName, x, y];
-	    };
-	    Menu.prototype.drawItems = function () {
-	        var _a, _b;
-	        this.trueTopOffset = this.scrollOffset % this.trueCellSize; // this accounts for the scroll
-	        for (var i = 0; i < this.rows; i++) {
-	            for (var j = 0; j < this.cols; j++) {
-	                // calculate index of current item
-	                var index = this.getGridIndex(i, j);
-	                if (index >= this.p.maxSounds)
-	                    return;
-	                var _c = __read(this.image(index, i, j), 4), soundName = _c[0], associatedImageName = _c[1], x = _c[2], y = _c[3];
-	                var editingText = "";
-	                // background
-	                this.p.push();
-	                (_a = this.p).fill.apply(_a, __spreadArray([], __read(appSettings.menuTileColor), false));
-	                // is the current tile being edited?
-	                // for (const user in this.status) {
-	                //   if (this.status[user] == soundName) {
-	                //     this.p.fill(...appSettings.userColor);
-	                //     editingText = ` [${user} editing]`
-	                //   }
-	                // }
-	                // is the current tile highlighted by the user? draw ui feedback
-	                if (isInRectangle(this.p.viewport.mouseX, this.p.viewport.mouseY, x, y, this.trueCellSize, this.trueCellSize)) {
-	                    (_b = this.p).fill.apply(_b, __spreadArray([], __read(appSettings.menuHoverColor), false));
-	                    // expose the last hovered filename
-	                    this.lastSelectedFile = soundName;
-	                }
-	                // draw background
-	                this.p.stroke(0, 0);
-	                this.p.rect(x, y, this.trueCellSize, this.trueCellSize, appSettings.menuBorderRadius);
-	                this.p.pop();
-	                this.text(associatedImageName, x, y, editingText);
-	            }
-	        }
-	    };
-	    Menu.prototype.draw = function () {
-	        var _a, _b;
-	        this.p.push();
-	        this.p.textSize(this.textSize);
-	        this.p.push();
-	        (_a = this.p).stroke.apply(_a, __spreadArray([], __read(appSettings.contentColor), false));
-	        (_b = this.p).fill.apply(_b, __spreadArray([], __read(appSettings.contentColor), false));
-	        this.p.rect(this.horizontalMargin, 0, this.width, this.height);
-	        this.p.pop();
-	        this.drawItems();
-	        this.p.pop();
-	    };
-	    return Menu;
-	}());
-
-	var Mouse = /** @class */ (function () {
-	    function Mouse() {
-	        this.engaged = false;
-	        this.p = P5Singleton.getInstance();
-	    }
-	    Mouse.prototype.cursor = function (cursorType) {
-	        this.engaged = true;
-	        this.p.cursor(cursorType);
-	        return true;
-	    };
-	    Mouse.prototype.update = function () {
-	        this.p.uiProcessed = false;
-	    };
-	    Mouse.prototype.draw = function () {
-	        if (!this.engaged)
-	            this.p.cursor("default");
-	        this.engaged = false;
-	    };
-	    return Mouse;
-	}());
-
-	var Viewport = /** @class */ (function () {
-	    function Viewport() {
-	        this.translationX = 0;
-	        this.translationY = 0;
-	        this.frameStack = [];
-	        this.p = P5Singleton.getInstance();
-	        this.computeSize();
-	        this.computeTextSize();
-	    }
-	    Viewport.prototype.updateMouse = function () {
-	        this.mouseX = this.p.mouseX - this.translationX;
-	        this.mouseY = this.p.mouseY - this.translationY;
-	    };
-	    Viewport.prototype.translate = function (x, y) {
-	        if (y === void 0) { y = 0; }
-	        this.p.push();
-	        this.p.translate(x, y);
-	        this.translationX += x;
-	        this.translationY += y;
-	        this.frameStack.push([x, y]);
-	        this.updateMouse();
-	    };
-	    Viewport.prototype.reset = function () {
-	        if (this.frameStack.length == 0)
-	            return;
-	        var _a = __read(this.frameStack.pop(), 2), x = _a[0], y = _a[1];
-	        this.translationX -= x;
-	        this.translationY -= y;
-	        this.p.pop();
-	        this.updateMouse();
-	    };
-	    Viewport.prototype.computeSize = function () {
-	        return [
-	            (this.width = this.p.max(appSettings.minCanvasSize, this.p.windowWidth)),
-	            (this.height = this.p.max(appSettings.minCanvasSize, this.p.windowHeight)),
-	        ];
-	    };
-	    Viewport.prototype.computeTextSize = function () {
-	        return (this.textSize = this.p.constrain(appSettings.textSizeRatio * this.width, 0, appSettings.maxTextSize));
-	    };
-	    Viewport.prototype.scaleToHeight = function (decimal) {
-	        return this.height * decimal;
-	    };
-	    Viewport.prototype.scaleToWidth = function (decimal) {
-	        return this.width * decimal;
-	    };
-	    return Viewport;
-	}());
-
 	var setup = function () {
 	    var p = P5Singleton.getInstance();
+	    preloadAsync();
 	    p.viewport = new Viewport();
 	    WidgetCollector.setInstance();
 	    p.createCanvas(p.viewport.width, p.viewport.height);
@@ -20728,7 +21153,7 @@
 	        p.textAlign(p.CENTER);
 	        p.text(p.message, p.width / 2, p.height / 2);
 	        if (p.files !== undefined) {
-	            if (p.imagesLoaded != p.maxImages) {
+	            if (!isLoadFinished()) {
 	                p.percentLoaded =
 	                    (appSettings.soundLoadingWeight * p.soundsLoaded +
 	                        appSettings.imageLoadingWeight * p.imagesLoaded) /
@@ -20763,6 +21188,8 @@
 	        return;
 	    if (!p.postloadSetupFinished)
 	        postloadSetup();
+	    if (!isLoadFinished())
+	        return;
 	    // pre-draw updates
 	    p.mouse.update(); // sets uiProcessed state to false
 	    try {
@@ -20785,6 +21212,7 @@
 	        p.menu.draw();
 	    if (p.menu !== undefined && !p.menu.enabled)
 	        WidgetCollector.draw();
+	    p.audioWidget.drawControls();
 	    p.viewport.reset();
 	    p.banner.draw();
 	    // end-of-frame mouse update
@@ -20794,39 +21222,45 @@
 	};
 
 	var windowResized = function () {
+	    var _a, _b, _c;
 	    var p = P5Singleton.getInstance();
-	    var _a = __read(p.viewport.computeSize(), 2), width = _a[0], height = _a[1];
+	    if (p === undefined)
+	        return;
+	    var _d = __read((_a = p.viewport) === null || _a === void 0 ? void 0 : _a.computeSize(), 2), width = _d[0], height = _d[1];
 	    p.resizeCanvas(width, height);
 	    p.textSize(p.viewport.computeTextSize());
-	    p.banner.computeSize();
-	    p.menu.computeSize();
+	    (_b = p.banner) === null || _b === void 0 ? void 0 : _b.computeSize();
+	    (_c = p.menu) === null || _c === void 0 ? void 0 : _c.computeSize();
 	    WidgetCollector.windowResized();
 	};
 	var keyPressed = function (event) {
+	    var _a;
 	    event.preventDefault();
 	    var p = P5Singleton.getInstance();
-	    if (!p.menu.enabled)
+	    if (!((_a = p.menu) === null || _a === void 0 ? void 0 : _a.enabled))
 	        WidgetCollector.keyPressed();
 	};
 	var mouseClicked = function () {
 	    var e_1, _a, e_2, _b;
-	    var _c;
+	    var _c, _d, _e, _f, _g;
 	    var p = P5Singleton.getInstance();
+	    if (!p.postloadSetupFinished)
+	        return;
 	    if (p.uiProcessed) {
-	        if (p.banner.mouseHoverHome) {
+	        if ((_c = p.banner) === null || _c === void 0 ? void 0 : _c.mouseHoverHome) {
 	            // user wants to go home
-	            (_c = p.audioWidget.currentSound) === null || _c === void 0 ? void 0 : _c.stop();
+	            (_e = (_d = p.audioWidget) === null || _d === void 0 ? void 0 : _d.currentSound) === null || _e === void 0 ? void 0 : _e.stop();
 	            p.menu.enabled = true;
-	            p.listBox.hide();
+	            (_f = p.listBox) === null || _f === void 0 ? void 0 : _f.hide();
 	            return;
 	        }
-	        else if (p.audioWidget.uiProcessed) {
+	        else if ((_g = p.audioWidget) === null || _g === void 0 ? void 0 : _g.uiProcessed) {
 	            p.audioWidget.mouseClicked();
 	            return;
 	        }
 	        try {
-	            for (var _d = __values(p.boxes), _e = _d.next(); !_e.done; _e = _d.next()) {
-	                var box = _e.value;
+	            for (var _h = __values(p.boxes), _j = _h.next(); !_j.done; _j = _h.next()) {
+	                var box = _j.value;
 	                if (box === p.listBox)
 	                    continue;
 	                if (!box.isMouseOver)
@@ -20836,7 +21270,7 @@
 	        catch (e_1_1) { e_1 = { error: e_1_1 }; }
 	        finally {
 	            try {
-	                if (_e && !_e.done && (_a = _d.return)) _a.call(_d);
+	                if (_j && !_j.done && (_a = _h.return)) _a.call(_h);
 	            }
 	            finally { if (e_1) throw e_1.error; }
 	        }
@@ -20846,15 +21280,15 @@
 	        p.audioWidget.bindSound(p.sounds[p.menu.lastSelectedFile]);
 	        p.listBox.toggle();
 	        try {
-	            for (var _f = __values(WidgetCollector.filter(SignalWidget)), _g = _f.next(); !_g.done; _g = _f.next()) {
-	                var signalWidget = _g.value;
+	            for (var _k = __values(WidgetCollector.filter(SignalWidget)), _l = _k.next(); !_l.done; _l = _k.next()) {
+	                var signalWidget = _l.value;
 	                signalWidget.newData(p.data[signalWidget.name][p.menu.lastSelectedFile]);
 	            }
 	        }
 	        catch (e_2_1) { e_2 = { error: e_2_1 }; }
 	        finally {
 	            try {
-	                if (_g && !_g.done && (_b = _f.return)) _b.call(_f);
+	                if (_l && !_l.done && (_b = _k.return)) _b.call(_k);
 	            }
 	            finally { if (e_2) throw e_2.error; }
 	        }
@@ -20864,7 +21298,6 @@
 
 	var sketch = function (p) {
 	    P5Singleton.setInstance(p);
-	    p.preload = preload;
 	    p.setup = setup;
 	    p.draw = draw;
 	    p.windowResized = windowResized;

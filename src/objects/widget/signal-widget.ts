@@ -57,6 +57,8 @@ export class SignalWidget extends Widget {
     "ctrl+y": this.redoCommand.bind(this),
     "ctrl+shift+z": this.redoCommand.bind(this),
     "ctrl+z": this.undoCommand.bind(this),
+
+    "ctrl+r": this.resetCommand.bind(this),
   };
 
   constructor(
@@ -83,9 +85,15 @@ export class SignalWidget extends Widget {
   }
 
   newData(data: number[]) {
+    this.bindFilename();
     this.checkpointData = data.slice();
     this.bindData(data);
     this.resetClipboard();
+  }
+
+  bindFilename() {
+    const name = this.p.select("#list-filename");
+    name?.html(this.p.menu.lastSelectedFile);
   }
 
   checkRootNode(data: number[]) {
@@ -95,6 +103,22 @@ export class SignalWidget extends Widget {
       );
       data.splice(0, 0, appSettings.commands.talk, this.closedAngle);
     }
+  }
+
+  resetCommand() {
+    if (typeof this.closedAngle !== "number") return;
+    const duration = 1000 * this.p.audioWidget.currentSound.duration();
+    const sleep = Math.round(duration / 2);
+    this.bindData([
+      appSettings.commands.talk,
+      this.closedAngle,
+      appSettings.commands.delay,
+      sleep,
+      appSettings.commands.talk,
+      this.openAngle,
+      appSettings.commands.delay,
+      sleep,
+    ]);
   }
 
   bindData(data: number[]) {
@@ -230,8 +254,11 @@ export class SignalWidget extends Widget {
 
   roundData() {
     for (const [index, datum] of this.currentData.entries()) {
-      if (index % 2 == 0) continue; 
-      this.currentData[index] = Math.max(Math.round(datum), appSettings.minimumKeyframeLength);
+      if (index % 2 == 0) continue;
+      this.currentData[index] = Math.max(
+        Math.round(datum),
+        appSettings.minimumKeyframeLength
+      );
     }
     this.checkRootNode(this.currentData);
   }
@@ -291,9 +318,32 @@ export class SignalWidget extends Widget {
           lastHeight = currentHeight;
           currentHeight = loweredHeight - percentOpen * this.signalHeight;
 
-          // draw vertical line
-          this.drawBuffer.line(currentX, lastHeight, currentX, currentHeight);
+          // calculate slope and horizontal leg length
+          let slope = appSettings.characters[this.name as keyof typeof appSettings.characters].angularSpeed * Math.sign(currentHeight - lastHeight) * -1; // -1 because y is down
+          let horizontalLength = Math.abs(slope) * this.p.audioWidget.resolution;
 
+          // draw triangle
+          let trianglePoints = [];
+          if (slope > 0) {
+            trianglePoints = [
+              currentX, lastHeight,
+              currentX + horizontalLength, currentHeight,
+              currentX + horizontalLength, lastHeight
+            ];
+          } else {
+            trianglePoints = [
+              currentX, currentHeight,
+              currentX + horizontalLength, currentHeight,
+              currentX, lastHeight
+            ];
+          }
+          // this.drawBuffer.push();
+          // this.drawBuffer.fill([...this.strokeColor, 50]);
+          // this.drawBuffer.stroke([...this.strokeColor, 50]);
+          // this.drawBuffer.triangle(...trianglePoints as [number, number, number, number, number, number]);
+          // this.drawBuffer.pop();
+          this.drawBuffer.line(currentX, currentHeight, currentX, lastHeight);
+          
           // draw bulb to show existence of keyframe
           if (this.userDraggingKeyframe && i in badKeyframes) {
             badKeyframeIndicatorCoordinates.push([
