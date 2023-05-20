@@ -25,8 +25,10 @@ export const draw = () => {
   p.viewport.translate(0, p.banner.height); // move viewport below banner
   if (p.files !== undefined && p.menu !== undefined && p.menu.enabled)
     p.menu.draw();
-  if (p.menu !== undefined && !p.menu.enabled) WidgetCollector.draw();
-  p.audioWidget.drawControls();
+  if (p.menu !== undefined && !p.menu.enabled) {
+    WidgetCollector.draw();
+    p.audioWidget.drawControls();
+  }
   p.viewport.reset();
   p.banner.draw();
 

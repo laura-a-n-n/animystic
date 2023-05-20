@@ -13533,7 +13533,7 @@
 	    };
 	    AudioWidget.prototype.resetTime = function (stop) {
 	        if (stop === void 0) { stop = true; }
-	        this.currentPosition = this.currentTime = 0;
+	        this.currentPosition = this.currentTime = this.timeMarker = 0;
 	        if (stop)
 	            safelyStopAudio(this.currentSound);
 	    };
@@ -13561,7 +13561,7 @@
 	            else if (!this.p.mouseIsPressed)
 	                this.currentTime = this.currentSound.isPlaying()
 	                    ? this.currentSound.currentTime()
-	                    : 0; // update to current time
+	                    : this.timeMarker; // update to current time
 	        }
 	        if (this.currentSound.duration() - this.currentTime < 0.1) {
 	            this.pause();
@@ -21222,9 +21222,10 @@
 	    p.viewport.translate(0, p.banner.height); // move viewport below banner
 	    if (p.files !== undefined && p.menu !== undefined && p.menu.enabled)
 	        p.menu.draw();
-	    if (p.menu !== undefined && !p.menu.enabled)
+	    if (p.menu !== undefined && !p.menu.enabled) {
 	        WidgetCollector.draw();
-	    p.audioWidget.drawControls();
+	        p.audioWidget.drawControls();
+	    }
 	    p.viewport.reset();
 	    p.banner.draw();
 	    // end-of-frame mouse update

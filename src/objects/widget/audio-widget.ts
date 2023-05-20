@@ -198,7 +198,7 @@ export class AudioWidget extends Widget {
   }
 
   resetTime(stop = true) {
-    this.currentPosition = this.currentTime = 0;
+    this.currentPosition = this.currentTime = this.timeMarker = 0;
     if (stop) safelyStopAudio(this.currentSound);
   }
 
@@ -230,7 +230,7 @@ export class AudioWidget extends Widget {
       } else if (!this.p.mouseIsPressed)
         this.currentTime = this.currentSound.isPlaying()
           ? this.currentSound.currentTime()
-          : 0; // update to current time
+          : this.timeMarker; // update to current time
     }
     if (this.currentSound.duration() - this.currentTime < 0.1) {
       this.pause();
