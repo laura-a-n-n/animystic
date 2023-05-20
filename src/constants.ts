@@ -73,6 +73,7 @@ export const appSettings = {
 
   // audio widget appearance
   scrubberColor: [255, 0, 0],
+  markerColor: [0, 0, 255],
 
   // signal widget settings
   characters: {

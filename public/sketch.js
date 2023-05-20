@@ -12463,6 +12463,7 @@
 	    audioButtonHeightProportion: 2 / 3,
 	    // audio widget appearance
 	    scrubberColor: [255, 0, 0],
+	    markerColor: [0, 0, 255],
 	    // signal widget settings
 	    characters: {
 	        zarbalatrax: {
@@ -13392,10 +13393,12 @@
 	        _this.currentPosition = 0;
 	        _this.loading = true;
 	        _this.paused = false;
+	        _this.timeMarker = 0;
 	        _this.uiProcessed = false;
 	        _this.keyBindings = {
 	            " ": _this.toggle.bind(_this),
 	            r: _this.resetTime.bind(_this),
+	            m: _this.markTime.bind(_this)
 	        };
 	        _this.playbackImages = [_this.p.images.pauseButton, _this.p.images.playButton];
 	        _this.createButtons();
@@ -13442,11 +13445,14 @@
 	        (_b = this.drawBuffer).stroke.apply(_b, __spreadArray([], __read(appSettings.defaultFill), false));
 	    };
 	    AudioWidget.prototype.drawScrubber = function () {
-	        var _a, _b;
+	        var _a, _b, _c, _d;
 	        this.p.push();
 	        (_a = this.p).stroke.apply(_a, __spreadArray([], __read(appSettings.scrubberColor), false));
 	        (_b = this.p).fill.apply(_b, __spreadArray([], __read(appSettings.scrubberColor), false));
 	        this.p.line(this.currentPosition, 0, this.currentPosition, this.p.height);
+	        (_c = this.p).stroke.apply(_c, __spreadArray([], __read(appSettings.markerColor), false));
+	        (_d = this.p).fill.apply(_d, __spreadArray([], __read(appSettings.markerColor), false));
+	        this.p.line(this.timeMarker * this.resolution, 0, this.timeMarker * this.resolution, this.p.height);
 	        this.p.pop();
 	    };
 	    AudioWidget.prototype.drawToBuffer = function (reset) {
@@ -13515,8 +13521,8 @@
 	        if (this.currentSound.isPlaying() && !this.paused) {
 	            safelyStopAudio(this.currentSound);
 	        }
-	        else
-	            this.currentSound.play(undefined, undefined, undefined, this.currentTime);
+	        if (this.timeMarker !== 0)
+	            this.currentTime = this.timeMarker;
 	        this.paused = !this.paused;
 	    };
 	    AudioWidget.prototype.pause = function () {
@@ -13531,6 +13537,12 @@
 	        if (stop)
 	            safelyStopAudio(this.currentSound);
 	    };
+	    AudioWidget.prototype.markTime = function () {
+	        if (this.timeMarker)
+	            this.timeMarker = 0;
+	        else
+	            this.timeMarker = this.currentTime;
+	    };
 	    AudioWidget.prototype.scrubToPosition = function (x) {
 	        if (this.currentSound.isPlaying())
 	            safelyStopAudio(this.currentSound);
@@ -13544,12 +13556,12 @@
 	            if (!this.p.mouseIsPressed &&
 	                !this.currentSound.isPlaying() &&
 	                this.currentTime < this.currentSound.duration()) {
-	                this.currentSound.play(undefined, undefined, undefined, this.currentTime);
+	                this.currentSound.play(undefined, undefined, undefined, this.currentTime); // resume at current time
 	            }
-	            else
+	            else if (!this.p.mouseIsPressed)
 	                this.currentTime = this.currentSound.isPlaying()
 	                    ? this.currentSound.currentTime()
-	                    : 0;
+	                    : 0; // update to current time
 	        }
 	        if (this.currentSound.duration() - this.currentTime < 0.1) {
 	            this.pause();

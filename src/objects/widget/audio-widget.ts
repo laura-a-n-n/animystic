@@ -14,6 +14,7 @@ export class AudioWidget extends Widget {
   currentPosition = 0;
   loading = true;
   paused = false;
+  timeMarker = 0;
 
   resolution!: number;
   topOffset!: number;
@@ -30,6 +31,7 @@ export class AudioWidget extends Widget {
   keyBindings: { [key: string]: () => any } = {
     " ": this.toggle.bind(this),
     r: this.resetTime.bind(this),
+    m: this.markTime.bind(this)
   };
   playbackImages: [p5.Image, p5.Image];
 
@@ -131,6 +133,9 @@ export class AudioWidget extends Widget {
     this.p.stroke(...appSettings.scrubberColor);
     this.p.fill(...appSettings.scrubberColor);
     this.p.line(this.currentPosition, 0, this.currentPosition, this.p.height);
+    this.p.stroke(...appSettings.markerColor);
+    this.p.fill(...appSettings.markerColor);
+    this.p.line(this.timeMarker * this.resolution, 0, this.timeMarker * this.resolution, this.p.height);
     this.p.pop();
   }
 
@@ -179,8 +184,8 @@ export class AudioWidget extends Widget {
   toggle() {
     if (this.currentSound.isPlaying() && !this.paused) {
       safelyStopAudio(this.currentSound);
-    } else
-      this.currentSound.play(undefined, undefined, undefined, this.currentTime);
+    }
+    if (this.timeMarker !== 0) this.currentTime = this.timeMarker;
 
     this.paused = !this.paused;
   }
@@ -195,6 +200,11 @@ export class AudioWidget extends Widget {
   resetTime(stop = true) {
     this.currentPosition = this.currentTime = 0;
     if (stop) safelyStopAudio(this.currentSound);
+  }
+
+  markTime() {
+    if (this.timeMarker) this.timeMarker = 0;
+    else this.timeMarker = this.currentTime;
   }
 
   scrubToPosition(x: number) {
@@ -216,11 +226,11 @@ export class AudioWidget extends Widget {
           undefined,
           undefined,
           this.currentTime
-        );
-      } else
+        ); // resume at current time
+      } else if (!this.p.mouseIsPressed)
         this.currentTime = this.currentSound.isPlaying()
           ? this.currentSound.currentTime()
-          : 0;
+          : 0; // update to current time
     }
     if (this.currentSound.duration() - this.currentTime < 0.1) {
       this.pause();
