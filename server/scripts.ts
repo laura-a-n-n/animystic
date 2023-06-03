@@ -25,7 +25,7 @@ export class ScriptCaller {
 
   static defaultOutput(script: ChildProcessWithoutNullStreams, res: Response) {
     let failed = false;
-    
+
     script.stdout.on("data", (data) => {
       console.log(`stdout: ${data}`);
     });
@@ -46,6 +46,8 @@ ScriptCaller.setup();
 
 export function playSoundFile(req: Request, res: Response) {
   const filename = req.body.filename;
-  const script = ScriptCaller.callFile(appSettings.playRemoteScript, [filenameToNumber(filename).toString()])
+  const script = ScriptCaller.callFile(appSettings.playRemoteScript, [
+    filenameToNumber(filename).toString(),
+  ]);
   ScriptCaller.defaultOutput(script, res);
 }

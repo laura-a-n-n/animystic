@@ -75,7 +75,7 @@ const preloadAssets = async () => {
 export const isLoadFinished = () => {
   p = P5Singleton.getInstance();
   return p.maxImages == p.imagesLoaded && p.soundsLoaded == p.maxSounds;
-}
+};
 
 export const preloadAsync = async () => {
   p = P5Singleton.getInstance();

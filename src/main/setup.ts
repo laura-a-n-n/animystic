@@ -34,7 +34,12 @@ export const postloadSetup = () => {
   p.listBox = new Box(appSettings.listBoxSelector, false);
   p.audioWidget = new AudioWidget();
   for (const [name, character] of Object.entries(appSettings.characters)) {
-    new SignalWidget(name, character.angularRange, character.rangeInverted, character.strokeColor);
+    new SignalWidget(
+      name,
+      character.angularRange,
+      character.rangeInverted,
+      character.strokeColor
+    );
   }
   p.mouse = new Mouse();
   p.helpBox = new Box(appSettings.helpBoxSelector);

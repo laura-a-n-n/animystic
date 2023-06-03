@@ -13,7 +13,8 @@ export const appSettings = {
   localDataInputPath: "./data/data.json",
   localDataBackupFolderPath: "./data/saves",
   dataInputPath: "./data/dist/zarbalatrax-3/zarbalatrax/ZarbData.h",
-  dataInputSearchString: "const int commands[][MAX_SUBARRAY_LENGTH] PROGMEM = {",
+  dataInputSearchString:
+    "const int commands[][MAX_SUBARRAY_LENGTH] PROGMEM = {",
   dataInputStopString: "};",
   dataRegex: /{\s*(([\d\w]+,?\s*)+)\s*}/g,
   commandAliases: {

@@ -34,7 +34,7 @@ export class AudioWidget extends Widget {
   keyBindings: { [key: string]: () => any } = {
     " ": this.toggle.bind(this),
     r: this.resetTime.bind(this),
-    m: this.markTime.bind(this)
+    m: this.markTime.bind(this),
   };
   playbackImages: [p5.Image, p5.Image];
 
@@ -58,61 +58,62 @@ export class AudioWidget extends Widget {
       this.audioButtonSize,
       this.playbackImages[0]
     );
-      this.helpButton = new Button(
-        "help",
-        this.width - this.audioButtonSize,
-        this.controlsTopOffset + this.controlsHeight / 2,
-        this.audioButtonSize,
-        this.p.images.helpButton
-      );
-      this.uploadButton = new Button(
-        "upload",
-        this.audioButtonSize,
-        this.controlsTopOffset + this.controlsHeight / 2,
-        this.audioButtonSize,
-        this.p.images.uploadButton
-      );
-      this.downloadButton = new Button(
-        "download",
-        (2 + appSettings.downloadButtonPadding) * this.audioButtonSize,
-        this.controlsTopOffset + this.controlsHeight / 2,
-        this.audioButtonSize,
-        this.p.images.downloadButton
-      );
-      this.playRemoteButton = new Button(
-        "playRemoteButton",
-        (3.4 + appSettings.downloadButtonPadding) * this.audioButtonSize, //TODO: fix magic number
-        this.controlsTopOffset + this.controlsHeight / 2,
-        this.audioButtonSize,
-        this.p.images.playRemoteButton
-      );
+    this.helpButton = new Button(
+      "help",
+      this.width - this.audioButtonSize,
+      this.controlsTopOffset + this.controlsHeight / 2,
+      this.audioButtonSize,
+      this.p.images.helpButton
+    );
+    this.uploadButton = new Button(
+      "upload",
+      this.audioButtonSize,
+      this.controlsTopOffset + this.controlsHeight / 2,
+      this.audioButtonSize,
+      this.p.images.uploadButton
+    );
+    this.downloadButton = new Button(
+      "download",
+      (2 + appSettings.downloadButtonPadding) * this.audioButtonSize,
+      this.controlsTopOffset + this.controlsHeight / 2,
+      this.audioButtonSize,
+      this.p.images.downloadButton
+    );
+    this.playRemoteButton = new Button(
+      "playRemoteButton",
+      (3.4 + appSettings.downloadButtonPadding) * this.audioButtonSize, //TODO: fix magic number
+      this.controlsTopOffset + this.controlsHeight / 2,
+      this.audioButtonSize,
+      this.p.images.playRemoteButton
+    );
   }
 
   computeButtonBoxes() {
-    this.playbackButton.resize(this.width / 2,
+    this.playbackButton.resize(
+      this.width / 2,
       this.controlsTopOffset + this.controlsHeight / 2,
       this.audioButtonSize
     );
-      this.helpButton.resize(
-        this.width - this.audioButtonSize,
-        this.controlsTopOffset + this.controlsHeight / 2,
-        this.audioButtonSize
-      );
-      this.uploadButton.resize(
-        this.audioButtonSize,
-        this.controlsTopOffset + this.controlsHeight / 2,
-        this.audioButtonSize
-      );
-      this.downloadButton.resize(
-        (2 + appSettings.downloadButtonPadding) * this.audioButtonSize,
-        this.controlsTopOffset + this.controlsHeight / 2,
-        this.audioButtonSize,
-      );
-      this.playRemoteButton.resize(
-        (3.4 + appSettings.downloadButtonPadding) * this.audioButtonSize,
-        this.controlsTopOffset + this.controlsHeight / 2,
-        this.audioButtonSize,
-      );
+    this.helpButton.resize(
+      this.width - this.audioButtonSize,
+      this.controlsTopOffset + this.controlsHeight / 2,
+      this.audioButtonSize
+    );
+    this.uploadButton.resize(
+      this.audioButtonSize,
+      this.controlsTopOffset + this.controlsHeight / 2,
+      this.audioButtonSize
+    );
+    this.downloadButton.resize(
+      (2 + appSettings.downloadButtonPadding) * this.audioButtonSize,
+      this.controlsTopOffset + this.controlsHeight / 2,
+      this.audioButtonSize
+    );
+    this.playRemoteButton.resize(
+      (3.4 + appSettings.downloadButtonPadding) * this.audioButtonSize,
+      this.controlsTopOffset + this.controlsHeight / 2,
+      this.audioButtonSize
+    );
   }
 
   computeSize() {
@@ -150,7 +151,12 @@ export class AudioWidget extends Widget {
     this.p.line(this.currentPosition, 0, this.currentPosition, this.p.height);
     this.p.stroke(...appSettings.markerColor);
     this.p.fill(...appSettings.markerColor);
-    this.p.line(this.timeMarker * this.resolution, 0, this.timeMarker * this.resolution, this.p.height);
+    this.p.line(
+      this.timeMarker * this.resolution,
+      0,
+      this.timeMarker * this.resolution,
+      this.p.height
+    );
     this.p.pop();
   }
 
@@ -202,10 +208,12 @@ export class AudioWidget extends Widget {
     })
       .then((response) => {
         if (!response.ok) {
-          console.log(response.text().then((text) => {
-            console.log(text);
-            throw new Error(text);
-          }));
+          console.log(
+            response.text().then((text) => {
+              console.log(text);
+              throw new Error(text);
+            })
+          );
         } else this.p.notificationBox.text("<p>Played!</p>");
       })
       .catch((error) => {
@@ -255,7 +263,8 @@ export class AudioWidget extends Widget {
   update() {
     if (this.loading) return;
     this.playbackButton.setImage(this.playbackImages[Number(this.paused)]);
-    if (this.paused && this.currentSound.isPlaying()) safelyStopAudio(this.currentSound);
+    if (this.paused && this.currentSound.isPlaying())
+      safelyStopAudio(this.currentSound);
     else if (!this.paused) {
       if (this.resetToMarkerFlag) {
         this.resetToMarkerFlag = false;
@@ -272,7 +281,7 @@ export class AudioWidget extends Widget {
           undefined,
           this.currentTime
         ); // resume at current time
-      } else if (this.currentSound.isPlaying() && !this.scrubFlag) 
+      } else if (this.currentSound.isPlaying() && !this.scrubFlag)
         this.currentTime = this.currentSound.currentTime();
     }
     if (this.currentSound.duration() - this.currentTime < 0.1) {

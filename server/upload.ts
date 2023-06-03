@@ -37,12 +37,12 @@ export const upload = (res: Response, data: string[], filename: string) => {
 
     script.on("close", (code) => {
       console.log(`child process exited with code ${code}`);
-      if (currentScriptFileIndex == 0) { // first script should be sync script.
+      if (currentScriptFileIndex == 0) {
+        // first script should be sync script.
         if (!syncLocal(data, filename))
           return res.status(400).send(appSettings.uploadErrorMessage);
       }
-      if (failed) 
-        return res.status(400).send(data.toString().trim());
+      if (failed) return res.status(400).send(data.toString().trim());
       currentScriptFileIndex++;
       if (currentScriptFileIndex < appSettings.uploadScriptFiles.length)
         setTimeout(() => {
@@ -159,5 +159,3 @@ export const postUpload = (req: Request, res: Response) => {
     }
   );
 };
-
-

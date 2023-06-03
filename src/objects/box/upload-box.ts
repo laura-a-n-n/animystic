@@ -53,13 +53,13 @@ export class UploadBox extends Box {
         this.uploadText.html(
           "Done! Reboot script called. Check server logs if needed."
         );
-
       })
       .catch((error) => {
         this.uploadText.html(
           `There was a problem sending the data:\n ${error}`
         );
-      }).finally(() => {
+      })
+      .finally(() => {
         setTimeout(() => {
           this.hide();
         }, appSettings.boxCloseTimeout);
