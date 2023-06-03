@@ -12472,14 +12472,14 @@
 	            angularSpeed: 2 / 7,
 	            rangeInverted: true,
 	            strokeColor: [255, 0, 255],
-	            command: 2
+	            command: 2,
 	        },
 	        squambo: {
 	            angularRange: 180,
 	            angularSpeed: 18 / 125,
 	            rangeInverted: true,
 	            strokeColor: [0, 255, 0],
-	            command: 3
+	            command: 3,
 	        },
 	    },
 	    signalWaveHeightScale: 0.4,
@@ -12564,21 +12564,23 @@
 	    };
 	    WidgetCollector.draw = function () {
 	        var e_1, _a, e_2, _b;
+	        var _c;
 	        try {
 	            // update widgets
-	            for (var _c = __values(WidgetCollector.sortedCollection.reverse()), _d = _c.next(); !_d.done; _d = _c.next()) {
-	                var widget = _d.value;
+	            for (var _d = __values(WidgetCollector.sortedCollection.reverse()), _e = _d.next(); !_e.done; _e = _d.next()) {
+	                var widget = _e.value;
 	                widget.update();
 	            } // render priority is opposite of update priority.
 	        }
 	        catch (e_1_1) { e_1 = { error: e_1_1 }; }
 	        finally {
 	            try {
-	                if (_d && !_d.done && (_a = _c.return)) _a.call(_c);
+	                if (_e && !_e.done && (_a = _d.return)) _a.call(_d);
 	            }
 	            finally { if (e_1) throw e_1.error; }
 	        }
 	        // default to last selected if focus cannot be resolved this frame
+	        console.log(!WidgetCollector.isWidgetFocused(), WidgetCollector.lastWidgetFocused !== undefined, (_c = WidgetCollector.lastWidgetFocused) === null || _c === void 0 ? void 0 : _c.active, WidgetCollector.lastWidgetFocused);
 	        if (!WidgetCollector.isWidgetFocused() &&
 	            WidgetCollector.lastWidgetFocused !== undefined &&
 	            WidgetCollector.lastWidgetFocused.active) {
@@ -12587,15 +12589,15 @@
 	        }
 	        try {
 	            // draw widgets
-	            for (var WidgetCollector_1 = __values(WidgetCollector), WidgetCollector_1_1 = WidgetCollector_1.next(); !WidgetCollector_1_1.done; WidgetCollector_1_1 = WidgetCollector_1.next()) {
-	                var widget = WidgetCollector_1_1.value;
+	            for (var _f = __values(WidgetCollector.sortedCollection), _g = _f.next(); !_g.done; _g = _f.next()) {
+	                var widget = _g.value;
 	                widget.draw();
 	            }
 	        }
 	        catch (e_2_1) { e_2 = { error: e_2_1 }; }
 	        finally {
 	            try {
-	                if (WidgetCollector_1_1 && !WidgetCollector_1_1.done && (_b = WidgetCollector_1.return)) _b.call(WidgetCollector_1);
+	                if (_g && !_g.done && (_b = _f.return)) _b.call(_f);
 	            }
 	            finally { if (e_2) throw e_2.error; }
 	        }
@@ -12622,24 +12624,24 @@
 	        };
 	    };
 	    WidgetCollector.filter = function (widgetType) {
-	        var WidgetCollector_2, WidgetCollector_2_1, widget, e_3_1;
+	        var WidgetCollector_1, WidgetCollector_1_1, widget, e_3_1;
 	        var e_3, _a;
 	        return __generator(this, function (_b) {
 	            switch (_b.label) {
 	                case 0:
 	                    _b.trys.push([0, 5, 6, 7]);
-	                    WidgetCollector_2 = __values(WidgetCollector), WidgetCollector_2_1 = WidgetCollector_2.next();
+	                    WidgetCollector_1 = __values(WidgetCollector), WidgetCollector_1_1 = WidgetCollector_1.next();
 	                    _b.label = 1;
 	                case 1:
-	                    if (!!WidgetCollector_2_1.done) return [3 /*break*/, 4];
-	                    widget = WidgetCollector_2_1.value;
+	                    if (!!WidgetCollector_1_1.done) return [3 /*break*/, 4];
+	                    widget = WidgetCollector_1_1.value;
 	                    if (!(widget instanceof widgetType)) return [3 /*break*/, 3];
 	                    return [4 /*yield*/, widget];
 	                case 2:
 	                    _b.sent();
 	                    _b.label = 3;
 	                case 3:
-	                    WidgetCollector_2_1 = WidgetCollector_2.next();
+	                    WidgetCollector_1_1 = WidgetCollector_1.next();
 	                    return [3 /*break*/, 1];
 	                case 4: return [3 /*break*/, 7];
 	                case 5:
@@ -12648,7 +12650,7 @@
 	                    return [3 /*break*/, 7];
 	                case 6:
 	                    try {
-	                        if (WidgetCollector_2_1 && !WidgetCollector_2_1.done && (_a = WidgetCollector_2.return)) _a.call(WidgetCollector_2);
+	                        if (WidgetCollector_1_1 && !WidgetCollector_1_1.done && (_a = WidgetCollector_1.return)) _a.call(WidgetCollector_1);
 	                    }
 	                    finally { if (e_3) throw e_3.error; }
 	                    return [7 /*endfinally*/];
@@ -12659,15 +12661,15 @@
 	    WidgetCollector.windowResized = function () {
 	        var e_4, _a;
 	        try {
-	            for (var WidgetCollector_3 = __values(WidgetCollector), WidgetCollector_3_1 = WidgetCollector_3.next(); !WidgetCollector_3_1.done; WidgetCollector_3_1 = WidgetCollector_3.next()) {
-	                var widget = WidgetCollector_3_1.value;
+	            for (var WidgetCollector_2 = __values(WidgetCollector), WidgetCollector_2_1 = WidgetCollector_2.next(); !WidgetCollector_2_1.done; WidgetCollector_2_1 = WidgetCollector_2.next()) {
+	                var widget = WidgetCollector_2_1.value;
 	                widget.buffer();
 	            }
 	        }
 	        catch (e_4_1) { e_4 = { error: e_4_1 }; }
 	        finally {
 	            try {
-	                if (WidgetCollector_3_1 && !WidgetCollector_3_1.done && (_a = WidgetCollector_3.return)) _a.call(WidgetCollector_3);
+	                if (WidgetCollector_2_1 && !WidgetCollector_2_1.done && (_a = WidgetCollector_2.return)) _a.call(WidgetCollector_2);
 	            }
 	            finally { if (e_4) throw e_4.error; }
 	        }
@@ -12675,21 +12677,21 @@
 	    WidgetCollector.keyPressed = function () {
 	        var e_5, _a;
 	        try {
-	            for (var WidgetCollector_4 = __values(WidgetCollector), WidgetCollector_4_1 = WidgetCollector_4.next(); !WidgetCollector_4_1.done; WidgetCollector_4_1 = WidgetCollector_4.next()) {
-	                var widget = WidgetCollector_4_1.value;
+	            for (var WidgetCollector_3 = __values(WidgetCollector), WidgetCollector_3_1 = WidgetCollector_3.next(); !WidgetCollector_3_1.done; WidgetCollector_3_1 = WidgetCollector_3.next()) {
+	                var widget = WidgetCollector_3_1.value;
 	                widget.keyPressed();
 	            }
 	        }
 	        catch (e_5_1) { e_5 = { error: e_5_1 }; }
 	        finally {
 	            try {
-	                if (WidgetCollector_4_1 && !WidgetCollector_4_1.done && (_a = WidgetCollector_4.return)) _a.call(WidgetCollector_4);
+	                if (WidgetCollector_3_1 && !WidgetCollector_3_1.done && (_a = WidgetCollector_3.return)) _a.call(WidgetCollector_3);
 	            }
 	            finally { if (e_5) throw e_5.error; }
 	        }
 	    };
 	    WidgetCollector.isWidgetFocused = function () {
-	        return WidgetCollector.widgetFocused !== false;
+	        return WidgetCollector.widgetFocused != false;
 	    };
 	    WidgetCollector.getLastFocusedWidget = function () {
 	        return WidgetCollector.lastWidgetFocused;
@@ -13404,7 +13406,7 @@
 	        _this.keyBindings = {
 	            " ": _this.toggle.bind(_this),
 	            r: _this.resetTime.bind(_this),
-	            m: _this.markTime.bind(_this)
+	            m: _this.markTime.bind(_this),
 	        };
 	        _this.playbackImages = [_this.p.images.pauseButton, _this.p.images.playButton];
 	        _this.createButtons();
@@ -13818,7 +13820,8 @@
 	        })
 	            .catch(function (error) {
 	            _this.uploadText.html("There was a problem sending the data:\n ".concat(error));
-	        }).finally(function () {
+	        })
+	            .finally(function () {
 	            setTimeout(function () {
 	                _this.hide();
 	            }, appSettings.boxCloseTimeout);
@@ -14618,7 +14621,7 @@
 			2,
 			50,
 			1,
-			1260
+			1241
 		],
 		"003.wav": [
 			2,
@@ -15290,7 +15293,7 @@
 			2,
 			50,
 			1,
-			2436
+			2166
 		],
 		"005.wav": [
 			2,
@@ -20504,7 +20507,7 @@
 			2,
 			50,
 			1,
-			950
+			830
 		],
 		"028.wav": [
 			2,
@@ -21988,7 +21991,7 @@
 			2,
 			50,
 			1,
-			706
+			699
 		],
 		"042.wav": [
 			2,
@@ -23476,7 +23479,7 @@
 			2,
 			50,
 			1,
-			3562
+			3170
 		],
 		"072.wav": [
 			2,
@@ -23534,7 +23537,7 @@
 			2,
 			50,
 			1,
-			1406
+			1399
 		],
 		"075.wav": [
 			2,
@@ -23690,7 +23693,7 @@
 			2,
 			50,
 			1,
-			1223
+			1214
 		],
 		"077.wav": [
 			2,
@@ -24006,7 +24009,7 @@
 			2,
 			50,
 			1,
-			3759
+			3669
 		],
 		"079.wav": [
 			2,
@@ -24164,7 +24167,7 @@
 			2,
 			50,
 			1,
-			5488
+			4648
 		],
 		"080.wav": [
 			2,
@@ -24700,7 +24703,7 @@
 			2,
 			50,
 			1,
-			2489
+			2480
 		],
 		"086.wav": [
 			2,
@@ -24922,7 +24925,7 @@
 			2,
 			50,
 			1,
-			2259
+			2250
 		],
 		"087.wav": [
 			2,
@@ -25766,7 +25769,7 @@
 			2,
 			50,
 			1,
-			2414
+			2405
 		],
 		"093.wav": [
 			2,
@@ -25860,7 +25863,7 @@
 			2,
 			50,
 			1,
-			8806
+			8805
 		],
 		"094.wav": [
 			2,
@@ -26000,7 +26003,7 @@
 			2,
 			50,
 			1,
-			353
+			320
 		],
 		"098.wav": [
 		],
@@ -26540,7 +26543,7 @@
 			2,
 			180,
 			1,
-			1266
+			1247
 		],
 		"003.wav": [
 			2,
@@ -26556,7 +26559,7 @@
 			2,
 			180,
 			1,
-			21458
+			21188
 		],
 		"005.wav": [
 			2,
@@ -26790,7 +26793,7 @@
 			2,
 			180,
 			1,
-			7610
+			7490
 		],
 		"028.wav": [
 			2,
@@ -27174,7 +27177,7 @@
 			2,
 			180,
 			1,
-			173
+			166
 		],
 		"042.wav": [
 			2,
@@ -27616,38 +27619,26 @@
 		],
 		"065.wav": [
 			2,
-			0,
-			1,
 			0
 		],
 		"066.wav": [
 			2,
-			0,
-			1,
 			0
 		],
 		"067.wav": [
 			2,
-			0,
-			1,
 			0
 		],
 		"068.wav": [
 			2,
-			0,
-			1,
 			0
 		],
 		"069.wav": [
 			2,
-			0,
-			1,
 			0
 		],
 		"070.wav": [
 			2,
-			0,
-			1,
 			0
 		],
 		"071.wav": [
@@ -27670,7 +27661,7 @@
 			2,
 			150,
 			1,
-			997
+			605
 		],
 		"072.wav": [
 			2,
@@ -27716,7 +27707,7 @@
 			2,
 			180,
 			1,
-			4053
+			4046
 		],
 		"075.wav": [
 			2,
@@ -27728,7 +27719,7 @@
 			2,
 			180,
 			1,
-			6641
+			6632
 		],
 		"077.wav": [
 			2,
@@ -27760,7 +27751,7 @@
 			2,
 			180,
 			1,
-			504
+			414
 		],
 		"079.wav": [
 			2,
@@ -27794,7 +27785,7 @@
 			2,
 			180,
 			1,
-			1995
+			1155
 		],
 		"080.wav": [
 			2,
@@ -27938,7 +27929,7 @@
 			2,
 			165,
 			1,
-			819
+			810
 		],
 		"086.wav": [
 			2,
@@ -27968,7 +27959,7 @@
 			2,
 			180,
 			1,
-			469
+			460
 		],
 		"087.wav": [
 			2,
@@ -28184,7 +28175,7 @@
 			2,
 			121,
 			1,
-			447
+			438
 		],
 		"093.wav": [
 			2,
@@ -28230,7 +28221,7 @@
 			2,
 			180,
 			1,
-			814
+			813
 		],
 		"094.wav": [
 			2,
@@ -28264,32 +28255,24 @@
 		],
 		"095.wav": [
 			2,
-			0,
-			1,
 			0
 		],
 		"096.wav": [
 			2,
-			0,
-			1,
 			0
 		],
 		"097.wav": [
 			2,
 			180,
 			1,
-			2702
+			2669
 		],
 		"098.wav": [
 			2,
-			0,
-			1,
 			0
 		],
 		"099.wav": [
 			2,
-			0,
-			1,
 			0
 		],
 		"100.wav": [
@@ -28606,6 +28589,8 @@
 	    var p = P5Singleton.getInstance();
 	    if (!((_a = p.menu) === null || _a === void 0 ? void 0 : _a.enabled))
 	        WidgetCollector.keyPressed();
+	    if (p.key === "/")
+	        p.saveCanvas("animystic-screenshot.png");
 	};
 	var mouseClicked = function () {
 	    var e_1, _a, e_2, _b;

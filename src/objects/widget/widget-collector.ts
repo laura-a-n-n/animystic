@@ -38,6 +38,10 @@ export class WidgetCollector {
       widget.update(); // render priority is opposite of update priority.
 
     // default to last selected if focus cannot be resolved this frame
+    console.log(!WidgetCollector.isWidgetFocused(),
+    WidgetCollector.lastWidgetFocused !== undefined,
+    WidgetCollector.lastWidgetFocused?.active,
+    WidgetCollector.lastWidgetFocused);
     if (
       !WidgetCollector.isWidgetFocused() &&
       WidgetCollector.lastWidgetFocused !== undefined &&
@@ -48,7 +52,7 @@ export class WidgetCollector {
     }
 
     // draw widgets
-    for (const widget of WidgetCollector) widget.draw();
+    for (const widget of WidgetCollector.sortedCollection) widget.draw();
     this.widgetFocused = false;
   }
 
@@ -90,7 +94,7 @@ export class WidgetCollector {
   }
 
   static isWidgetFocused() {
-    return WidgetCollector.widgetFocused !== false;
+    return WidgetCollector.widgetFocused != false;
   }
 
   static getLastFocusedWidget() {

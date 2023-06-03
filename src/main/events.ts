@@ -17,6 +17,7 @@ export const keyPressed = (event: KeyboardEvent) => {
   event.preventDefault();
   const p = P5Singleton.getInstance();
   if (!p.menu?.enabled) WidgetCollector.keyPressed();
+  if (p.key === "/") p.saveCanvas("animystic-screenshot.png");
 };
 
 export const mouseClicked = () => {
