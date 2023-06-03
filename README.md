@@ -19,9 +19,10 @@ While Animystic is in a usable state, a lot more needs to be done for all featur
 Animystic uses Node.js. If you don't already have NPM installed, you can use [NVM](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm). There is [NVM for Windows](https://github.com/coreybutler/nvm-windows) for PC systems.
 
 1. Download the repo.
-2. Go to the folder location using `cd`, e.g. `cd C:\Users\me\animystic`.
-3. Run `npm run start`.
-4. Open [localhost](http://localhost:8080) on port 8080.
+2. Open a terminal and go to the folder location using `cd`, e.g. `cd C:\Users\me\animystic`.
+3. Install by running `npm i`.
+4. Run `npm run start`.
+5. Open [localhost](http://localhost:8080) on port 8080.
 
 That should work! To use all features, you should also have [Python](https://www.python.org/) installed on your system and added to your PATH environment variable.
 
