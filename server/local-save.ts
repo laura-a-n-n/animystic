@@ -1,7 +1,13 @@
 import fs from "fs";
+import path from "path";
 import { Request, Response } from "express";
 import { appSettings } from "./constants";
 import { DataRequestBody } from "./types";
+
+function generateTimestamp() {
+  const now = new Date();
+  return now.toISOString().replace(/:/g, '-');
+}
 
 export const postData = async (req: Request, res: Response) => {
   // extract and verify data
@@ -37,6 +43,17 @@ export const postData = async (req: Request, res: Response) => {
               return res.status(500).send(appSettings.serverErrorMessage);
             }
             console.log(appSettings.dataSaveSuccessMessage);
+
+            // Save a backup copy of the data
+            const backupFilename = `${generateTimestamp()}.json`;
+            const backupFilePath = path.join(appSettings.localDataBackupFolderPath, backupFilename);        
+            fs.writeFile(backupFilePath, JSON.stringify(jsonDictionary), (err) => {
+              if (err) {
+                console.log(err);
+              }
+              console.log(`Backup saved to ${backupFilePath}`);
+            });
+
             res.send(appSettings.dataLocalSaveCompleteMessage);
           }
         );

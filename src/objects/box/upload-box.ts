@@ -37,7 +37,7 @@ export class UploadBox extends Box {
       filename: this.p.menu.lastSelectedFile,
     });
 
-    // Send a POST request to the server with the array data in the request body
+    // Send a POST request to the server
     fetch("/upload", {
       method: "POST",
       headers: {

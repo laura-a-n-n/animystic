@@ -19,7 +19,7 @@ export type AnimationEditor = p5 & {
   boxes: Box[];
   helpBox: Box;
   listBox: Box;
-  saveBox: FadingBox;
+  notificationBox: FadingBox;
   uploadBox: UploadBox;
 
   data: { [key: string]: { [filename: string]: number[] } };

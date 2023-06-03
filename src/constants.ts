@@ -23,6 +23,7 @@ export const appSettings = {
   helpButton: "question-circle.png",
   uploadButton: "cloud-upload.png",
   downloadButton: "download.png",
+  playRemoteButton: "play-remote-circle.png",
   filetypeIdLookup: [1, 14, 31, 44, 60, 71, 84, 97, 100, 101],
   filetypes: [
     "★ Fortune",

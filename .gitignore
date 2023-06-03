@@ -17,3 +17,5 @@ ZarbData.h
 
 tests/logs
 tests/test-server.spec.ts
+
+/*.bat

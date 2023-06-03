@@ -28,6 +28,9 @@ const preloadSetup = () => {
   p.images.downloadButton = p.loadImage(
     `${appSettings.imagesPath}/${appSettings.downloadButton}`
   );
+  p.images.playRemoteButton = p.loadImage(
+    `${appSettings.imagesPath}/${appSettings.playRemoteButton}`
+  );
   p.essentialImagesLoaded = true;
   p.loaded = false;
   p.showMessage = true;

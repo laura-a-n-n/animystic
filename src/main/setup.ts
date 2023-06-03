@@ -38,7 +38,7 @@ export const postloadSetup = () => {
   }
   p.mouse = new Mouse();
   p.helpBox = new Box(appSettings.helpBoxSelector);
-  p.saveBox = new FadingBox(appSettings.saveBoxSelector);
+  p.notificationBox = new FadingBox(appSettings.saveBoxSelector);
   p.helpBox = new Box(appSettings.helpBoxSelector);
   p.uploadBox = new UploadBox(appSettings.uploadBoxSelector);
   p.boxes = [p.helpBox, p.uploadBox, p.listBox];

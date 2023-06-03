@@ -181,12 +181,12 @@ export class SignalWidget extends Widget {
   }
 
   copyCommand() {
-    this.p.saveBox.text("<p>Data copied to clipboard!</p>");
+    this.p.notificationBox.text("<p>Data copied to clipboard!</p>");
     navigator.clipboard.writeText(this.currentData.toString());
   }
 
   async pasteCommand() {
-    this.p.saveBox.text(
+    this.p.notificationBox.text(
       "<p>Data pasted from clipboard. Be sure to save if you want to keep these changes, otherwise they will be discarded.</p>"
     );
     const clipboard = await navigator.clipboard.readText();
@@ -200,7 +200,7 @@ export class SignalWidget extends Widget {
   }
 
   initiateSave() {
-    this.p.saveBox.text();
+    this.p.notificationBox.text();
     this.saveToFile();
   }
 
@@ -319,22 +319,34 @@ export class SignalWidget extends Widget {
           currentHeight = loweredHeight - percentOpen * this.signalHeight;
 
           // calculate slope and horizontal leg length
-          let slope = appSettings.characters[this.name as keyof typeof appSettings.characters].angularSpeed * Math.sign(currentHeight - lastHeight) * -1; // -1 because y is down
-          let horizontalLength = Math.abs(slope) * this.p.audioWidget.resolution;
+          let slope =
+            appSettings.characters[
+              this.name as keyof typeof appSettings.characters
+            ].angularSpeed *
+            Math.sign(currentHeight - lastHeight) *
+            -1; // -1 because y is down
+          let horizontalLength =
+            Math.abs(slope) * this.p.audioWidget.resolution;
 
           // draw triangle
           let trianglePoints = [];
           if (slope > 0) {
             trianglePoints = [
-              currentX, lastHeight,
-              currentX + horizontalLength, currentHeight,
-              currentX + horizontalLength, lastHeight
+              currentX,
+              lastHeight,
+              currentX + horizontalLength,
+              currentHeight,
+              currentX + horizontalLength,
+              lastHeight,
             ];
           } else {
             trianglePoints = [
-              currentX, currentHeight,
-              currentX + horizontalLength, currentHeight,
-              currentX, lastHeight
+              currentX,
+              currentHeight,
+              currentX + horizontalLength,
+              currentHeight,
+              currentX,
+              lastHeight,
             ];
           }
           // this.drawBuffer.push();
@@ -343,7 +355,7 @@ export class SignalWidget extends Widget {
           // this.drawBuffer.triangle(...trianglePoints as [number, number, number, number, number, number]);
           // this.drawBuffer.pop();
           this.drawBuffer.line(currentX, currentHeight, currentX, lastHeight);
-          
+
           // draw bulb to show existence of keyframe
           if (this.userDraggingKeyframe && i in badKeyframes) {
             badKeyframeIndicatorCoordinates.push([
@@ -513,6 +525,7 @@ export class SignalWidget extends Widget {
     this.getSelectedKeyframe();
 
     if (
+      !this.p.audioWidget.isScrubbing() &&
       !this.p.uiProcessed &&
       this.p.mouseIsPressed &&
       this.p.mouseButton == this.p.LEFT &&
@@ -612,7 +625,7 @@ export class SignalWidget extends Widget {
       this.selectedVerticalKeyframe < this.angularArgumentDataIndices.length
     ) {
       const argumentIndex =
-        this.angularArgumentDataIndices[this.selectedVerticalKeyframe];
+        this.angularArgumentDataIndices[this.selectedVerticalKeyframe + 1];
       const commandIndex = argumentIndex - 1;
       this.currentData.splice(commandIndex, 2);
       this.drawToBuffer();

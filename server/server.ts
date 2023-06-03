@@ -6,6 +6,7 @@ import { getFiles } from "./files";
 import { postData } from "./local-save";
 import { postUpload } from "./upload";
 import { updateStatus } from "./user";
+import { playSoundFile } from "./scripts";
 
 const app = express();
 
@@ -24,3 +25,4 @@ app.get("/files", getFiles);
 app.post("/data", postData);
 app.post("/upload", postUpload);
 app.post("/status", updateStatus);
+app.post("/play", playSoundFile);

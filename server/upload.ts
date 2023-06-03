@@ -3,7 +3,7 @@ import { Request, Response } from "express";
 import { syncLocal } from "./sync";
 import { appSettings } from "./constants";
 import { appSettings as clientAppSettings } from "../src/constants";
-import { spawn } from "child_process";
+import { ScriptCaller } from "./scripts";
 
 export const upload = (res: Response, data: string[], filename: string) => {
   let command: string, args: string[];
@@ -23,7 +23,7 @@ export const upload = (res: Response, data: string[], filename: string) => {
     const scriptFile = appSettings.uploadScriptFiles[currentScriptFileIndex];
     console.log(`Script ${currentScriptFileIndex}: ${scriptFile}`);
 
-    const script = spawn(command, [...args, scriptFile]);
+    const script = ScriptCaller.callFile(scriptFile);
     let failed = false;
 
     script.stdout.on("data", (data) => {
@@ -145,6 +145,11 @@ export const postUpload = (req: Request, res: Response) => {
       }
       try {
         const jsonDictionary = JSON.parse(jsonString);
+        // for (let i = 1; i <= 100; i ++ ) {
+        //   const formattedNum = String(i).padStart(3, '0');
+        //   const filename = `${formattedNum}.wav`;
+        //   syncLocal(mergeAllData(filename, jsonDictionary), filename);
+        // }
         upload(res, mergeAllData(filename, jsonDictionary), filename);
         // res.send("OK");
       } catch {

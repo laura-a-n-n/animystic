@@ -19,5 +19,8 @@ export default [
               p5: "p5"
             })
         ],
+        // watch: {
+        //     exclude: ["data/**"]
+        //   },
     }
 ];

@@ -15,6 +15,8 @@ export class AudioWidget extends Widget {
   loading = true;
   paused = false;
   timeMarker = 0;
+  private resetToMarkerFlag = false;
+  private scrubFlag = false;
 
   resolution!: number;
   topOffset!: number;
@@ -26,6 +28,7 @@ export class AudioWidget extends Widget {
   helpButton!: Button;
   uploadButton!: Button;
   downloadButton!: Button;
+  playRemoteButton!: Button;
   uiProcessed: boolean = false;
 
   keyBindings: { [key: string]: () => any } = {
@@ -76,6 +79,13 @@ export class AudioWidget extends Widget {
         this.audioButtonSize,
         this.p.images.downloadButton
       );
+      this.playRemoteButton = new Button(
+        "playRemoteButton",
+        (3.4 + appSettings.downloadButtonPadding) * this.audioButtonSize, //TODO: fix magic number
+        this.controlsTopOffset + this.controlsHeight / 2,
+        this.audioButtonSize,
+        this.p.images.playRemoteButton
+      );
   }
 
   computeButtonBoxes() {
@@ -95,6 +105,11 @@ export class AudioWidget extends Widget {
       );
       this.downloadButton.resize(
         (2 + appSettings.downloadButtonPadding) * this.audioButtonSize,
+        this.controlsTopOffset + this.controlsHeight / 2,
+        this.audioButtonSize,
+      );
+      this.playRemoteButton.resize(
+        (3.4 + appSettings.downloadButtonPadding) * this.audioButtonSize,
         this.controlsTopOffset + this.controlsHeight / 2,
         this.audioButtonSize,
       );
@@ -171,6 +186,33 @@ export class AudioWidget extends Widget {
     this.p.pop();
   }
 
+  playRemote() {
+    // Convert the currentData array to JSON format
+    const jsonData = JSON.stringify({
+      filename: this.p.menu.lastSelectedFile,
+    });
+    this.p.notificationBox.text("<p>Attempting to play...</p>");
+
+    fetch("/play", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: jsonData,
+    })
+      .then((response) => {
+        if (!response.ok) {
+          console.log(response.text().then((text) => {
+            console.log(text);
+            throw new Error(text);
+          }));
+        } else this.p.notificationBox.text("<p>Played!</p>");
+      })
+      .catch((error) => {
+        this.p.notificationBox.text(`<p>Remote play failure: ${error}</p>`);
+      });
+  }
+
   mouseClicked() {
     if (this.playbackButton.getHoverState()) this.toggle();
     else if (this.helpButton.getHoverState()) this.p.helpBox.toggle();
@@ -178,44 +220,47 @@ export class AudioWidget extends Widget {
     else if (this.downloadButton.getHoverState()) {
       for (const widget of WidgetCollector.filter(SignalWidget))
         widget.initiateSave();
-    }
+    } else if (this.playRemoteButton.getHoverState()) this.playRemote();
   }
 
   toggle() {
     if (this.currentSound.isPlaying() && !this.paused) {
-      safelyStopAudio(this.currentSound);
-    }
-    if (this.timeMarker !== 0) this.currentTime = this.timeMarker;
-
-    this.paused = !this.paused;
+      this.pause();
+    } else this.paused = false;
+    if (!this.resetToMarkerFlag) this.resetToMarkerFlag = true;
   }
 
   pause() {
     if (!this.paused) {
-      safelyStopAudio(this.currentSound);
       this.paused = true;
     }
   }
 
   resetTime(stop = true) {
     this.currentPosition = this.currentTime = this.timeMarker = 0;
-    if (stop) safelyStopAudio(this.currentSound);
+    if (stop) this.pause();
   }
 
-  markTime() {
-    if (this.timeMarker) this.timeMarker = 0;
-    else this.timeMarker = this.currentTime;
+  markTime(argument?: number) {
+    this.timeMarker = argument || this.currentTime;
   }
 
   scrubToPosition(x: number) {
-    if (this.currentSound.isPlaying()) safelyStopAudio(this.currentSound);
+    this.pause();
+    this.scrubFlag = true;
     this.currentTime = x / this.resolution;
+    this.markTime(this.currentTime);
   }
 
   update() {
     if (this.loading) return;
     this.playbackButton.setImage(this.playbackImages[Number(this.paused)]);
-    if (!this.paused) {
+    if (this.paused && this.currentSound.isPlaying()) safelyStopAudio(this.currentSound);
+    else if (!this.paused) {
+      if (this.resetToMarkerFlag) {
+        this.resetToMarkerFlag = false;
+        this.currentTime = this.timeMarker;
+      }
       if (
         !this.p.mouseIsPressed &&
         !this.currentSound.isPlaying() &&
@@ -227,10 +272,8 @@ export class AudioWidget extends Widget {
           undefined,
           this.currentTime
         ); // resume at current time
-      } else if (!this.p.mouseIsPressed)
-        this.currentTime = this.currentSound.isPlaying()
-          ? this.currentSound.currentTime()
-          : this.timeMarker; // update to current time
+      } else if (this.currentSound.isPlaying() && !this.scrubFlag) 
+        this.currentTime = this.currentSound.currentTime();
     }
     if (this.currentSound.duration() - this.currentTime < 0.1) {
       this.pause();
@@ -242,6 +285,7 @@ export class AudioWidget extends Widget {
   }
 
   handleMouse() {
+    this.scrubFlag = false;
     this.uiProcessed = false;
     Button.resetAllButtons();
 
@@ -256,6 +300,10 @@ export class AudioWidget extends Widget {
     if (this.p.uiProcessed) this.p.mouse.cursor("pointer");
     else if (this.p.mouseIsPressed && this.p.mouseButton == this.p.LEFT)
       this.scrubToPosition(this.p.mouseX);
+  }
+
+  isScrubbing() {
+    return this.scrubFlag;
   }
 
   draw() {
