@@ -26,7 +26,7 @@ Animystic uses Node.js. If you don't already have NPM installed, you can use [NV
 
 That should work! To use all features, you should also have [Python](https://www.python.org/) installed on your system and added to your PATH environment variable.
 
-Running `npm run test` runs tests but automatically tries to fix your data, so be careful with it. `npm run serve` is almost as good as `npm run start` except that (right now) saving won't work; this will be changed soon.
+Running `npm run test` runs tests and automatically tries to fix [data/data.json](data/data.json); it may be good to back this up before running. `npm run serve` is almost as good as `npm run start` except that (right now) saving won't work; this will be changed soon.
 
 This repo doesn't come with any files to get started with the Arduino or Raspberry Pi as of yet. But if you do want to use the upload feature etc., the code currently uses SSH over the local network so you need an SSH key pair.
 
@@ -39,4 +39,3 @@ Be sure to edit the asset directories in [server/constants.ts](server/constants.
 ## Screenshots
 
 ![animystic-screenshot (1)](https://github.com/laura-a-n-n/animystic/assets/100505614/45f3cfa4-743f-48af-b840-a911e8bf5f27)
-![animystic-screenshot (2)](https://github.com/laura-a-n-n/animystic/assets/100505614/c978d3f8-4ad1-461c-a97e-74282e6e9b52)
