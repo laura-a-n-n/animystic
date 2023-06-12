@@ -1,5 +1,5 @@
 # Animystic Animation Editor (Alpha)
-**Animystic** is an animation editor for servos. [**Zarbalatrax**](https://www.instagram.com/zarbalatrax/), the animatronic [fortune teller machine](https://en.wikipedia.org/wiki/Fortune_teller_machine), is programmed by and controlled with this software with the help with [Arduino](https://www.arduino.cc/) and [Raspberry Pi](https://www.raspberrypi.com/).
+**Animystic** is an animation editor for servos. Zarbalatrax, the animatronic [fortune teller machine](https://en.wikipedia.org/wiki/Fortune_teller_machine), is programmed by and controlled with this software with the help with [Arduino](https://www.arduino.cc/) and [Raspberry Pi](https://www.raspberrypi.com/).
 
 In particular, Zarbalatrax's jaw is a servo, and also Squambo the mouse, Zarbalatrax's friend, moves on a servo. For each outcome, there is a single audio file that plays, and the servos are timed to move accordingly.
 
