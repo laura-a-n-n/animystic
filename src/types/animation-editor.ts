@@ -8,13 +8,14 @@ import { Mouse } from "@/objects/mouse";
 import { SignalWidget } from "@/objects/widget/signal-widget";
 import { Viewport } from "@/objects/viewport";
 import p5 from "p5";
+import { AssetFiles } from "@/utilities/file-helpers";
 
 export type AnimationEditor = p5 & {
   viewport: Viewport;
   mouse: Mouse;
   menu: Menu;
   banner: Banner;
-  files: { [assetType: string]: string[] };
+  files: AssetFiles;
   audioWidget: AudioWidget;
   boxes: Box[];
   helpBox: Box;
@@ -38,4 +39,5 @@ export type AnimationEditor = p5 & {
   maxImages: number;
   essentialImagesLoaded: boolean;
   postloadSetupFinished: boolean;
+  loadFinished: boolean;
 };

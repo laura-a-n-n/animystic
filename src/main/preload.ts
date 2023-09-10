@@ -1,5 +1,5 @@
 import data from "data/data.json";
-import { getFilesAsync } from "@/utilities/file-helpers";
+import { AssetFiles, getFilesAsync } from "@/utilities/file-helpers";
 import { P5Singleton } from "@/utilities/p5-singleton";
 import { appSettings } from "@/constants";
 import { AnimationEditor } from "@/types/animation-editor";
@@ -38,6 +38,7 @@ const preloadSetup = () => {
   p.imagesLoaded = 0;
   p.soundsLoaded = 0;
   p.percentLoaded = 0;
+  p.loadFinished = false;
 };
 
 const preloadAssets = async () => {
@@ -74,7 +75,8 @@ const preloadAssets = async () => {
 
 export const isLoadFinished = () => {
   p = P5Singleton.getInstance();
-  return p.maxImages == p.imagesLoaded && p.soundsLoaded == p.maxSounds;
+  p.loadFinished = p.loadFinished || (p.maxImages == p.imagesLoaded && p.soundsLoaded == p.maxSounds);
+  return p.loadFinished;
 };
 
 export const preloadAsync = async () => {

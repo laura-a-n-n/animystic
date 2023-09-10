@@ -12419,7 +12419,7 @@
 	    uploadButton: "cloud-upload.png",
 	    downloadButton: "download.png",
 	    playRemoteButton: "play-remote-circle.png",
-	    filetypeIdLookup: [1, 14, 31, 44, 60, 71, 84, 97, 100, 101],
+	    filetypeIdLookup: [1, 14, 31, 44, 60, 71, 84, 97, 100, 101, 105],
 	    filetypes: [
 	        "★ Fortune",
 	        "★★ Fortune",
@@ -12431,6 +12431,7 @@
 	        '"In a past life..."',
 	        "★★★GOD MODE★★★",
 	        "Music",
+	        "Extra"
 	    ],
 	    // menu and gui settings
 	    bannerHeight: 0.15,
@@ -13856,10 +13857,28 @@
 	    return appSettings.filetypes[i];
 	}
 
+	var newItem = function (soundName) {
+	    var p = P5Singleton.getInstance();
+	    // load assets
+	    var imageName = soundName.replace(".wav", ".png");
+	    // try {
+	    p.images[imageName] = p.loadImage("".concat(appSettings.imagesPath, "/").concat(imageName), function () { return p.imagesLoaded++; }, function () { return p.imagesLoaded++; });
+	    p.files.image.push(imageName);
+	    p.maxSounds++;
+	    p.maxImages++;
+	    p.sounds[soundName] = p.loadSound("".concat(appSettings.soundsPath, "/").concat(soundName), function () { return p.soundsLoaded++; }, function () { return p.soundsLoaded++; });
+	    p.files.sound.push(soundName);
+	    console.log(p.files);
+	    // } catch {
+	    //   console.log('tis ok')
+	    // }
+	};
+
 	var Menu = /** @class */ (function () {
 	    function Menu() {
 	        this._enabled = true;
 	        this.lastSelectedFile = "";
+	        this.newTileHovered = false;
 	        this.status = {};
 	        this.rows = 0;
 	        this.cols = 0;
@@ -13867,6 +13886,9 @@
 	        this.trueTopOffset = 0;
 	        this.p = P5Singleton.getInstance();
 	        this.computeSize();
+	        var sound = this.p.files.sound;
+	        var lastSound = sound[sound.length - 1];
+	        this.lastSoundIndex = Number(lastSound.substring(0, lastSound.indexOf("."))) + 1;
 	        this.enabled = true;
 	    }
 	    Object.defineProperty(Menu.prototype, "enabled", {
@@ -13929,23 +13951,29 @@
 	        this.p.textSize(this.textSize);
 	        this.p.text(imageName, 0, 0);
 	        this.p.textSize(this.textSize / 2);
-	        this.p.text(lookupFiletype(Number(imageName.substring(0, imageName.indexOf(".")))) +
-	            editingText, 0, appSettings.filenameTextScale * this.p.textAscent());
+	        this.p.text(lookupFiletype(Number(imageName.substring(0, imageName.indexOf(".")))) + editingText, 0, appSettings.filenameTextScale * this.p.textAscent());
 	        this.p.pop();
 	    };
 	    Menu.prototype.getGridIndex = function (i, j) {
-	        return ((i + this.p.floor(this.scrollOffset / this.trueCellSize)) * this.cols + j);
+	        return ((i + this.p.floor(this.scrollOffset / this.trueCellSize)) *
+	            this.cols +
+	            j);
 	    };
-	    Menu.prototype.image = function (index, i, j) {
+	    Menu.prototype.image = function (index, i, j, isLastTile) {
+	        var _a;
 	        // calculate the x position of the item
 	        var x = this.trueLeftOffset + j * this.trueCellSize;
 	        var y = -this.trueTopOffset + i * this.trueCellSize; // calculate the y position of the item
 	        // every sound is linked to the images via filename
-	        var soundName = this.p.files.sound[index];
+	        var sound = this.p.files.sound;
+	        var newSoundIndex = this.lastSoundIndex;
+	        var soundName = (_a = sound[index]) !== null && _a !== void 0 ? _a : (newSoundIndex + ".wav");
 	        var associatedImageName = soundName.replace(".wav", ".png");
 	        this.p.push();
 	        // try to get image and display if existing, otherwise display "missing" image
-	        var image = this.p.images[associatedImageName] || this.p.images.missingImage;
+	        var image = isLastTile
+	            ? this.p.images.playButton
+	            : this.p.images[associatedImageName] || this.p.images.missingImage;
 	        this.p.image(image, x + this.cellPadding / 2, y + this.cellPadding / 4, this.cellSize, this.cellSize);
 	        this.p.pop();
 	        return [soundName, associatedImageName, x, y];
@@ -13953,18 +13981,24 @@
 	    Menu.prototype.drawItems = function () {
 	        var _a, _b;
 	        this.trueTopOffset = this.scrollOffset % this.trueCellSize; // this accounts for the scroll
-	        for (var i = 0; i < this.rows; i++) {
-	            for (var j = 0; j < this.cols; j++) {
+	        for (var i = 0; i <= this.rows; i++) {
+	            for (var j = 0; j <= this.cols; j++) {
 	                // calculate index of current item
 	                var index = this.getGridIndex(i, j);
-	                if (index >= this.p.maxSounds)
+	                // console.log(j, this.p.maxSounds);
+	                if (j === this.cols && index !== this.p.maxSounds)
+	                    continue;
+	                // console.log(i, j, this.cols, index, this.p.maxSounds);
+	                if (index > this.p.maxSounds)
 	                    return;
-	                var _c = __read(this.image(index, i, j), 4), soundName = _c[0], associatedImageName = _c[1], x = _c[2], y = _c[3];
-	                var editingText = "";
+	                // is the user hovering the last tile?
+	                var isLastTile = index === this.p.maxSounds;
+	                var _c = __read(this.image(index, i, j, isLastTile), 4), soundName = _c[0], associatedImageName = _c[1], x = _c[2], y = _c[3];
 	                // background
 	                this.p.push();
 	                (_a = this.p).fill.apply(_a, __spreadArray([], __read(appSettings.menuTileColor), false));
 	                // is the current tile being edited?
+	                var editingText = "";
 	                // for (const user in this.status) {
 	                //   if (this.status[user] == soundName) {
 	                //     this.p.fill(...appSettings.userColor);
@@ -13976,7 +14010,10 @@
 	                    (_b = this.p).fill.apply(_b, __spreadArray([], __read(appSettings.menuHoverColor), false));
 	                    // expose the last hovered filename
 	                    this.lastSelectedFile = soundName;
+	                    this.newTileHovered = isLastTile;
 	                }
+	                else
+	                    this.newTileHovered = false;
 	                // draw background
 	                this.p.stroke(0, 0);
 	                this.p.rect(x, y, this.trueCellSize, this.trueCellSize, appSettings.menuBorderRadius);
@@ -13996,6 +14033,35 @@
 	        this.p.pop();
 	        this.drawItems();
 	        this.p.pop();
+	    };
+	    Menu.prototype.mouseClicked = function () {
+	        var e_1, _a;
+	        if (this.enabled && this.lastSelectedFile !== "") {
+	            if (this.newTileHovered) {
+	                newItem(this.lastSelectedFile);
+	                this.computeSize();
+	                this.lastSoundIndex++;
+	                console.log(this);
+	                return;
+	            }
+	            var p = this.p;
+	            this.enabled = false;
+	            p.audioWidget.bindSound(p.sounds[this.lastSelectedFile]);
+	            p.listBox.toggle();
+	            try {
+	                for (var _b = __values(WidgetCollector.filter(SignalWidget)), _c = _b.next(); !_c.done; _c = _b.next()) {
+	                    var signalWidget = _c.value;
+	                    signalWidget.newData(p.data[signalWidget.name][this.lastSelectedFile]);
+	                }
+	            }
+	            catch (e_1_1) { e_1 = { error: e_1_1 }; }
+	            finally {
+	                try {
+	                    if (_c && !_c.done && (_a = _b.return)) _a.call(_b);
+	                }
+	                finally { if (e_1) throw e_1.error; }
+	            }
+	        }
 	    };
 	    return Menu;
 	}());
@@ -28390,6 +28456,7 @@
 	    p.imagesLoaded = 0;
 	    p.soundsLoaded = 0;
 	    p.percentLoaded = 0;
+	    p.loadFinished = false;
 	};
 	var preloadAssets = function () { return __awaiter(void 0, void 0, void 0, function () {
 	    var files, _a, _b, f, _loop_1, _c, _d, _e, index, f;
@@ -28444,7 +28511,8 @@
 	}); };
 	var isLoadFinished = function () {
 	    p = P5Singleton.getInstance();
-	    return p.maxImages == p.imagesLoaded && p.soundsLoaded == p.maxSounds;
+	    p.loadFinished = p.loadFinished || (p.maxImages == p.imagesLoaded && p.soundsLoaded == p.maxSounds);
+	    return p.loadFinished;
 	};
 	var preloadAsync = function () { return __awaiter(void 0, void 0, void 0, function () {
 	    return __generator(this, function (_a) {
@@ -28593,26 +28661,26 @@
 	        p.saveCanvas("animystic-screenshot.png");
 	};
 	var mouseClicked = function () {
-	    var e_1, _a, e_2, _b;
-	    var _c, _d, _e, _f, _g;
+	    var e_1, _a;
+	    var _b, _c, _d, _e, _f;
 	    var p = P5Singleton.getInstance();
 	    if (!p.postloadSetupFinished)
 	        return;
 	    if (p.uiProcessed) {
-	        if ((_c = p.banner) === null || _c === void 0 ? void 0 : _c.mouseHoverHome) {
+	        if ((_b = p.banner) === null || _b === void 0 ? void 0 : _b.mouseHoverHome) {
 	            // user wants to go home
-	            (_e = (_d = p.audioWidget) === null || _d === void 0 ? void 0 : _d.currentSound) === null || _e === void 0 ? void 0 : _e.stop();
+	            (_d = (_c = p.audioWidget) === null || _c === void 0 ? void 0 : _c.currentSound) === null || _d === void 0 ? void 0 : _d.stop();
 	            p.menu.enabled = true;
-	            (_f = p.listBox) === null || _f === void 0 ? void 0 : _f.hide();
+	            (_e = p.listBox) === null || _e === void 0 ? void 0 : _e.hide();
 	            return;
 	        }
-	        else if ((_g = p.audioWidget) === null || _g === void 0 ? void 0 : _g.uiProcessed) {
+	        else if ((_f = p.audioWidget) === null || _f === void 0 ? void 0 : _f.uiProcessed) {
 	            p.audioWidget.mouseClicked();
 	            return;
 	        }
 	        try {
-	            for (var _h = __values(p.boxes), _j = _h.next(); !_j.done; _j = _h.next()) {
-	                var box = _j.value;
+	            for (var _g = __values(p.boxes), _h = _g.next(); !_h.done; _h = _g.next()) {
+	                var box = _h.value;
 	                if (box === p.listBox)
 	                    continue;
 	                if (!box.isMouseOver)
@@ -28622,29 +28690,12 @@
 	        catch (e_1_1) { e_1 = { error: e_1_1 }; }
 	        finally {
 	            try {
-	                if (_j && !_j.done && (_a = _h.return)) _a.call(_h);
+	                if (_h && !_h.done && (_a = _g.return)) _a.call(_g);
 	            }
 	            finally { if (e_1) throw e_1.error; }
 	        }
 	    }
-	    if (p.menu.enabled && p.menu.lastSelectedFile !== "") {
-	        p.menu.enabled = false;
-	        p.audioWidget.bindSound(p.sounds[p.menu.lastSelectedFile]);
-	        p.listBox.toggle();
-	        try {
-	            for (var _k = __values(WidgetCollector.filter(SignalWidget)), _l = _k.next(); !_l.done; _l = _k.next()) {
-	                var signalWidget = _l.value;
-	                signalWidget.newData(p.data[signalWidget.name][p.menu.lastSelectedFile]);
-	            }
-	        }
-	        catch (e_2_1) { e_2 = { error: e_2_1 }; }
-	        finally {
-	            try {
-	                if (_l && !_l.done && (_b = _k.return)) _b.call(_k);
-	            }
-	            finally { if (e_2) throw e_2.error; }
-	        }
-	    }
+	    p.menu.mouseClicked();
 	};
 	var mouseWheel = function (event) { var _a; return (_a = P5Singleton.getInstance().menu) === null || _a === void 0 ? void 0 : _a.scroll(event.deltaY); };
 

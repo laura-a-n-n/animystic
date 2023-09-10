@@ -1,5 +1,7 @@
 import { appSettings } from "@/constants";
 
+export type AssetFiles = { [assetType: string]: string[] };
+
 export async function getFilesAsync(origin: string = ""): Promise<{
   [assetType: string]: string[];
 }> {

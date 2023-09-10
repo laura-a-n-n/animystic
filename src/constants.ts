@@ -24,7 +24,7 @@ export const appSettings = {
   uploadButton: "cloud-upload.png",
   downloadButton: "download.png",
   playRemoteButton: "play-remote-circle.png",
-  filetypeIdLookup: [1, 14, 31, 44, 60, 71, 84, 97, 100, 101],
+  filetypeIdLookup: [1, 14, 31, 44, 60, 71, 84, 97, 100, 101, 105],
   filetypes: [
     "★ Fortune",
     "★★ Fortune",
@@ -36,6 +36,7 @@ export const appSettings = {
     '"In a past life..."',
     "★★★GOD MODE★★★",
     "Music",
+    "Extra"
   ],
 
   // menu and gui settings
